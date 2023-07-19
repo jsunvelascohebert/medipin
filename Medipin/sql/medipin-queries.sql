@@ -24,4 +24,7 @@ where article_id = 3;
 delete from article
 where article_id = 4;    
     
--- ----- ----- queries for ___ ----- ----- --
+-- ----- ----- queries for topic ----- ----- --
+
+select * from topic;
+select topic_id, name from topic;
