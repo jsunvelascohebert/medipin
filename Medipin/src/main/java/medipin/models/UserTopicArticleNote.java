@@ -60,6 +60,17 @@ public class UserTopicArticleNote {
     }
 
     @Override
+    public String toString() {
+        return "UserTopicArticleNote{" +
+                "userTopicArticleNoteId=" + userTopicArticleNoteId +
+                ", userId=" + userId +
+                ", topicId=" + topicId +
+                ", articleId=" + articleId +
+                ", noteId=" + noteId +
+                '}';
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;

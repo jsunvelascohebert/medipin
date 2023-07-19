@@ -41,6 +41,15 @@ public class UserTopic {
     }
 
     @Override
+    public String toString() {
+        return "UserTopic{" +
+                "userTopicId=" + userTopicId +
+                ", userId=" + userId +
+                ", topicId=" + topicId +
+                '}';
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;

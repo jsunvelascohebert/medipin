@@ -1,9 +1,15 @@
 package medipin.data;
 
+import medipin.data.mappers.ArticleMapper;
 import medipin.models.Article;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.PreparedStatement;
+import java.sql.Statement;
 import java.util.List;
 
 @Repository
@@ -16,31 +22,70 @@ public class ArticleJdbcTemplateRepository implements ArticleRepository {
 
     @Override
     public List<Article> getAll() {
-        return null;
-    }
-
-    @Override
-    public List<Article> getByTopic(String topic) {
-        return null;
+        final String sql = "select article_id, title, `description`, url, " +
+                "date_published, publisher from article;";
+        return jdbcTemplate.query(sql, new ArticleMapper());
     }
 
     @Override
     public Article getById(int articleId) {
-        return null;
+        final String sql = "select article_id, title, `description`, url, " +
+                "date_published, publisher " +
+                "from article " +
+                "where article_id = ?;";
+        return jdbcTemplate.query(sql, new ArticleMapper(), articleId)
+                .stream().findAny().orElse(null);
     }
 
     @Override
     public Article add(Article article) {
-        return null;
+        final String sql =
+                "insert into article " +
+                "(title, `description`, url, date_published, publisher) " +
+                "values (?, ?, ?, ?, ?);";
+
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        int rowsAffected = jdbcTemplate.update(connection -> {
+            PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            ps.setString(1, article.getTitle());
+            ps.setString(2, article.getDescription());
+            ps.setString(3, article.getUrl());
+            ps.setDate(4, article.getDatePublished());
+            ps.setString(5, article.getPublisher());
+            return ps;
+        }, keyHolder);
+        if (rowsAffected <= 0) {
+            return null;
+        }
+        article.setArticleId(keyHolder.getKey().intValue());
+        return article;
     }
 
     @Override
     public boolean update(Article article) {
-        return false;
+        final String sql =
+                "update article set " +
+                    "title = ?, " +
+                    "`description` = ?, " +
+                    "url = ?, " +
+                    "date_published = ?, " +
+                    "publisher = ? " +
+                    "where article_id = ?;";
+
+        return jdbcTemplate.update(sql,
+                article.getTitle(),
+                article.getDescription(),
+                article.getUrl(),
+                article.getDatePublished(),
+                article.getPublisher(),
+                article.getArticleId()) > 0;
     }
 
     @Override
     public boolean deleteById(int articleId) {
-        return false;
+        final String sql =
+                "delete from article " +
+                "where article_id = ?;";
+        return jdbcTemplate.update(sql, articleId) > 0;
     }
 }

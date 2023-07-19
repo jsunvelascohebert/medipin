@@ -1,6 +1,6 @@
 package medipin.models;
 
-import java.util.Date;
+import java.sql.Date;
 import java.util.Objects;
 
 public class Article {
@@ -69,6 +69,18 @@ public class Article {
 
     public void setPublisher(String publisher) {
         this.publisher = publisher;
+    }
+
+    @Override
+    public String toString() {
+        return "Article{" +
+                "articleId=" + articleId +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", url='" + url + '\'' +
+                ", datePublished=" + datePublished +
+                ", publisher='" + publisher + '\'' +
+                '}';
     }
 
     @Override

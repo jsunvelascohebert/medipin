@@ -41,6 +41,15 @@ public class Note {
     }
 
     @Override
+    public String toString() {
+        return "Note{" +
+                "noteId=" + noteId +
+                ", text='" + text + '\'' +
+                ", datetimeMade=" + datetimeMade +
+                '}';
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
