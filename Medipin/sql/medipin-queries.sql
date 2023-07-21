@@ -93,3 +93,16 @@ select *
 from `user` u
 inner join user_role ur on ur.user_id = u.user_id
 inner join access_role ar on ar.role_id = ur.role_id;
+
+-- ----- ----- user_topic queries ----- ----- --
+
+select user_id, topic_id from user_topic;
+select user_id, topic_id
+from user_topic
+where user_id = 1;
+
+insert into user_topic (user_id, topic_id)
+values (2, 2);
+
+delete from user_topic
+where user_id = 2 and topic_id = 1;

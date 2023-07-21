@@ -53,9 +53,10 @@ create table user_role (
 );
 
 create table user_topic (
-	user_topic_id int primary key auto_increment,
     user_id int not null,
     topic_id int not null,
+    constraint pk_user_topic
+		primary key (user_id, topic_id),
     constraint fk_user_topic_user_id
 		foreign key(user_id)
         references `user`(user_id),
@@ -65,9 +66,10 @@ create table user_topic (
 );
 
 create table topic_article (
-	topic_article_id int primary key auto_increment,
     topic_id int not null,
     article_id int not null,
+    constraint pk_topic_article
+		primary key (topic_id, article_id),
     constraint fk_topic_article_topic_id
 		foreign key(topic_id)
         references topic(topic_id),
@@ -77,11 +79,12 @@ create table topic_article (
 );
 
 create table user_topic_article_note (
-	user_topic_article_note_id int primary key auto_increment,
     user_id int not null,
     topic_id int not null,
     article_id int not null,
     note_id int not null,
+    constraint pk_user_topic_article_note
+		primary key (user_id, topic_id, article_id, note_id),
     constraint fk_user_topic_article_note_user_id
 		foreign key(user_id)
         references `user`(user_id),

@@ -3,24 +3,14 @@ package medipin.models;
 import java.util.Objects;
 
 public class TopicArticle {
-    private int topicArticleId;
     private int topicId;
     private int articleId;
 
     public TopicArticle() {}
 
-    public TopicArticle(int topicArticleId, int topicId, int articleId) {
-        this.topicArticleId = topicArticleId;
+    public TopicArticle(int topicId, int articleId) {
         this.topicId = topicId;
         this.articleId = articleId;
-    }
-
-    public int getTopicArticleId() {
-        return topicArticleId;
-    }
-
-    public void setTopicArticleId(int topicArticleId) {
-        this.topicArticleId = topicArticleId;
     }
 
     public int getTopicId() {
@@ -44,11 +34,11 @@ public class TopicArticle {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         TopicArticle that = (TopicArticle) o;
-        return topicArticleId == that.topicArticleId && topicId == that.topicId && articleId == that.articleId;
+        return topicId == that.topicId && articleId == that.articleId;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(topicArticleId, topicId, articleId);
+        return Objects.hash(topicId, articleId);
     }
 }

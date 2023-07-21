@@ -3,7 +3,6 @@ package medipin.models;
 import java.util.Objects;
 
 public class UserTopicArticleNote {
-    private int userTopicArticleNoteId;
     private int userId;
     private int topicId;
     private int articleId;
@@ -11,20 +10,11 @@ public class UserTopicArticleNote {
 
     public UserTopicArticleNote() {}
 
-    public UserTopicArticleNote(int userTopicArticleNoteId, int userId, int topicId, int articleId, int noteId) {
-        this.userTopicArticleNoteId = userTopicArticleNoteId;
+    public UserTopicArticleNote(int userId, int topicId, int articleId, int noteId) {
         this.userId = userId;
         this.topicId = topicId;
         this.articleId = articleId;
         this.noteId = noteId;
-    }
-
-    public int getUserTopicArticleNoteId() {
-        return userTopicArticleNoteId;
-    }
-
-    public void setUserTopicArticleNoteId(int userTopicArticleNoteId) {
-        this.userTopicArticleNoteId = userTopicArticleNoteId;
     }
 
     public int getUserId() {
@@ -62,7 +52,6 @@ public class UserTopicArticleNote {
     @Override
     public String toString() {
         return "UserTopicArticleNote{" +
-                "userTopicArticleNoteId=" + userTopicArticleNoteId +
                 ", userId=" + userId +
                 ", topicId=" + topicId +
                 ", articleId=" + articleId +
@@ -75,11 +64,11 @@ public class UserTopicArticleNote {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         UserTopicArticleNote that = (UserTopicArticleNote) o;
-        return userTopicArticleNoteId == that.userTopicArticleNoteId && userId == that.userId && topicId == that.topicId && articleId == that.articleId && noteId == that.noteId;
+        return userId == that.userId && topicId == that.topicId && articleId == that.articleId && noteId == that.noteId;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userTopicArticleNoteId, userId, topicId, articleId, noteId);
+        return Objects.hash(userId, topicId, articleId, noteId);
     }
 }

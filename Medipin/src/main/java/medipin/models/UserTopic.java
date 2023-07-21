@@ -4,24 +4,14 @@ import java.util.Objects;
 
 public class UserTopic {
 
-    private int userTopicId;
     private int userId;
     private int topicId;
 
     public UserTopic() {}
 
-    public UserTopic(int userTopicId, int userId, int topicId) {
-        this.userTopicId = userTopicId;
+    public UserTopic(int userId, int topicId) {
         this.userId = userId;
         this.topicId = topicId;
-    }
-
-    public int getUserTopicId() {
-        return userTopicId;
-    }
-
-    public void setUserTopicId(int userTopicId) {
-        this.userTopicId = userTopicId;
     }
 
     public int getUserId() {
@@ -43,7 +33,6 @@ public class UserTopic {
     @Override
     public String toString() {
         return "UserTopic{" +
-                "userTopicId=" + userTopicId +
                 ", userId=" + userId +
                 ", topicId=" + topicId +
                 '}';
@@ -54,11 +43,11 @@ public class UserTopic {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         UserTopic userTopic = (UserTopic) o;
-        return userTopicId == userTopic.userTopicId && userId == userTopic.userId && topicId == userTopic.topicId;
+        return userId == userTopic.userId && topicId == userTopic.topicId;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userTopicId, userId, topicId);
+        return Objects.hash(userId, topicId);
     }
 }
