@@ -114,3 +114,7 @@ from topic_article
 where topic_id = 3;
 
 select * from topic_article;
+
+-- ----- ----- user_topic_article_note queries ----- ----- --
+
+select * from user_topic_article_note;
