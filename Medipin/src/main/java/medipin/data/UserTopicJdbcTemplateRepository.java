@@ -37,7 +37,7 @@ public class UserTopicJdbcTemplateRepository implements UserTopicRepository {
         return jdbcTemplate.update(sql, userTopic.getUserId(),
                 userTopic.getTopicId()) > 0;
     }
-    
+
     @Override
     @Transactional
     public boolean deleteByKey(int userId, int topicId) {

@@ -106,3 +106,11 @@ values (2, 2);
 
 delete from user_topic
 where user_id = 2 and topic_id = 1;
+
+-- ----- ----- topic_article queries ----- ----- --
+
+select topic_id, article_id 
+from topic_article
+where topic_id = 3;
+
+select * from topic_article;
