@@ -7,14 +7,14 @@ use medipin;
 create table `user` (
 	user_id int primary key auto_increment,
     `name` varchar(100) not null,
-    username varchar(50) not null,
+    username varchar(50) not null unique,
     password_hash varchar(2048) not null,
-    enabled bit(1) not null
+    enabled bit not null default(1)
 );
 
 create table access_role (
 	role_id int primary key auto_increment,
-    `role` varchar(100) not null
+    `role` varchar(100) not null unique
 );
 
 create table topic (
@@ -40,9 +40,10 @@ create table note (
 -- ----- ----- bridge tables ----- ----- --
 
 create table user_role (
-	user_role_id int primary key auto_increment,
     user_id int not null,
     role_id int not null,
+    constraint pk_user_role 
+		primary key (user_id, role_id),
     constraint fk_user_role_user_id
 		foreign key(user_id)
         references `user`(user_id),

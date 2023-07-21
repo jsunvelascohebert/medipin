@@ -18,13 +18,14 @@ public class User implements UserDetails {
     private boolean enabled;
     private Collection<GrantedAuthority> authorities;
 
-    public User(int userId, String name, String username, String password, boolean enabled, Collection<GrantedAuthority> authorities) {
+    public User(int userId, String name, String username, String password,
+                boolean enabled, List<String> authorities) {
         this.userId = userId;
         this.name = name;
         this.username = username;
         this.password = password;
         this.enabled = enabled;
-        this.authorities = authorities;
+        this.authorities = convertRolesToAuthorities(authorities);
     }
 
     private static Collection<GrantedAuthority> convertRolesToAuthorities(List<String> roles){

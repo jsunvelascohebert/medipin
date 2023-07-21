@@ -56,3 +56,40 @@ insert into note
 	(`text`, datetime_made)
 value
 	('Testing add', '2023-07-22 12:34:56');
+    
+update note set
+`text` = 'testing update',
+datetime_made = '2023-07-23 12:34:56'
+where note_id = 2;
+
+-- ----- ----- user queries ----- ----- --
+
+select * from `user`;
+
+select user_id, `name`, username, password_hash, enabled
+from `user`;
+
+select user_id, `name`, username, password_hash, enabled
+from `user`
+where user_id = 1;
+
+select user_id, `name`, username, password_hash, enabled
+from `user`
+where username = 'john@smith.com';
+
+select r.`role` 
+from user_role ur 
+inner join access_role r on ur.role_id = r.role_id
+inner join `user` u on ur.user_id = u.user_id 
+where u.user_id = 1; 
+
+select r.`role` 
+from user_role ur 
+inner join access_role r on ur.role_id = r.role_id
+inner join `user` u on ur.user_id = u.user_id 
+where u.username = 'john@smith.com'; 
+
+select * 
+from `user` u
+inner join user_role ur on ur.user_id = u.user_id
+inner join access_role ar on ar.role_id = ur.role_id;

@@ -7,14 +7,14 @@ use medipin_test;
 create table `user` (
 	user_id int primary key auto_increment,
     `name` varchar(100) not null,
-    username varchar(50) not null,
+    username varchar(50) not null unique,
     password_hash varchar(2048) not null,
-    enabled bit(1) not null
+    enabled bit not null default(1)
 );
 
 create table access_role (
 	role_id int primary key auto_increment,
-    `role` varchar(100) not null
+    `role` varchar(100) not null unique
 );
 
 create table topic (
@@ -40,9 +40,10 @@ create table note (
 -- ----- ----- bridge tables ----- ----- --
 
 create table user_role (
-	user_role_id int primary key auto_increment,
     user_id int not null,
     role_id int not null,
+    constraint pk_user_role 
+		primary key (user_id, role_id),
     constraint fk_user_role_user_id
 		foreign key(user_id)
         references `user`(user_id),
@@ -134,7 +135,8 @@ begin
     insert into `user` (`name`, username, password_hash, enabled)
 		values
     		('john smith', 'john@smith.com', '$2a$10$ntB7CsRKQzuLoKY3rfoAQen5nNyiC/U60wBsWnnYrtQQi8Z3IZzQa', 1),
-    		('sally jones', 'sally@jones.com', '$2a$10$ntB7CsRKQzuLoKY3rfoAQen5nNyiC/U60wBsWnnYrtQQi8Z3IZzQa', 1);
+    		('sally jones', 'sally@jones.com', '$2a$10$ntB7CsRKQzuLoKY3rfoAQen5nNyiC/U60wBsWnnYrtQQi8Z3IZzQa', 1),
+            ('silly head', 'silly@head.com', '$2a$10$ntB7CsRKQzuLoKY3rfoAQen5nNyiC/U60wBsWnnYrtQQi8Z3IZzQa', 1);
             
     insert into topic (`name`)
 		values ('Personal'), ('Partner'), ('Friend');
@@ -154,10 +156,10 @@ begin
     -- populate test data for bridge tables --
     
 	insert into user_role (user_id, role_id)
-		values (1, 2), (2, 1);
+		values (1, 1), (2, 1), (3, 1);
         
 	insert into user_topic (user_id, topic_id)
-		values (1, 1), (1, 2), (2, 1);
+		values (1, 1), (1, 2), (2, 1), (3, 1);
         
 	insert into topic_article (topic_id, article_id)
 		values (1, 1), (1, 2), (3, 1), (3, 2), (3, 3);
@@ -167,7 +169,8 @@ begin
 			(1, 1, 1, 1),
             (2, 3, 1, 3),
             (2, 3, 2, 2),
-            (2, 3, 3, 1);
+            (2, 3, 3, 1),
+            (3, 3, 3, 1);
             
 	set sql_safe_updates = 1;
 
