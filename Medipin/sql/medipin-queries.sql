@@ -27,4 +27,32 @@ where article_id = 4;
 -- ----- ----- queries for topic ----- ----- --
 
 select * from topic;
-select topic_id, name from topic;
+select topic_id, `name` from topic;
+
+select topic_id, `name`
+from topic
+where topic_id = 1;
+
+insert into topic
+(`name`)
+value ('Test Topic');
+
+update topic set
+`name` = 'Test update'
+where topic_id = 2;
+
+delete from topic
+where topic_id = 4;
+
+-- ----- ----- note queries ----- ----- --
+
+select note_id, `text`, datetime_made from note;
+
+select note_id, `text`, datetime_made 
+from note
+where note_id = 1;
+
+insert into note
+	(`text`, datetime_made)
+value
+	('Testing add', '2023-07-22 12:34:56');

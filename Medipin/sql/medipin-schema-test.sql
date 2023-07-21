@@ -160,13 +160,14 @@ begin
 		values (1, 1), (1, 2), (2, 1);
         
 	insert into topic_article (topic_id, article_id)
-		values (1, 1), (1, 2), (3, 1), (3, 2);
+		values (1, 1), (1, 2), (3, 1), (3, 2), (3, 3);
         
 	insert into user_topic_article_note (user_id, topic_id, article_id, note_id)
 		values
 			(1, 1, 1, 1),
             (2, 3, 1, 3),
-            (2, 3, 2, 2);
+            (2, 3, 2, 2),
+            (2, 3, 3, 1);
             
 	set sql_safe_updates = 1;
 

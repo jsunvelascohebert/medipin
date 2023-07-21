@@ -4,8 +4,13 @@ import medipin.data.mappers.ArticleMapper;
 import medipin.data.mappers.TopicMapper;
 import medipin.models.Topic;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.PreparedStatement;
+import java.sql.Statement;
 import java.util.List;
 
 @Repository
@@ -23,22 +28,60 @@ public class TopicJdbcTemplateRepository implements TopicRepository {
     }
 
     @Override
+    @Transactional
     public Topic getById(int topicId) {
-        return null;
+        final String sql =
+                "select topic_id, `name` " +
+                "from topic " +
+                "where topic_id = ?;";
+        return jdbcTemplate.query(sql, new TopicMapper(), topicId)
+                .stream().findAny().orElse(null);
     }
 
     @Override
     public Topic add(Topic topic) {
-        return null;
+        final String sql =
+                "insert into topic " +
+                "(`name`) " +
+                "value (?);";
+
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        int rowsAffected = jdbcTemplate.update(connection -> {
+            PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            ps.setString(1, topic.getName());
+            return ps;
+        }, keyHolder);
+        if (rowsAffected <= 0) {
+            return null;
+        }
+        topic.setTopicId(keyHolder.getKey().intValue());
+        return topic;
     }
 
     @Override
     public boolean update(Topic topic) {
-        return false;
+        final String sql =
+                "update topic set " +
+                "`name` = ? " +
+                "where topic_id = ?;";
+
+        return jdbcTemplate.update(sql,
+                topic.getName(),
+                topic.getTopicId()) > 0;
     }
 
     @Override
+    @Transactional
     public boolean deleteById(int topicId) {
-        return false;
+        // delete from topic_article
+        jdbcTemplate.update("delete from topic_article where topic_id = ?;",
+                topicId);
+        // delete from user_topic
+        jdbcTemplate.update("delete from user_topic where topic_id = ?;", topicId);
+        // delete from user_topic_article_note
+        jdbcTemplate.update("delete from user_topic_article_note where topic_id = ?;", topicId);
+        // delete from topic and check size
+        return jdbcTemplate.update("delete from topic where topic_id = ?;",
+                topicId) > 0;
     }
 }

@@ -28,6 +28,7 @@ public class ArticleJdbcTemplateRepository implements ArticleRepository {
     }
 
     @Override
+    @Transactional
     public Article getById(int articleId) {
         final String sql = "select article_id, title, `description`, url, " +
                 "date_published, publisher " +
@@ -82,7 +83,14 @@ public class ArticleJdbcTemplateRepository implements ArticleRepository {
     }
 
     @Override
+    @Transactional
     public boolean deleteById(int articleId) {
+        // delete from topic_article
+        jdbcTemplate.update("delete from topic_article where article_id = ?;", articleId);
+        // delete from user_topic_article_note
+        jdbcTemplate.update("delete from user_topic_article_note where " +
+                "article_id = ?;", articleId);
+        // delete from article and check size
         final String sql =
                 "delete from article " +
                 "where article_id = ?;";
