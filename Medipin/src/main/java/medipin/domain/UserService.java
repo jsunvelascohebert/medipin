@@ -32,7 +32,7 @@ public class UserService implements UserDetailsService {
         return user;
     }
 
-    public Result<User> getByID(int userId) {
+    public Result<User> getById(int userId) {
         Result<User> result = new Result<>();
 
         User found = repository.getById(userId);
