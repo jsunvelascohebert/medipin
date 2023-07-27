@@ -118,6 +118,11 @@ public class UserService implements UserDetailsService {
     private Result<User> validate(Credentials credentials) {
         Result<User> result = new Result<>();
 
+        if (credentials == null) {
+            result.addMessage("Credentials cannot be null", ResultType.INVALID);
+            return result;
+        }
+
         if (credentials.getName() == null || credentials.getName().isBlank()) {
             result.addMessage("Name is required", ResultType.INVALID);
         }

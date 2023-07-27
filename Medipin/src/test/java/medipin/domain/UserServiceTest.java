@@ -11,31 +11,16 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.anyChar;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
 class UserServiceTest {
-
-    private List<User> users;
 
     @Autowired
     UserService service;
 
     @MockBean
     UserRepository repository;
-
-    @BeforeEach
-    void setup() {
-        users = List.of(
-                new User(1, "user one", "user1", "user1Password!",
-                        true, List.of("USER")),
-                new User(2, "user two", "user2", "user2Password!",
-                        true, List.of("USER")),
-                new User(3, "user three", "user3", "user3Password!",
-                        true, List.of("USER"))
-        );
-    }
 
     @Test
     void shouldGetByValidId() {
