@@ -18,6 +18,7 @@ public class TopicService {
     public Result<List<Topic>> getAll() {
         Result<List<Topic>> result = new Result<>();
         List<Topic> topics = repository.getAll();
+
         if (topics == null || topics.isEmpty()) {
             result.addMessage("No topics found", ResultType.NOT_FOUND);
         } else {
@@ -29,8 +30,10 @@ public class TopicService {
     public Result<Topic> getById(int topicId) {
         Result<Topic> result = new Result<>();
         Topic topic = repository.getById(topicId);
+
         if (topic == null) {
-            result.addMessage("Topic id not found", ResultType.NOT_FOUND);
+            String msg = String.format("Could not find topic with id %s", topicId);
+            result.addMessage(msg, ResultType.NOT_FOUND);
         } else {
             result.setPayload(topic);
         }

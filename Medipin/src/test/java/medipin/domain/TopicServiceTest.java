@@ -68,7 +68,8 @@ class TopicServiceTest {
         Result<Topic> result = service.getById(100);
         assertFalse(result.isSuccess());
         assertEquals(result.getType(), ResultType.NOT_FOUND);
-        assertTrue(result.getMessages().contains("Topic id not found"));
+        assertTrue(result.getMessages().contains("Could not find topic with " +
+                "id 100"));
     }
 
     @Test
