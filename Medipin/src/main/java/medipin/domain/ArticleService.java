@@ -90,7 +90,7 @@ public class ArticleService {
     }
 
     /* ***** ***** validations ***** ***** */
-    
+
     private Result<Article> validate(Article article) {
         Result<Article> result = new Result<>();
 
