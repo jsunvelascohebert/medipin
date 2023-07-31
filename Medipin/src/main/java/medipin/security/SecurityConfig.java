@@ -28,6 +28,7 @@ public class SecurityConfig {
 
         http.authorizeRequests()
                 .antMatchers(HttpMethod.GET, "/api/note").permitAll()
+                .antMatchers(HttpMethod.GET, "/api/note/*").permitAll()
                 .and()
                 .addFilter(new JwtRequestFilter(authenticationManager(authConfig),converter))
                 .sessionManagement()

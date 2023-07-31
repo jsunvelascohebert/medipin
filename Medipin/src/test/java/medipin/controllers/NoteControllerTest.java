@@ -16,7 +16,9 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
@@ -47,8 +49,11 @@ class NoteControllerTest {
 
     List<Note> notes = List.of(
             new Note(1, "note 1", LocalDateTime.parse("2023-07-23T12:34:56")),
-            new Note(2, "note 2", LocalDateTime.parse("2023-07-23T12:34:56"))
+            new Note(2, "note 2", LocalDateTime.parse("2023-07-23T12:34:56")),
+            new Note(3, "note 3", LocalDateTime.parse("2023-07-23T12:34:56"))
     );
+
+    /* ***** ***** getAll and getById tests ***** ***** */
 
     @Test
     void getAllShouldReturn200() throws Exception {
@@ -65,8 +70,97 @@ class NoteControllerTest {
     }
 
     @Test
-    void findAllShouldReturn404() throws Exception {
+    void getAllShouldReturn404() throws Exception {
+        when(repository.getAll()).thenReturn(null);
+        mvc.perform(get("/api/note"))
+                .andExpect(status().isNotFound());
 
+        when(repository.getAll()).thenReturn(new ArrayList<>());
+        mvc.perform(get("/api/note"))
+                .andExpect(status().isNotFound());
     }
+
+    @Test
+    void getByIdShouldReturn200() throws Exception {
+        Note expectedNote = new Note(1, "note 1", LocalDateTime.parse("2023" +
+                "-07-23T12:34:56"));
+        when(repository.getById(1)).thenReturn(expectedNote);
+        ObjectMapper jsonMapper = new ObjectMapper();
+        jsonMapper.registerModule(new JavaTimeModule());
+
+        String expected = jsonMapper.writeValueAsString(expectedNote);
+
+        mvc.perform(get("/api/note/1"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(content().json(expected));
+    }
+
+    /* ***** ***** validation and add tests ***** ***** */
+
+    @Test
+    void validationCatchesShouldReturn400() throws Exception {
+        ObjectMapper jsonMapper = new ObjectMapper();
+        jsonMapper.registerModule(new JavaTimeModule());
+
+        var request = post("/api/note")
+                .contentType(MediaType.APPLICATION_JSON);
+
+        mvc.perform(request).andExpect(status().isBadRequest());
+
+        Note note = new Note(0, null, null);
+        String jsonIn = jsonMapper.writeValueAsString(note);
+
+        request = post("/api/note")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(jsonIn);
+
+        mvc.perform(request).andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void successfulAddShouldReturn201() throws Exception {
+        Note noteIn = new Note(0, "test", LocalDateTime.parse("2023" +
+                "-07-23T12:34:56"));
+        Note noteOut = new Note(1, "test", LocalDateTime.parse("2023" +
+                "-07-23T12:34:56"));
+
+        when(repository.add(noteIn)).thenReturn(noteOut);
+
+        ObjectMapper jsonMapper = new ObjectMapper();
+        jsonMapper.registerModule(new JavaTimeModule());
+
+        String jsonIn = jsonMapper.writeValueAsString(noteIn);
+        String jsonOut = jsonMapper.writeValueAsString(noteOut);
+
+        var request = post("/api/note")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(jsonIn);
+
+        mvc.perform(request)
+                .andExpect(status().isCreated())
+                .andExpect(content().json(jsonOut));
+    }
+
+    @Test
+    void failedAddShouldReturn400() throws Exception {
+        Note noteIn = new Note(1, "test", LocalDateTime.parse("2023" +
+                "-07-23T12:34:56"));
+
+        ObjectMapper jsonMapper = new ObjectMapper();
+        jsonMapper.registerModule(new JavaTimeModule());
+
+        String json = jsonMapper.writeValueAsString(noteIn);
+
+        var request = post("/api/note")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(json);
+
+        mvc.perform(request).andExpect(status().isBadRequest());
+    }
+
+    /* ***** ***** update tests ***** ***** */
+
+    
 
 }

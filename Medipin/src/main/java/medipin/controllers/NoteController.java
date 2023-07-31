@@ -5,10 +5,7 @@ import medipin.domain.Result;
 import medipin.models.Note;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -28,6 +25,25 @@ public class NoteController {
         Result<List<Note>> result = service.getAll();
         if (result.isSuccess()) {
             return new ResponseEntity<>(result.getPayload(), HttpStatus.OK);
+        }
+        return ErrorResponse.build(result);
+    }
+
+    @GetMapping("/{noteId}")
+    public ResponseEntity<Object> getById(@PathVariable int noteId) {
+        Result<Note> result = service.getById(noteId);
+        if (result.isSuccess()) {
+            return new ResponseEntity<>(result.getPayload(), HttpStatus.OK);
+        }
+        return ErrorResponse.build(result);
+    }
+
+    @PostMapping()
+    public ResponseEntity<Object> add(@RequestBody Note note) {
+        Result<Note> result = service.add(note);
+        if (result.isSuccess()) {
+            return new ResponseEntity<>(result.getPayload(),
+                    HttpStatus.CREATED);
         }
         return ErrorResponse.build(result);
     }
