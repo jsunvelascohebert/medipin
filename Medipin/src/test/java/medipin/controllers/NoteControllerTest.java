@@ -239,5 +239,4 @@ class NoteControllerTest {
         var request = delete("/api/note/100");
         mvc.perform(request).andExpect(status().isNotFound());
     }
-
 }
