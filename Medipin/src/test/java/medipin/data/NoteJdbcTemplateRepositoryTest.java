@@ -86,7 +86,7 @@ class NoteJdbcTemplateRepositoryTest {
 
     @Test
     void shouldNotBeAttachedToUserTopicArticleNote() {
-        assertFalse(repository.isAttachedToUserTopicArticleNote(3));
+        assertFalse(repository.isAttachedToUserTopicArticleNote(4));
     }
 
 }

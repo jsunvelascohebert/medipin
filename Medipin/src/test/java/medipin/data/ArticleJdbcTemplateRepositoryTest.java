@@ -26,6 +26,8 @@ class ArticleJdbcTemplateRepositoryTest {
         knownGoodState.set();
     }
 
+    /* ***** ***** getAll and getById tests ***** ***** */
+
     @Test
     void shouldGetAllArticles() {
         List<Article> articles = repository.getAll();
@@ -46,6 +48,8 @@ class ArticleJdbcTemplateRepositoryTest {
         assertNull(article);
     }
 
+    /* ***** ***** add tests ***** ***** */
+
     @Test
     void shouldAddValidArticle() {
         Article article = new Article(0, "Test add",
@@ -58,6 +62,8 @@ class ArticleJdbcTemplateRepositoryTest {
         assertNotNull(result);
         assertTrue(result.getArticleId() > 0);
     }
+
+    /* ***** ***** update tests ***** ***** */
 
     @Test
     void shouldUpdateValidArticle() {
@@ -88,6 +94,8 @@ class ArticleJdbcTemplateRepositoryTest {
                 "update publisher test");
         assertFalse(repository.update(article));
     }
+
+    /* ***** ***** delete tests ***** ***** */
 
     @Test
     void shouldDeleteExistingUnattachedArticle() {

@@ -107,6 +107,10 @@ values (2, 2);
 delete from user_topic
 where user_id = 2 and topic_id = 1;
 
+select count(*)
+from user_topic
+where topic_id = 1;
+
 -- ----- ----- topic_article queries ----- ----- --
 
 select topic_id, article_id 

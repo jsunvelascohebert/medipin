@@ -24,6 +24,8 @@ class TopicJdbcTemplateRepositoryTest {
         knownGoodState.set();
     }
 
+    /* ***** ***** getAll and getById tests ***** ***** */
+
     @Test
     void shouldGetAllTopics() {
         List<Topic> topics = repository.getAll();
@@ -44,6 +46,8 @@ class TopicJdbcTemplateRepositoryTest {
         assertNull(topic);
     }
 
+    /* ***** ***** add tests ***** ***** */
+
     @Test
     void shouldAddValidTopic() {
         Topic topic = new Topic(0, "Testing Add in Java");
@@ -51,6 +55,8 @@ class TopicJdbcTemplateRepositoryTest {
         assertNotNull(result);
         assertTrue(result.getTopicId() > 0);
     }
+
+    /* ***** ***** update tests ***** ***** */
 
     @Test
     void shouldUpdateValidTopic() {
@@ -64,13 +70,45 @@ class TopicJdbcTemplateRepositoryTest {
         assertFalse(repository.update(topic));
     }
 
+    /* ***** ***** delete tests ***** ***** */
+
     @Test
-    void shouldDeleteExistingTopic() {
-        assertTrue(repository.deleteById(3));
+    void shouldDeleteExistingUnattachedTopic() {
+        assertTrue(repository.deleteById(4));
     }
 
     @Test
     void shouldNotDeleteMissingTopic() {
         assertFalse(repository.deleteById(100));
+    }
+
+    @Test
+    void shouldBeAttachedToUserTopic() {
+        assertTrue(repository.isAttachedToUserTopic(1));
+    }
+
+    @Test
+    void shouldNotBeAttachedToUserTopic() {
+        assertFalse(repository.isAttachedToUserTopic(4));
+    }
+
+    @Test
+    void shouldBeAttachedToTopicArticle() {
+        assertTrue(repository.isAttachedToTopicArticle(1));
+    }
+
+    @Test
+    void shouldNotBeAttachedToTopicArticle() {
+        assertFalse(repository.isAttachedToTopicArticle(4));
+    }
+
+    @Test
+    void shouldBeAttachedToUTAN() {
+        assertTrue(repository.isAttachedToUTAN(1));
+    }
+
+    @Test
+    void shouldNotBeAttachedToUTAN() {
+        assertFalse(repository.isAttachedToUTAN(4));
     }
 }

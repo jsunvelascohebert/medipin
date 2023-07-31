@@ -73,15 +73,52 @@ public class TopicJdbcTemplateRepository implements TopicRepository {
     @Override
     @Transactional
     public boolean deleteById(int topicId) {
-        // delete from topic_article
-        jdbcTemplate.update("delete from topic_article where topic_id = ?;",
-                topicId);
-        // delete from user_topic
-        jdbcTemplate.update("delete from user_topic where topic_id = ?;", topicId);
-        // delete from user_topic_article_note
-        jdbcTemplate.update("delete from user_topic_article_note where topic_id = ?;", topicId);
-        // delete from topic and check size
         return jdbcTemplate.update("delete from topic where topic_id = ?;",
                 topicId) > 0;
+    }
+
+    @Override
+    @Transactional
+    public boolean isAttachedToUserTopic(int topicId) {
+        final String sql = """
+                select count(*)
+                from user_topic
+                where topic_id = ?;""";
+
+        try {
+            return jdbcTemplate.queryForObject(sql, Integer.class, topicId) > 0;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    @Override
+    @Transactional
+    public boolean isAttachedToTopicArticle(int topicId) {
+        final String sql = """
+                select count(*)
+                from topic_article
+                where topic_id = ?;""";
+
+        try {
+            return jdbcTemplate.queryForObject(sql, Integer.class, topicId) > 0;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    @Override
+    @Transactional
+    public boolean isAttachedToUTAN(int topicId) {
+        final String sql = """
+                select count(*)
+                from user_topic_article_note
+                where topic_id = ?;""";
+
+        try {
+            return jdbcTemplate.queryForObject(sql, Integer.class, topicId) > 0;
+        } catch (Exception e) {
+            return false;
+        }
     }
 }

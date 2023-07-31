@@ -143,7 +143,7 @@ begin
             ('another test', 'another@test.com', '$2a$10$ntB7CsRKQzuLoKY3rfoAQen5nNyiC/U60wBsWnnYrtQQi8Z3IZzQa', 1);
             
     insert into topic (`name`)
-		values ('Personal'), ('Partner'), ('Friend');
+		values ('Personal'), ('Partner'), ('Friend'), ('Other');
 	
     insert into article (title, `description`, url)
 		values 
