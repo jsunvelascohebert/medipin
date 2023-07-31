@@ -8,6 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -38,7 +39,7 @@ class NoteJdbcTemplateRepositoryTest {
         assertEquals(note.getNoteId(), 1);
         assertEquals(note.getText(), "note 1");
         assertEquals(note.getDatetimeMade(),
-                Timestamp.valueOf("2023-07-19 12:34:56"));
+                LocalDateTime.parse("2023-07-19T12:34:56"));
     }
 
     @Test
@@ -50,7 +51,7 @@ class NoteJdbcTemplateRepositoryTest {
     @Test
     void shouldAddValidNote() {
         Note note = new Note(0, "Testing add in java",
-                Timestamp.valueOf("2023-07-22 12:34:56"));
+                LocalDateTime.parse("2023-07-23T12:34:56"));
         Note result = repository.add(note);
         assertNotNull(result);
         assertTrue(result.getNoteId() > 0);
@@ -59,14 +60,14 @@ class NoteJdbcTemplateRepositoryTest {
     @Test
     void shouldUpdateValidNote() {
         Note note = new Note(2, "Testing update in java",
-                Timestamp.valueOf("2023-07-23 12:34:56"));
+                LocalDateTime.parse("2023-07-23T12:34:56"));
         assertTrue(repository.update(note));
     }
 
     @Test
     void shouldNotUpdateMissingNote() {
         Note note = new Note(100, "Testing update on missing note",
-                Timestamp.valueOf("2023-07-23 12:34:56"));
+                LocalDateTime.parse("2023-07-23T12:34:56"));
         assertFalse(repository.update(note));
     }
 
@@ -79,6 +80,5 @@ class NoteJdbcTemplateRepositoryTest {
     void shouldNotDeleteByMissingNote() {
         assertFalse(repository.deleteByID(100));
     }
-
 
 }

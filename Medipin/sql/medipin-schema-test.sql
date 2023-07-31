@@ -34,7 +34,7 @@ create table article (
 create table note (
 	note_id int primary key auto_increment,
     `text` varchar(255) not null,
-    datetime_made datetime not null
+    datetime_made timestamp not null
 );
 
 -- ----- ----- bridge tables ----- ----- --
@@ -153,9 +153,9 @@ begin
         
 	insert into note (`text`, datetime_made)
 		values
-        ('note 1', '2023-07-19 12:34:56'),
-        ('note 2', '2023-07-20 12:34:56'),
-        ('note 3', '2023-07-21 12:34:56');
+        ('note 1', '2023-07-23T12:34:56'),
+        ('note 2', '2023-07-23T12:34:56'),
+        ('note 3', '2023-07-23T12:34:56');
     
     -- populate test data for bridge tables --
     

@@ -50,7 +50,7 @@ public class NoteJdbcTemplateRepository implements NoteRepository {
             PreparedStatement ps = connection.prepareStatement(sql,
                     Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, note.getText());
-            ps.setTimestamp(2, note.getDatetimeMade());
+            ps.setObject(2, note.getDatetimeMade());
             return ps;
         }, keyHolder);
         if (rowsAffected <= 0) {

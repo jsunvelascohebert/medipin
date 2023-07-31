@@ -34,7 +34,7 @@ create table article (
 create table note (
 	note_id int primary key auto_increment,
     `text` varchar(255) not null,
-    datetime_made datetime not null
+    datetime_made timestamp not null
 );
 
 -- ----- ----- bridge tables ----- ----- --

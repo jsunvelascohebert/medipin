@@ -8,6 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,8 +27,8 @@ class NoteServiceTest {
     @Test
     void shouldFindAllNotes() {
         List<Note> notes = List.of(
-            new Note(1, "note 1", Timestamp.valueOf("2023-07-23 12:34:56")),
-            new Note(2, "note 2", Timestamp.valueOf("2023-07-24 12:34:56"))
+            new Note(1, "note 1", LocalDateTime.parse("2023-07-23T12:34:56")),
+            new Note(2, "note 2", LocalDateTime.parse("2023-07-23T12:34:56"))
         );
 
         when(repository.getAll()).thenReturn(notes);
@@ -54,7 +55,7 @@ class NoteServiceTest {
     @Test
     void shouldGetByValidId() {
         Note note = new Note(1, "note 1",
-                Timestamp.valueOf("2023-07-23 12:34:56"));
+                LocalDateTime.parse("2023-07-23T12:34:56"));
         when(repository.getById(1)).thenReturn(note);
 
         Result<Note> result = service.getById(1);
@@ -99,9 +100,9 @@ class NoteServiceTest {
     @Test
     void shouldAddValidNote() {
         Note note = new Note(0, "note 1",
-                Timestamp.valueOf("2023-07-23 12:34:56"));
+                LocalDateTime.parse("2023-07-23T12:34:56"));
         Note expected = new Note(1, "note 1",
-                Timestamp.valueOf("2023-07-23 12:34:56"));
+                LocalDateTime.parse("2023-07-23T12:34:56"));
         when(repository.add(note)).thenReturn(expected);
 
         Result<Note> result = service.add(note);
@@ -112,7 +113,7 @@ class NoteServiceTest {
     @Test
     void shouldNotAddInvalidNote() {
         Note note = new Note(1, "note 1",
-                Timestamp.valueOf("2023-07-23 12:34:56"));
+                LocalDateTime.parse("2023-07-23T12:34:56"));
         Result<Note> result = service.add(note);
         assertFalse(result.isSuccess());
         assertEquals(result.getType(), ResultType.INVALID);
@@ -123,7 +124,7 @@ class NoteServiceTest {
     @Test
     void shouldUpdateValidNote() {
         Note note = new Note(1, "note 1",
-                Timestamp.valueOf("2023-07-23 12:34:56"));
+                LocalDateTime.parse("2023-07-23T12:34:56"));
         when(repository.update(note)).thenReturn(true);
         Result<Note> result = service.update(note);
         assertTrue(result.isSuccess());
@@ -133,7 +134,7 @@ class NoteServiceTest {
     void shouldNotUpdateInvalidNote() {
         // invalid id
         Note note = new Note(-1, "note 1",
-                Timestamp.valueOf("2023-07-23 12:34:56"));
+                LocalDateTime.parse("2023-07-23T12:34:56"));
         Result<Note> result = service.update(note);
         assertFalse(result.isSuccess());
         assertEquals(result.getType(), ResultType.INVALID);
@@ -142,7 +143,7 @@ class NoteServiceTest {
 
         // missing note
         note = new Note(100, "note 1",
-                Timestamp.valueOf("2023-07-23 12:34:56"));
+                LocalDateTime.parse("2023-07-23T12:34:56"));
         when(repository.update(note)).thenReturn(false);
         result = service.update(note);
         assertFalse(result.isSuccess());

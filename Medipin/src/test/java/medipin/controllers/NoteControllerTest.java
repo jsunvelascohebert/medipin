@@ -1,0 +1,72 @@
+package medipin.controllers;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import medipin.data.NoteRepository;
+import medipin.models.Note;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
+import org.springframework.http.MediaType;
+import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
+import org.springframework.test.web.servlet.MockMvc;
+
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.when;
+
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
+import org.springframework.context.annotation.Import;
+
+@SpringJUnitConfig
+@AutoConfigureMockMvc
+@SpringBootTest
+@Import(TestConfig.class)
+class NoteControllerTest {
+
+    @MockBean
+    NoteRepository repository;
+
+    @Autowired
+    MockMvc mvc;
+
+    List<Note> notes = List.of(
+            new Note(1, "note 1", LocalDateTime.parse("2023-07-23T12:34:56")),
+            new Note(2, "note 2", LocalDateTime.parse("2023-07-23T12:34:56"))
+    );
+
+    @Test
+    void getAllShouldReturn200() throws Exception {
+        when(repository.getAll()).thenReturn(notes);
+        ObjectMapper jsonMapper = new ObjectMapper();
+        jsonMapper.registerModule(new JavaTimeModule());
+
+        String expected = jsonMapper.writeValueAsString(notes);
+
+        mvc.perform(get("/api/note"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(content().json(expected, true));
+    }
+
+    @Test
+    void findAllShouldReturn404() throws Exception {
+
+    }
+
+}

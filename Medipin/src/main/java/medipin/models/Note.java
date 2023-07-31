@@ -1,16 +1,21 @@
 package medipin.models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class Note {
     private int noteId;
     private String text;
-    private Timestamp datetimeMade;
+
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    private LocalDateTime datetimeMade;
 
     public Note() {};
 
-    public Note(int noteId, String text, Timestamp datetimeMade) {
+    public Note(int noteId, String text, LocalDateTime datetimeMade) {
         this.noteId = noteId;
         this.text = text;
         this.datetimeMade = datetimeMade;
@@ -32,11 +37,11 @@ public class Note {
         this.text = text;
     }
 
-    public Timestamp getDatetimeMade() {
+    public LocalDateTime getDatetimeMade() {
         return datetimeMade;
     }
 
-    public void setDatetimeMade(Timestamp datetimeMade) {
+    public void setDatetimeMade(LocalDateTime datetimeMade) {
         this.datetimeMade = datetimeMade;
     }
 
