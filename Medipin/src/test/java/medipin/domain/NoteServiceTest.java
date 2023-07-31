@@ -160,6 +160,17 @@ class NoteServiceTest {
     }
 
     @Test
+    void shouldNotDeleteExistingAttachedToUTAN() {
+        when(repository.isAttachedToUserTopicArticleNote(1)).thenReturn(true);
+        when(repository.deleteByID(1)).thenReturn(false);
+        Result<Note> result = service.deleteById(1);
+        assertFalse(result.isSuccess());
+        assertEquals(result.getType(), ResultType.INVALID);
+        assertTrue(result.getMessages().contains("Cannot delete Note with id " +
+                "1 attached to a UserTopicArticleNote"));
+    }
+
+    @Test
     void shouldNotDeleteMissingId() {
         when(repository.deleteByID(100)).thenReturn(false);
         Result<Note> result = service.deleteById(100);

@@ -118,3 +118,7 @@ select * from topic_article;
 -- ----- ----- user_topic_article_note queries ----- ----- --
 
 select * from user_topic_article_note;
+
+select count(*)
+from user_topic_article_note
+where note_id = 2;

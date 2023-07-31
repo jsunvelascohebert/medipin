@@ -14,4 +14,5 @@ public interface UserTopicRepository {
 
     @Transactional
     boolean deleteByKey(int userId, int topicId);
+
 }

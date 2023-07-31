@@ -226,6 +226,14 @@ class NoteControllerTest {
     }
 
     @Test
+    void failedDeleteAttachedToUTANShouldReturn400() throws Exception {
+        when(repository.isAttachedToUserTopicArticleNote(1)).thenReturn(true);
+        when(repository.deleteByID(1)).thenReturn(false);
+        var request = delete("/api/note/1");
+        mvc.perform(request).andExpect(status().isBadRequest());
+    }
+
+    @Test
     void failedDeleteShouldReturn404() throws Exception {
         when(repository.deleteByID(100)).thenReturn(false);
         var request = delete("/api/note/100");

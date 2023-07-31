@@ -17,4 +17,7 @@ public interface NoteRepository {
 
     @Transactional
     boolean deleteByID(int noteId);
+
+    @Transactional
+    boolean isAttachedToUserTopicArticleNote(int noteId);
 }

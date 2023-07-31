@@ -72,13 +72,23 @@ class NoteJdbcTemplateRepositoryTest {
     }
 
     @Test
-    void shouldDeleteByExistingNote() {
+    void shouldDeleteExistingAndNotInUserTopicArticleNote() {
         assertTrue(repository.deleteByID(3));
     }
 
     @Test
     void shouldNotDeleteByMissingNote() {
         assertFalse(repository.deleteByID(100));
+    }
+
+    @Test
+    void shouldBeAttachedToUserTopicArticleNote() {
+        assertTrue(repository.isAttachedToUserTopicArticleNote(2));
+    }
+
+    @Test
+    void shouldNotBeAttachedToUserTopicArticleNote() {
+        assertFalse(repository.isAttachedToUserTopicArticleNote(3));
     }
 
 }

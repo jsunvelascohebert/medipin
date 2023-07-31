@@ -77,7 +77,18 @@ public class NoteService {
     }
 
     public Result<Note> deleteById(int noteId) {
+
+        boolean isInUserTopicArticleNote =
+                repository.isAttachedToUserTopicArticleNote(noteId);
+
         Result<Note> result = new Result<>();
+        if (isInUserTopicArticleNote) {
+            String msg = String.format("Cannot delete Note with id %s " +
+                    "attached to a UserTopicArticleNote", noteId);
+            result.addMessage(msg, ResultType.INVALID);
+            return result;
+        }
+
         boolean response = repository.deleteByID(noteId);
         if (!response) {
             String msg = String.format("Note id %s not found, cannot delete", noteId);

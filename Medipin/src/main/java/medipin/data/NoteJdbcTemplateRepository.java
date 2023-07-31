@@ -84,4 +84,18 @@ public class NoteJdbcTemplateRepository implements NoteRepository {
         return jdbcTemplate.update("delete from note where note_id = ?;",
                 noteId) > 0;
     }
+
+    @Override
+    public boolean isAttachedToUserTopicArticleNote(int noteId) {
+        final String sql = """
+                select count(*)
+                from user_topic_article_note
+                where note_id = ?;""";
+
+        try {
+            return jdbcTemplate.queryForObject(sql, Integer.class, noteId) > 0;
+        } catch (Exception e) {
+            return false;
+        }
+    }
 }
