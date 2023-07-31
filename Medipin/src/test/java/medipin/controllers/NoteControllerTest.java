@@ -14,26 +14,15 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
-import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
-import org.springframework.context.annotation.Import;
 
 @SpringJUnitConfig
 @AutoConfigureMockMvc
@@ -161,6 +150,86 @@ class NoteControllerTest {
 
     /* ***** ***** update tests ***** ***** */
 
-    
+    @Test
+    void successfulUpdateShouldReturn204() throws Exception {
+        Note noteIn = new Note(1, "test", LocalDateTime.parse("2023" +
+                "-07-23T12:34:56"));
+        ObjectMapper jsonMapper = new ObjectMapper();
+        jsonMapper.registerModule(new JavaTimeModule());
+
+        String json = jsonMapper.writeValueAsString(noteIn);
+        when(repository.update(noteIn)).thenReturn(true);
+
+        var request = put("/api/note/1")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(json);
+
+        mvc.perform(request).andExpect(status().isNoContent());
+    }
+
+    @Test
+    void conflictedUpdateShouldReturn409() throws Exception {
+        Note noteIn = new Note(1, "test", LocalDateTime.parse("2023" +
+                "-07-23T12:34:56"));
+        ObjectMapper jsonMapper = new ObjectMapper();
+        jsonMapper.registerModule(new JavaTimeModule());
+
+        String json = jsonMapper.writeValueAsString(noteIn);
+
+        var request = put("/api/note/100")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(json);
+
+        mvc.perform(request).andExpect(status().isConflict());
+    }
+
+    @Test
+    void invalidUpdateShouldReturn401() throws Exception {
+        Note noteIn = new Note(0, "test", LocalDateTime.parse("2023" +
+                "-07-23T12:34:56"));
+        ObjectMapper jsonMapper = new ObjectMapper();
+        jsonMapper.registerModule(new JavaTimeModule());
+
+        String json = jsonMapper.writeValueAsString(noteIn);
+
+        var request = put("/api/note/0")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(json);
+
+        mvc.perform(request).andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void invalidUpdateShouldReturn404() throws Exception {
+        Note noteIn = new Note(1, "test", LocalDateTime.parse("2023" +
+                "-07-23T12:34:56"));
+        ObjectMapper jsonMapper = new ObjectMapper();
+        jsonMapper.registerModule(new JavaTimeModule());
+
+        String json = jsonMapper.writeValueAsString(noteIn);
+
+        when(repository.update(noteIn)).thenReturn(false);
+        var request = put("/api/note/1")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(json);
+
+        mvc.perform(request).andExpect(status().isNotFound());
+    }
+
+    /* ***** ***** deleteById tests ***** ***** */
+
+    @Test
+    void successfulDeleteShouldReturn204() throws Exception {
+        when(repository.deleteByID(1)).thenReturn(true);
+        var request = delete("/api/note/1");
+        mvc.perform(request).andExpect(status().isNoContent());
+    }
+
+    @Test
+    void failedDeleteShouldReturn404() throws Exception {
+        when(repository.deleteByID(100)).thenReturn(false);
+        var request = delete("/api/note/100");
+        mvc.perform(request).andExpect(status().isNotFound());
+    }
 
 }

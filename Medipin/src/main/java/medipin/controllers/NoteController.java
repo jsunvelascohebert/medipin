@@ -47,4 +47,27 @@ public class NoteController {
         }
         return ErrorResponse.build(result);
     }
+
+    @PutMapping("/{noteId}")
+    public ResponseEntity<Object> update(@PathVariable int noteId,
+                                         @RequestBody Note note) {
+        if (noteId != note.getNoteId()) {
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
+
+        Result<Note> result = service.update(note);
+        if (result.isSuccess()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return ErrorResponse.build(result);
+    }
+
+    @DeleteMapping("/{noteId}")
+    public ResponseEntity<Object> deleteById(@PathVariable int noteId) {
+        Result<Note> result = service.deleteById(noteId);
+        if (result.isSuccess()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return ErrorResponse.build(result);
+    }
 }
