@@ -1,6 +1,7 @@
 package medipin.data;
 
 import medipin.data.mappers.UserTopicArticleNoteMapper;
+import medipin.models.UserTopic;
 import medipin.models.UserTopicArticleNote;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
