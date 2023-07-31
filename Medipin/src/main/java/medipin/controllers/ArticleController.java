@@ -1,8 +1,8 @@
 package medipin.controllers;
 
-import medipin.domain.NoteService;
+import medipin.domain.ArticleService;
 import medipin.domain.Result;
-import medipin.models.Note;
+import medipin.models.Article;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,27 +11,27 @@ import java.util.List;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/api/note")
-public class NoteController {
+@RequestMapping("/api/article")
+public class ArticleController {
 
-    private final NoteService service;
+    private final ArticleService service;
 
-    public NoteController(NoteService service) {
+    public ArticleController(ArticleService service) {
         this.service = service;
     }
 
     @GetMapping
     public ResponseEntity<Object> getAll() {
-        Result<List<Note>> result = service.getAll();
+        Result<List<Article>> result = service.getAll();
         if (result.isSuccess()) {
             return new ResponseEntity<>(result.getPayload(), HttpStatus.OK);
         }
         return ErrorResponse.build(result);
     }
 
-    @GetMapping("/{noteId}")
-    public ResponseEntity<Object> getById(@PathVariable int noteId) {
-        Result<Note> result = service.getById(noteId);
+    @GetMapping("/{articleId}")
+    public ResponseEntity<Object> getById(@PathVariable int articleId) {
+        Result<Article> result = service.getById(articleId);
         if (result.isSuccess()) {
             return new ResponseEntity<>(result.getPayload(), HttpStatus.OK);
         }
@@ -39,8 +39,8 @@ public class NoteController {
     }
 
     @PostMapping
-    public ResponseEntity<Object> add(@RequestBody Note note) {
-        Result<Note> result = service.add(note);
+    public ResponseEntity<Object> add(@RequestBody Article article) {
+        Result<Article> result = service.add(article);
         if (result.isSuccess()) {
             return new ResponseEntity<>(result.getPayload(),
                     HttpStatus.CREATED);
@@ -48,23 +48,23 @@ public class NoteController {
         return ErrorResponse.build(result);
     }
 
-    @PutMapping("/{noteId}")
-    public ResponseEntity<Object> update(@PathVariable int noteId,
-                                         @RequestBody Note note) {
-        if (noteId != note.getNoteId()) {
+    @PutMapping("/{articleId}")
+    public ResponseEntity<Object> update(@PathVariable int articleId,
+                                         @RequestBody Article article) {
+        if (articleId != article.getArticleId()) {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
 
-        Result<Note> result = service.update(note);
+        Result<Article> result = service.update(article);
         if (result.isSuccess()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return ErrorResponse.build(result);
     }
 
-    @DeleteMapping("/{noteId}")
-    public ResponseEntity<Object> deleteById(@PathVariable int noteId) {
-        Result<Note> result = service.deleteById(noteId);
+    @DeleteMapping("/{articleId}")
+    public ResponseEntity<Object> deleteById(@PathVariable int articleId) {
+        Result<Article> result = service.deleteById(articleId);
         if (result.isSuccess()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }

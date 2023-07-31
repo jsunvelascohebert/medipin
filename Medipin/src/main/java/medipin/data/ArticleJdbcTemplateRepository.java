@@ -8,6 +8,7 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.util.List;
@@ -51,7 +52,7 @@ public class ArticleJdbcTemplateRepository implements ArticleRepository {
             ps.setString(1, article.getTitle());
             ps.setString(2, article.getDescription());
             ps.setString(3, article.getUrl());
-            ps.setDate(4, article.getDatePublished());
+            ps.setDate(4, Date.valueOf(article.getDatePublished()));
             ps.setString(5, article.getPublisher());
             return ps;
         }, keyHolder);

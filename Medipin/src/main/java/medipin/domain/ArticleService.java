@@ -2,7 +2,6 @@ package medipin.domain;
 
 import medipin.data.ArticleRepository;
 import medipin.models.Article;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

@@ -1,6 +1,6 @@
 package medipin.models;
 
-import java.sql.Date;
+import java.time.LocalDate;
 import java.util.Objects;
 
 public class Article {
@@ -9,12 +9,13 @@ public class Article {
     private String title;
     private String description;
     private String url;
-    private Date datePublished;
+    private LocalDate datePublished;
     private String publisher;
 
     public Article() {}
 
-    public Article(int articleId, String title, String description, String url, Date datePublished, String publisher) {
+    public Article(int articleId, String title, String description,
+                   String url, LocalDate datePublished, String publisher) {
         this.articleId = articleId;
         this.title = title;
         this.description = description;
@@ -55,11 +56,11 @@ public class Article {
         this.url = url;
     }
 
-    public Date getDatePublished() {
+    public LocalDate getDatePublished() {
         return datePublished;
     }
 
-    public void setDatePublished(Date datePublished) {
+    public void setDatePublished(LocalDate datePublished) {
         this.datePublished = datePublished;
     }
 

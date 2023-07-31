@@ -8,6 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,7 +28,7 @@ class ArticleServiceTest {
     void shouldFindAllArticles() {
         List<Article> articles = List.of(
             new Article(1, "test", "testing article", "http://test.com",
-                    Date.valueOf("2023-10-20"), null)
+                    LocalDate.of(2023, 7, 31), null)
         );
 
         when(repository.getAll()).thenReturn(articles);
@@ -54,7 +55,7 @@ class ArticleServiceTest {
     @Test
     void shouldFindByValidId() {
         Article article = new Article(1, "test", "testing article",
-                "http://test.com", Date.valueOf("2023-10-20"), null);
+                "http://test.com", LocalDate.of(2023, 7, 31), null);
         when(repository.getById(1)).thenReturn(article);
 
         Result<Article> result = service.getById(1);
@@ -94,9 +95,9 @@ class ArticleServiceTest {
     @Test
     void shouldAddValidArticle() {
         Article article = new Article(0, "test", "testing article",
-                "http://test.com", Date.valueOf("2023-10-20"), null);
+                "http://test.com", LocalDate.of(2023, 7, 31), null);
         Article expected = new Article(1, "test", "testing article",
-                "http://test.com", Date.valueOf("2023-10-20"), null);
+                "http://test.com", LocalDate.of(2023, 7, 31), null);
         when(repository.add(article)).thenReturn(expected);
 
         Result<Article> result = service.add(article);
@@ -107,7 +108,7 @@ class ArticleServiceTest {
     @Test
     void shouldNotAddInvalidArticleId() {
         Article article = new Article(1, "test", "testing article",
-                "http://test.com", Date.valueOf("2023-10-20"), null);
+                "http://test.com", LocalDate.of(2023, 7, 31), null);
         Result<Article> result = service.add(article);
         assertFalse(result.isSuccess());
         assertEquals(result.getType(), ResultType.INVALID);
@@ -118,7 +119,7 @@ class ArticleServiceTest {
     @Test
     void shouldUpdateValidArticle() {
         Article article = new Article(1, "test", "testing article",
-                "http://test.com", Date.valueOf("2023-10-20"), null);
+                "http://test.com", LocalDate.of(2023, 7, 31), null);
         when(repository.update(article)).thenReturn(true);
         Result<Article> result = service.update(article);
         assertTrue(result.isSuccess());
@@ -128,7 +129,7 @@ class ArticleServiceTest {
     void shouldNotUpdateInvalidArticle() {
         // invalid id
         Article article = new Article(-1, "test", "testing article",
-                "http://test.com", Date.valueOf("2023-10-20"), null);
+                "http://test.com", LocalDate.of(2023, 7, 31), null);
         Result<Article> result = service.update(article);
         assertFalse(result.isSuccess());
         assertEquals(result.getType(), ResultType.INVALID);
@@ -137,7 +138,7 @@ class ArticleServiceTest {
 
         // missing id
         article = new Article(100, "test", "testing article",
-                "http://test.com", Date.valueOf("2023-10-20"), null);
+                "http://test.com", LocalDate.of(2023, 7, 31), null);
         when(repository.update(article)).thenReturn(false);
         result = service.update(article);
         assertFalse(result.isSuccess());

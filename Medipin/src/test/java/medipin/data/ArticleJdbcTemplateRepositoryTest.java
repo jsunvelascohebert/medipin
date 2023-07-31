@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -50,7 +51,7 @@ class ArticleJdbcTemplateRepositoryTest {
         Article article = new Article(0, "Test add",
                 "Testing description",
                 "http://www.test.com/testing/article",
-                Date.valueOf("2023-07-19"),
+                LocalDate.of(2023, 7, 31),
                 "Test Publisher");
 
         Article result = repository.add(article);
@@ -63,7 +64,7 @@ class ArticleJdbcTemplateRepositoryTest {
         Article article = new Article(2, "Test Update",
                 "Update Testing",
                 "http://updatetesting.com",
-                Date.valueOf("2023-10-20"),
+                LocalDate.of(2023, 7, 31),
                 "update publisher test");
         boolean result = repository.update(article);
         assertTrue(result); // manually tested update in database
@@ -83,7 +84,7 @@ class ArticleJdbcTemplateRepositoryTest {
         Article article = new Article(100, "Test Update",
                 "Update Testing",
                 "http://updatetesting.com",
-                Date.valueOf("2023-10-20"),
+                LocalDate.of(2023, 7, 31),
                 "update publisher test");
         assertFalse(repository.update(article));
     }

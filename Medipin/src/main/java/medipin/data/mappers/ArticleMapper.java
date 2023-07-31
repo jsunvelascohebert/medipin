@@ -6,6 +6,9 @@ import org.springframework.jdbc.core.RowMapper;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import java.sql.Date;
+import java.time.LocalDate;
+
 public class ArticleMapper implements RowMapper<Article> {
     @Override
     public Article mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -14,7 +17,10 @@ public class ArticleMapper implements RowMapper<Article> {
         article.setTitle(rs.getString("title"));
         article.setDescription(rs.getString("description"));
         article.setUrl(rs.getString("url"));
-        article.setDatePublished(rs.getDate("date_published"));
+        Date datePublished = rs.getObject("date_published", Date.class);
+        if (datePublished != null) {
+            article.setDatePublished(datePublished.toLocalDate());
+        }
         article.setPublisher(rs.getString("publisher"));
         return article;
     }
