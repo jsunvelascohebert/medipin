@@ -54,7 +54,7 @@ public class AuthController {
         return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
     }
 
-    @PostMapping("/refresh token")
+    @PostMapping("/refresh_token")
     public ResponseEntity<Object> refreshToken(@AuthenticationPrincipal User user){
         return new ResponseEntity<>(makeUserTokenMap(user), HttpStatus.OK);
     }
