@@ -80,7 +80,20 @@ public class TopicService {
     }
 
     public Result<Topic> deleteById(int topicId) {
+
+        boolean inUserTopic = repository.isAttachedToUserTopic(topicId);
+        boolean inTopicArticle = repository.isAttachedToTopicArticle(topicId);
+        boolean inUTAN = repository.isAttachedToUTAN(topicId);
+
         Result<Topic> result = new Result<>();
+        if (inUserTopic || inTopicArticle || inUTAN) {
+            String msg = String.format("Cannot delete Topic with id %s " +
+                    "attached to a UserTopic, TopicArticle, or " +
+                    "UserTopicArticleNote", topicId);
+            result.addMessage(msg, ResultType.INVALID);
+            return result;
+        }
+
         boolean response = repository.deleteById(topicId);
         if (!response) {
             String msg = String.format("Topic id %s not found, cannot delete", topicId);

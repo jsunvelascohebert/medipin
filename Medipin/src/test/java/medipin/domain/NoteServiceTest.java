@@ -24,8 +24,10 @@ class NoteServiceTest {
     @MockBean
     NoteRepository repository;
 
+    /* ***** ***** getAll and getId tests ***** ***** */
+
     @Test
-    void shouldFindAllNotes() {
+    void shouldGetAllNotes() {
         List<Note> notes = List.of(
             new Note(1, "note 1", LocalDateTime.parse("2023-07-23T12:34:56")),
             new Note(2, "note 2", LocalDateTime.parse("2023-07-23T12:34:56"))
@@ -72,6 +74,8 @@ class NoteServiceTest {
         assertTrue(result.getMessages().contains("Could not find note with " +
                 "id 100"));
     }
+
+    /* ***** ***** validate and add tests ***** ***** */
 
     @Test
     void shouldValidateCorrectly() {
@@ -121,6 +125,8 @@ class NoteServiceTest {
                 "of 0"));
     }
 
+    /* ***** ***** update tests ***** ***** */
+
     @Test
     void shouldUpdateValidNote() {
         Note note = new Note(1, "note 1",
@@ -151,6 +157,8 @@ class NoteServiceTest {
         assertTrue(result.getMessages().contains("Could not update missing " +
                 "note with id 100"));
     }
+
+    /* ***** ***** delete tests ***** ***** */
 
     @Test
     void shouldDeleteValidId() {

@@ -22,6 +22,8 @@ class TopicServiceTest {
     @MockBean
     TopicRepository repository;
 
+    /* ***** ***** getAll and getId tests ***** ***** */
+
     @Test
     void shouldGetAllTopics() {
         List<Topic> topics = List.of(
@@ -72,6 +74,8 @@ class TopicServiceTest {
                 "id 100"));
     }
 
+    /* ***** ***** validate and add tests ***** ***** */
+
     @Test
     void shouldAddValidTopic() {
         Topic topic = new Topic(0, "testing add");
@@ -108,6 +112,8 @@ class TopicServiceTest {
         assertTrue(result.getMessages().contains("Topic name cannot be blank"));
     }
 
+    /* ***** ***** update tests ***** ***** */
+
     @Test
     void shouldUpdateValidTopic() {
         Topic updated = new Topic(1, "valid update");
@@ -137,9 +143,26 @@ class TopicServiceTest {
                 "topic with id 1"));
     }
 
+    /* ***** ***** delete tests ***** ***** */
+
     @Test
-    void shouldDeleteByValidId() {
+    void shouldNotDeleteByExistingAttachedId() {
+        when(repository.isAttachedToTopicArticle(1)).thenReturn(true);
+        when(repository.isAttachedToUserTopic(1)).thenReturn(true);
+        when(repository.isAttachedToUTAN(1)).thenReturn(true);
+
+        Result<Topic> result = service.deleteById(1);
+        assertFalse(result.isSuccess());
+        assertEquals(result.getType(), ResultType.INVALID);
+    }
+
+    @Test
+    void shouldDeleteExistingUnattachedTopic() {
+        when(repository.isAttachedToUTAN(1)).thenReturn(false);
+        when(repository.isAttachedToUserTopic(1)).thenReturn(false);
+        when(repository.isAttachedToTopicArticle(1)).thenReturn(false);
         when(repository.deleteById(1)).thenReturn(true);
+
         Result<Topic> result = service.deleteById(1);
         assertTrue(result.isSuccess());
     }
