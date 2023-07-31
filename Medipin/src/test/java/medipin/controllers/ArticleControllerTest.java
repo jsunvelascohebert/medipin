@@ -289,5 +289,4 @@ class ArticleControllerTest {
         var request = delete("/api/article/100");
         mvc.perform(request).andExpect(status().isNotFound());
     }
-
 }
