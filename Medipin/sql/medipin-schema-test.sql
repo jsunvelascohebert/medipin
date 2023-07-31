@@ -149,13 +149,15 @@ begin
 		values 
         ('Diabetes', 'Description of diabetes', 'http://www.test.com/diabetes'),
         ('Asthma', 'Description of asthma', 'http://www.test.com/asthma'),
-        ('Allergies', 'Description of allergies', 'http://www.test.com/allergies');
+        ('Allergies', 'Description of allergies', 'http://www.test.com/allergies'),
+        ('Slay', 'Description of saly', 'http://www.test.com/slay');
         
 	insert into note (`text`, datetime_made)
 		values
         ('note 1', '2023-07-23T12:34:56'),
         ('note 2', '2023-07-23T12:34:56'),
-        ('note 3', '2023-07-23T12:34:56');
+        ('note 3', '2023-07-23T12:34:56'),
+        ('note 4', '2023-07-23T12:34:56');
     
     -- populate test data for bridge tables --
     

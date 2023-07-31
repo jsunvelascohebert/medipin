@@ -19,4 +19,10 @@ public interface ArticleRepository {
     @Transactional
     boolean deleteById(int articleId);
 
+    @Transactional
+    boolean isAttachedToTopicArticle(int articleId);
+
+    @Transactional
+    boolean isAttachedToUTAN(int articleId);
+
 }

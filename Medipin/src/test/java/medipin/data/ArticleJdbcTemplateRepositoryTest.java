@@ -13,6 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
 class ArticleJdbcTemplateRepositoryTest {
+
     @Autowired
     ArticleJdbcTemplateRepository repository;
 
@@ -88,12 +89,32 @@ class ArticleJdbcTemplateRepositoryTest {
     }
 
     @Test
-    void shouldDeleteExistingArticle() {
-        assertTrue(repository.deleteById(3));
+    void shouldDeleteExistingUnattachedArticle() {
+        assertTrue(repository.deleteById(4));
     }
 
     @Test
     void shouldNotDeleteMissingArticle() {
         assertFalse(repository.deleteById(100));
+    }
+
+    @Test
+    void shouldBeAttachedToTopicArticle() {
+        assertTrue(repository.isAttachedToTopicArticle(1));
+    }
+
+    @Test
+    void shouldNotBeAttachedToTopicArticle() {
+        assertFalse(repository.isAttachedToTopicArticle(4));
+    }
+
+    @Test
+    void shouldBeAttachedToUTAN() {
+        assertTrue(repository.isAttachedToUTAN(1));
+    }
+
+    @Test
+    void shouldNotBeAttachedToUTAN() {
+        assertFalse(repository.isAttachedToUTAN(4));
     }
 }

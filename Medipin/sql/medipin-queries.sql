@@ -122,3 +122,7 @@ select * from user_topic_article_note;
 select count(*)
 from user_topic_article_note
 where note_id = 2;
+
+select count(*)
+from topic_article
+where article_id = 4;

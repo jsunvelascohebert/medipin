@@ -85,15 +85,39 @@ public class ArticleJdbcTemplateRepository implements ArticleRepository {
     @Override
     @Transactional
     public boolean deleteById(int articleId) {
-        // delete from topic_article
-        jdbcTemplate.update("delete from topic_article where article_id = ?;", articleId);
-        // delete from user_topic_article_note
-        jdbcTemplate.update("delete from user_topic_article_note where " +
-                "article_id = ?;", articleId);
-        // delete from article and check size
         final String sql =
                 "delete from article " +
                 "where article_id = ?;";
         return jdbcTemplate.update(sql, articleId) > 0;
+    }
+
+    @Override
+    @Transactional
+    public boolean isAttachedToTopicArticle(int articleId) {
+        final String sql = """
+                select count(*)
+                from topic_article
+                where article_id = ?;""";
+
+        try {
+            return jdbcTemplate.queryForObject(sql, Integer.class, articleId) > 0;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    @Override
+    @Transactional
+    public boolean isAttachedToUTAN(int articleId) {
+        final String sql = """
+            select count(*)
+            from user_topic_article_note
+            where article_id = ?;""";
+
+        try {
+            return jdbcTemplate.queryForObject(sql, Integer.class, articleId) > 0;
+        } catch (Exception e) {
+            return false;
+        }
     }
 }

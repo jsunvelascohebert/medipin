@@ -77,15 +77,13 @@ public class NoteJdbcTemplateRepository implements NoteRepository {
     @Override
     @Transactional
     public boolean deleteByID(int noteId) {
-        // delete from user_topic_article_note
-        jdbcTemplate.update("delete from user_topic_article_note where " +
-                "note_id = ?;", noteId);
         // delete from note and check size
         return jdbcTemplate.update("delete from note where note_id = ?;",
                 noteId) > 0;
     }
 
     @Override
+    @Transactional
     public boolean isAttachedToUserTopicArticleNote(int noteId) {
         final String sql = """
                 select count(*)

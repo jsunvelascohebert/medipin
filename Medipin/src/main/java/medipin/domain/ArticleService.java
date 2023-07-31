@@ -79,7 +79,21 @@ public class ArticleService {
     }
 
     public Result<Article> deleteById(int articleId) {
+
+        boolean isInTopicArticle =
+                repository.isAttachedToTopicArticle(articleId);
+
+        boolean isInUserTopicArticleNote =
+                repository.isAttachedToUTAN(articleId);
+
         Result<Article> result = new Result<>();
+        if (isInTopicArticle || isInUserTopicArticleNote) {
+            String msg = String.format("Cannot delete Article with id %s " +
+                    "attached to either TopicArticle or UserTopicArticleNote", articleId);
+            result.addMessage(msg, ResultType.INVALID);
+            return result;
+        }
+
         boolean response = repository.deleteById(articleId);
         if (!response) {
             String msg = String.format("Article id %s not found, cannot " +

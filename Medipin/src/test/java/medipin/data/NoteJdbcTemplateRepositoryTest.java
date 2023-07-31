@@ -6,8 +6,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.sql.Time;
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -39,7 +37,7 @@ class NoteJdbcTemplateRepositoryTest {
         assertEquals(note.getNoteId(), 1);
         assertEquals(note.getText(), "note 1");
         assertEquals(note.getDatetimeMade(),
-                LocalDateTime.parse("2023-07-19T12:34:56"));
+                LocalDateTime.parse("2023-07-23T12:34:56"));
     }
 
     @Test
@@ -73,7 +71,7 @@ class NoteJdbcTemplateRepositoryTest {
 
     @Test
     void shouldDeleteExistingAndNotInUserTopicArticleNote() {
-        assertTrue(repository.deleteByID(3));
+        assertTrue(repository.deleteByID(4));
     }
 
     @Test

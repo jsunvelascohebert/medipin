@@ -162,4 +162,16 @@ class ArticleServiceTest {
         assertTrue(result.getMessages().contains("Article id 100 not found, " +
                 "cannot delete"));
     }
+
+    @Test
+    void shouldNotDeleteExistingAttachedToTopicArticleOrUTAN() {
+        when(repository.isAttachedToUTAN(1)).thenReturn(true);
+        when(repository.isAttachedToTopicArticle(1)).thenReturn(true);
+        Result<Article> result = service.deleteById(1);
+        assertFalse(result.isSuccess());
+        assertEquals(result.getType(), ResultType.INVALID);
+        assertTrue(result.getMessages().contains("Cannot delete Article with " +
+                "id 1 attached to either TopicArticle or " +
+                "UserTopicArticleNote"));
+    }
 }
