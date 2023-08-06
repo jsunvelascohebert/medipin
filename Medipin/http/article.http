@@ -1,0 +1,41 @@
+@url = http://localhost:8080/api/article
+
+### test get all
+
+GET {{url}} HTTP/1.1
+
+### test get by id
+
+GET {{url}}/5 HTTP/1.1
+
+### test post
+
+POST {{url}} HTTP/1.1
+Content-Type: application/json
+
+{
+    "articleId" : 0,
+    "title" : "test title 3",
+    "description" : "test description 3",
+    "url" : "https://www.test.com/article/3",
+    "datePublished" : "2023-07-31",
+    "publisher" : "fake publisher"
+}
+
+### test put
+
+PUT {{url}}/7 HTTP/1.1
+Content-Type: application/json
+
+{
+    "articleId" : 7,
+    "title" : "test title 6",
+    "description" : "test description 6",
+    "url" : "https://www.test.com/article/6",
+    "datePublished" : "2023-07-31",
+    "publisher" : "fake publisher"
+}
+
+### test delete
+
+DELETE {{url}}/7 HTTP/1.1
