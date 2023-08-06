@@ -15,9 +15,9 @@ Content-Type: application/json
 
 {
     "articleId" : 0,
-    "title" : "test title 3",
-    "description" : "test description 3",
-    "url" : "https://www.test.com/article/3",
+    "title" : "test article",
+    "description" : "test article",
+    "url" : "https://www.test.com/article/10",
     "datePublished" : "2023-07-31",
     "publisher" : "fake publisher"
 }

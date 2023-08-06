@@ -32,8 +32,11 @@ public class SecurityConfig {
 
                 /* TODO ***** ***** topics ***** ***** */
 
-
-
+                .antMatchers(HttpMethod.GET, "/api/topic").permitAll()
+                .antMatchers(HttpMethod.GET, "/api/topic/*").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/topic/").permitAll()
+                .antMatchers(HttpMethod.PUT, "/api/topic/*").permitAll()
+                .antMatchers(HttpMethod.DELETE, "/api/topic/*").permitAll()
 
                 /* ***** ***** articles ***** ***** */
 
