@@ -18,9 +18,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 
 @RestController
-@CrossOrigin
-@RequestMapping("/security")
-@ConditionalOnWebApplication
 public class AuthController {
 
     private final AuthenticationManager authenticationManager;
@@ -54,12 +51,39 @@ public class AuthController {
         return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
     }
 
-    @PostMapping("/refresh_token")
+    /**
+     * @PostMapping("/authenticate")
+     *     public ResponseEntity<Map<String, String>> authenticate(@RequestBody Map<String, String> credentials) {
+     *
+     *         UsernamePasswordAuthenticationToken authToken =
+     *                 new UsernamePasswordAuthenticationToken(credentials.get("username"), credentials.get("password"));
+     *
+     *         try {
+     *             Authentication authentication = authenticationManager.authenticate(authToken);
+     *
+     *             if (authentication.isAuthenticated()) {
+     *                 String jwtToken = converter.getTokenFromUser((AppUser) authentication.getPrincipal());
+     *
+     *                 HashMap<String, String> map = new HashMap<>();
+     *                 map.put("jwt_token", jwtToken);
+     *
+     *                 return new ResponseEntity<>(map, HttpStatus.OK);
+     *             }
+     *
+     *         } catch (AuthenticationException ex) {
+     *             System.out.println(ex);
+     *         }
+     *
+     *         return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+     *     }
+     */
+
+    @PostMapping("/refresh-token")
     public ResponseEntity<Object> refreshToken(@AuthenticationPrincipal User user){
         return new ResponseEntity<>(makeUserTokenMap(user), HttpStatus.OK);
     }
 
-    @PostMapping("/create_account")
+    @PostMapping("/create-account")
     public ResponseEntity<Object> create (@RequestBody Credentials credentials){
         Result<User> result = service.add(credentials);
 

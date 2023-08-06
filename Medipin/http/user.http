@@ -1,0 +1,12 @@
+@url = http://localhost:8080/api/security
+
+### test adding new account
+
+POST {{url}}/create-account HTTP/1.1
+Content-Type: application/json
+
+{
+    "name" : "tester",
+    "username" : "testernator",
+    "password" : "P@ssw0rd!"
+}/

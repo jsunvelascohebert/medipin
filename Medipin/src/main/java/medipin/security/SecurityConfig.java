@@ -30,7 +30,9 @@ public class SecurityConfig {
 
                 /* TODO ***** ***** users ***** ***** */
 
-                /* TODO ***** ***** topics ***** ***** */
+                .antMatchers(HttpMethod.POST, "/api/security/create-account").permitAll()
+
+                /* ***** ***** topics ***** ***** */
 
                 .antMatchers(HttpMethod.GET, "/api/topic").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/topic/*").permitAll()
