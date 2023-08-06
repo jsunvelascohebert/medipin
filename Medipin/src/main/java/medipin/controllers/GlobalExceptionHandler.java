@@ -35,6 +35,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(HttpMediaTypeNotSupportedException.class)
     public ResponseEntity<?> handleException(HttpMediaTypeNotSupportedException ex) {
+        ex.printStackTrace();
         return new ResponseEntity<>("Media type unsupported",
                 HttpStatus.UNSUPPORTED_MEDIA_TYPE);
     }

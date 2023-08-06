@@ -16,8 +16,12 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.Map;
 
 @RestController
+@CrossOrigin
+@RequestMapping("/api")
+@ConditionalOnWebApplication
 public class AuthController {
 
     private final AuthenticationManager authenticationManager;
@@ -32,60 +36,73 @@ public class AuthController {
 
 
     @PostMapping("/authenticate")
-    public ResponseEntity<Object> authenticate(@RequestBody Credentials credentials){
+    public ResponseEntity<Object> authenticate(@RequestBody Map<String,
+                String> credentials){
 
-        UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(credentials.getUsername(), credentials.getPassword());
+        UsernamePasswordAuthenticationToken authToken =
+                new UsernamePasswordAuthenticationToken(credentials.get("username"), credentials.get("password"));
 
-        try{
+        try {
             Authentication authentication = authenticationManager.authenticate(authToken);
 
-            if(authentication.isAuthenticated()){
-                User user = (User) authentication.getPrincipal();
-                return new ResponseEntity<>(makeUserTokenMap(user), HttpStatus.OK);
+            if (authentication.isAuthenticated()) {
+                String jwtToken =
+                        converter.getTokenFromUser((User) authentication.getPrincipal());
+
+                HashMap<String, String> map = new HashMap<>();
+                map.put("jwt_token", jwtToken);
+
+                return new ResponseEntity<>(map, HttpStatus.OK);
             }
 
-        } catch (AuthenticationException e) {
-            System.out.println(e);
+        } catch (AuthenticationException ex) {
+            System.out.println(ex);
         }
 
         return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
     }
 
-    /**
-     * @PostMapping("/authenticate")
-     *     public ResponseEntity<Map<String, String>> authenticate(@RequestBody Map<String, String> credentials) {
-     *
-     *         UsernamePasswordAuthenticationToken authToken =
-     *                 new UsernamePasswordAuthenticationToken(credentials.get("username"), credentials.get("password"));
-     *
-     *         try {
-     *             Authentication authentication = authenticationManager.authenticate(authToken);
-     *
-     *             if (authentication.isAuthenticated()) {
-     *                 String jwtToken = converter.getTokenFromUser((AppUser) authentication.getPrincipal());
-     *
-     *                 HashMap<String, String> map = new HashMap<>();
-     *                 map.put("jwt_token", jwtToken);
-     *
-     *                 return new ResponseEntity<>(map, HttpStatus.OK);
-     *             }
-     *
-     *         } catch (AuthenticationException ex) {
-     *             System.out.println(ex);
-     *         }
-     *
-     *         return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-     *     }
+    /*
+        public ResponseEntity<Map<String, String>> authenticate(@RequestBody Map<String, String> credentials) {
+
+        UsernamePasswordAuthenticationToken authToken =
+                new UsernamePasswordAuthenticationToken(credentials.get("username"), credentials.get("password"));
+
+        try {
+            Authentication authentication = authenticationManager.authenticate(authToken);
+
+            if (authentication.isAuthenticated()) {
+                String jwtToken = converter.getTokenFromUser((AppUser) authentication.getPrincipal());
+
+                HashMap<String, String> map = new HashMap<>();
+                map.put("jwt_token", jwtToken);
+
+                return new ResponseEntity<>(map, HttpStatus.OK);
+            }
+
+        } catch (AuthenticationException ex) {
+            System.out.println(ex);
+        }
+
+        return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+    }
      */
 
-    @PostMapping("/refresh-token")
+    @PostMapping("/refresh_token")
     public ResponseEntity<Object> refreshToken(@AuthenticationPrincipal User user){
         return new ResponseEntity<>(makeUserTokenMap(user), HttpStatus.OK);
     }
 
-    @PostMapping("/create-account")
-    public ResponseEntity<Object> create (@RequestBody Credentials credentials){
-        Result<User> result = service.add(credentials);
+    @PostMapping("/create_account")
+    public ResponseEntity<Object> createAccount (@RequestBody Map<String,
+            String> credentials) {
+
+        String name = credentials.get("name");
+        String username = credentials.get("username");
+        String password = credentials.get("password");
+
+        Credentials creds = new Credentials(name, username, password);
+        Result<User> result = service.add(creds);
 
         if(!result.isSuccess()){
             return new ResponseEntity<>(result.getMessages(), HttpStatus.BAD_REQUEST);
