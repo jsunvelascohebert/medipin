@@ -7,17 +7,16 @@ Content-Type: application/json
 
 {
     "name" : "tester",
-    "username" : "testernator3",
+    "username" : "testernator30",
     "password" : "P@ssw0rd!"
 }
 
 ### test authenticate
 
 POST {{url}}/authenticate HTTP/1.1
-Cotnent-Type: application/json
+Content-Type: application/json
 
 {
-    "username" : "testernator",
+    "username" : "testernator2",
     "password" : "P@ssw0rd!"
 }
-
