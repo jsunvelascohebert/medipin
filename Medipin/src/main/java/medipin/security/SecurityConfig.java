@@ -72,9 +72,11 @@ public class SecurityConfig {
 
                 /* TODO ***** ***** user topic article notes ***** ***** */
 
-                .antMatchers(HttpMethod.GET, "/api/utan/*/*/*").permitAll()
-                .antMatchers(HttpMethod.POST, "/api/utan").permitAll()
-                .antMatchers(HttpMethod.DELETE, "/api/utan/*/*/*/*").permitAll()
+                .antMatchers(HttpMethod.GET,
+                        "/api/user/topic/article/note/*/*/*").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/user/topic/article/note").permitAll()
+                .antMatchers(HttpMethod.DELETE,
+                        "/api/user/topic/article/note/*/*/*/*").permitAll()
 
                 /* ***** ***** misc ***** ***** */
 
