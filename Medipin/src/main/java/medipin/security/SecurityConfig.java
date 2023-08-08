@@ -28,11 +28,11 @@ public class SecurityConfig {
 
         http.authorizeRequests() // TODO : revise these according to security needs
 
-                /* TODO ***** ***** users ***** ***** */
+                /* ***** ***** users ***** ***** */
 
                 .antMatchers(HttpMethod.POST, "/api/create_account").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/authenticate").permitAll()
-                .antMatchers(HttpMethod.POST, "/api/refresh_token").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/refresh_token").permitAll() // iffy about
 
                 /* ***** ***** topics ***** ***** */
 
@@ -57,6 +57,24 @@ public class SecurityConfig {
                 .antMatchers(HttpMethod.POST, "/api/note").permitAll()
                 .antMatchers(HttpMethod.PUT, "/api/note/*").permitAll()
                 .antMatchers(HttpMethod.DELETE, "/api/note/*").permitAll()
+
+                /* TODO ***** ***** user topics ***** ***** */
+
+                .antMatchers(HttpMethod.GET, "/api/user/topic/*").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/user/topic/add").permitAll()
+                .antMatchers(HttpMethod.DELETE, "/api/user/topic/delete/*/*").permitAll()
+
+                /* TODO ***** ***** topic articles ***** ***** */
+
+                .antMatchers(HttpMethod.GET, "/api/topic/article/*").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/topic/article").permitAll()
+                .antMatchers(HttpMethod.DELETE, "/api/topic/article/*/*").permitAll()
+
+                /* TODO ***** ***** user topic article notes ***** ***** */
+
+                .antMatchers(HttpMethod.GET, "/api/utan/*/*/*").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/utan").permitAll()
+                .antMatchers(HttpMethod.DELETE, "/api/utan/*/*/*/*").permitAll()
 
                 /* ***** ***** misc ***** ***** */
 

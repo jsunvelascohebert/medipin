@@ -11,9 +11,9 @@ Content-Type: application/json
 
 {
     "topicId" : 2,
-    "articleId" : 5
+    "articleId" : 8
 }
 
 ### test delete by key
 
-DELETE {{url}}/1/5 HTTP/1.1 
+DELETE {{url}}/2/8 HTTP/1.1 
