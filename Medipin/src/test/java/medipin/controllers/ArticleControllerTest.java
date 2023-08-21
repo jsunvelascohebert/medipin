@@ -41,21 +41,14 @@ class ArticleControllerTest {
     @Test
     void getAllShouldReturn200() throws Exception {
         List<Article> articles = List.of(
-                new Article(1, "Test get",
-                        "Testing description",
-                        "http://www.test.com/testing/article",
-                        LocalDate.of(2023, 7, 31),
-                        "Test Publisher")
-        );
+                new Article(30574,
+                        "Gestational Diabetes Screening: Questions for the Doctor",
+                        "https://health.gov/sites/default/files/2022-06/gdsqd.jpg",
+                        "Pregnant woman smiling."));
 
         when(repository.getAll()).thenReturn(articles);
 
         ObjectMapper jsonMapper = new ObjectMapper();
-        jsonMapper.registerModule(new JavaTimeModule());
-
-        jsonMapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false); // Serialize dates as strings
-        jsonMapper.configure(DeserializationFeature.READ_DATE_TIMESTAMPS_AS_NANOSECONDS, false); // Read timestamps as seconds
-
         String expected = jsonMapper.writeValueAsString(articles);
 
         mvc.perform(get("/api/article"))
@@ -77,21 +70,16 @@ class ArticleControllerTest {
 
     @Test
     void getByIdShouldReturn200() throws Exception {
-        Article expectedArticle = new Article(1, "Test get",
-                "Testing description",
-                "http://www.test.com/testing/article",
-                LocalDate.of(2023, 7, 31),
-                "Test Publisher");
+        Article expectedArticle = new Article(30574,
+                "Gestational Diabetes Screening: Questions for the Doctor",
+                "https://health.gov/sites/default/files/2022-06/gdsqd.jpg",
+                "Pregnant woman smiling.");
 
-        when(repository.getById(1)).thenReturn(expectedArticle);
+        when(repository.getById(30574)).thenReturn(expectedArticle);
         ObjectMapper jsonMapper = new ObjectMapper();
-        jsonMapper.registerModule(new JavaTimeModule());
-
-        jsonMapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
-        jsonMapper.configure(DeserializationFeature.READ_DATE_TIMESTAMPS_AS_NANOSECONDS, false);
 
         String expected = jsonMapper.writeValueAsString(expectedArticle);
-        mvc.perform(get("/api/article/1"))
+        mvc.perform(get("/api/article/30574"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(content().json(expected));
@@ -100,9 +88,6 @@ class ArticleControllerTest {
     @Test
     void getByIdShouldReturn404() throws Exception {
         when(repository.getById(1)).thenReturn(null);
-        ObjectMapper jsonMapper = new ObjectMapper();
-        jsonMapper.registerModule(new JavaTimeModule());
-
         mvc.perform(get("/api/article/1"))
                 .andExpect(status().isNotFound());
     }
@@ -119,8 +104,7 @@ class ArticleControllerTest {
 
         mvc.perform(request).andExpect(status().isBadRequest());
 
-        Article article = new Article(0, "",
-                null, "", null, null);
+        Article article = new Article(0, null, null, null);
 
         String jsonIn = jsonMapper.writeValueAsString(article);
 
@@ -133,23 +117,17 @@ class ArticleControllerTest {
 
     @Test
     void successfulAddShouldReturn201() throws Exception {
-        Article articleIn = new Article(0, "Test get",
-                "Testing description",
-                "http://www.test.com/testing/article",
-                LocalDate.of(2023, 7, 31),
-                "Test Publisher");
-        Article articleOut = new Article(1, "Test get",
-                "Testing description",
-                "http://www.test.com/testing/article",
-                LocalDate.of(2023, 7, 31),
-                "Test Publisher");
+        Article articleIn = new Article(30574,
+                "Gestational Diabetes Screening: Questions for the Doctor",
+                "https://health.gov/sites/default/files/2022-06/gdsqd.jpg",
+                "Pregnant woman smiling.");
+        Article articleOut = new Article(30574,
+                "Gestational Diabetes Screening: Questions for the Doctor",
+                "https://health.gov/sites/default/files/2022-06/gdsqd.jpg",
+                "Pregnant woman smiling.");
 
         when(repository.add(articleIn)).thenReturn(articleOut);
         ObjectMapper jsonMapper = new ObjectMapper();
-        jsonMapper.registerModule(new JavaTimeModule());
-
-        jsonMapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
-        jsonMapper.configure(DeserializationFeature.READ_DATE_TIMESTAMPS_AS_NANOSECONDS, false);
 
         String jsonIn = jsonMapper.writeValueAsString(articleIn);
         String jsonOut = jsonMapper.writeValueAsString(articleOut);
@@ -163,35 +141,14 @@ class ArticleControllerTest {
                 .andExpect(content().json(jsonOut));
     }
 
-    @Test
-    void invalidAddShouldReturn404() throws Exception {
-        Article articleIn = new Article(1, "Test get",
-                "Testing description",
-                "http://www.test.com/testing/article",
-                LocalDate.of(2023, 7, 31),
-                "Test Publisher");
-
-        ObjectMapper jsonMapper = new ObjectMapper();
-        jsonMapper.registerModule(new JavaTimeModule());
-
-        String json = jsonMapper.writeValueAsString(articleIn);
-
-        var request = post("/api/article")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(json);
-
-        mvc.perform(request).andExpect(status().isBadRequest());
-    }
-
     /* ***** ***** update tests ***** ***** */
 
     @Test
     void successfulUpdateShouldReturn204() throws Exception {
-        Article articleIn = new Article(1, "Test get",
-                "Testing description",
-                "http://www.test.com/testing/article",
-                LocalDate.of(2023, 7, 31),
-                "Test Publisher");
+        Article articleIn = new Article(30574,
+                "Gestational Diabetes Screening: Questions for the Doctor",
+                "https://health.gov/sites/default/files/2022-06/gdsqd.jpg",
+                "Pregnant woman smiling.");
 
         ObjectMapper jsonMapper = new ObjectMapper();
         jsonMapper.registerModule(new JavaTimeModule());
@@ -199,7 +156,7 @@ class ArticleControllerTest {
         String json = jsonMapper.writeValueAsString(articleIn);
         when(repository.update(articleIn)).thenReturn(true);
 
-        var request = put("/api/article/1")
+        var request = put("/api/article/30574")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(json);
 
@@ -208,11 +165,10 @@ class ArticleControllerTest {
 
     @Test
     void conflictedUpdateShouldReturn409() throws Exception {
-        Article articleIn = new Article(1, "Test get",
-                "Testing description",
-                "http://www.test.com/testing/article",
-                LocalDate.of(2023, 7, 31),
-                "Test Publisher");
+        Article articleIn = new Article(30574,
+                "Gestational Diabetes Screening: Questions for the Doctor",
+                "https://health.gov/sites/default/files/2022-06/gdsqd.jpg",
+                "Pregnant woman smiling.");
 
         ObjectMapper jsonMapper = new ObjectMapper();
         jsonMapper.registerModule(new JavaTimeModule());
@@ -228,11 +184,10 @@ class ArticleControllerTest {
 
     @Test
     void invalidUpdateShouldReturn401() throws Exception {
-        Article articleIn = new Article(0, "Test get",
-                "Testing description",
-                "http://www.test.com/testing/article",
-                LocalDate.of(2023, 7, 31),
-                "Test Publisher");
+        Article articleIn = new Article(0,
+                "Gestational Diabetes Screening: Questions for the Doctor",
+                "https://health.gov/sites/default/files/2022-06/gdsqd.jpg",
+                "Pregnant woman smiling.");;
 
         ObjectMapper jsonMapper = new ObjectMapper();
         jsonMapper.registerModule(new JavaTimeModule());
@@ -248,18 +203,16 @@ class ArticleControllerTest {
 
     @Test
     void invalidUpdateShouldReturn404() throws Exception {
-        Article articleIn = new Article(1, "Test get",
-                "Testing description",
-                "http://www.test.com/testing/article",
-                LocalDate.of(2023, 7, 31),
-                "Test Publisher");
+        Article articleIn = new Article(30574,
+                "Gestational Diabetes Screening: Questions for the Doctor",
+                "https://health.gov/sites/default/files/2022-06/gdsqd.jpg",
+                "Pregnant woman smiling.");;
 
         ObjectMapper jsonMapper = new ObjectMapper();
-        jsonMapper.registerModule(new JavaTimeModule());
-
         String json = jsonMapper.writeValueAsString(articleIn);
+
         when(repository.update(articleIn)).thenReturn(false);
-        var request = put("/api/article/1")
+        var request = put("/api/article/30574")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(json);
 
@@ -270,16 +223,16 @@ class ArticleControllerTest {
 
     @Test
     void successfulDeleteShouldReturn204() throws Exception {
-        when(repository.deleteById(1)).thenReturn(true);
-        var request = delete("/api/article/1");
+        when(repository.deleteById(30591)).thenReturn(true);
+        var request = delete("/api/article/30591");
         mvc.perform(request).andExpect(status().isNoContent());
     }
 
     @Test
     void failedDeleteAttachedToTopicArticleOrUTANShouldReturn400() throws Exception {
-        when(repository.isAttachedToTopicArticle(1)).thenReturn(true);
-        when(repository.isAttachedToUTAN(1)).thenReturn(true);
-        var request = delete("/api/article/1");
+        when(repository.isAttachedToTopicArticle(30574)).thenReturn(true);
+        when(repository.isAttachedToUTAN(30574)).thenReturn(true);
+        var request = delete("/api/article/30574");
         mvc.perform(request).andExpect(status().isBadRequest());
     }
 

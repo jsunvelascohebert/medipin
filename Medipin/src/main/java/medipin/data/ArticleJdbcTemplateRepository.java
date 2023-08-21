@@ -23,63 +23,54 @@ public class ArticleJdbcTemplateRepository implements ArticleRepository {
 
     @Override
     public List<Article> getAll() {
-        final String sql = "select article_id, title, `description`, url, " +
-                "date_published, publisher from article;";
+        final String sql = """
+                select article_id, title, image_url, image_alt
+                from article;""";
         return jdbcTemplate.query(sql, new ArticleMapper());
     }
 
     @Override
     @Transactional
     public Article getById(int articleId) {
-        final String sql = "select article_id, title, `description`, url, " +
-                "date_published, publisher " +
-                "from article " +
-                "where article_id = ?;";
+        final String sql = """
+                select article_id, title, image_url, image_alt
+                from article
+                where article_id = ?;""";
         return jdbcTemplate.query(sql, new ArticleMapper(), articleId)
                 .stream().findAny().orElse(null);
     }
 
     @Override
     public Article add(Article article) {
-        final String sql =
-                "insert into article " +
-                "(title, `description`, url, date_published, publisher) " +
-                "values (?, ?, ?, ?, ?);";
+        final String sql = """
+                insert into article
+                	(article_id, title, image_url, image_alt)
+                values
+                    (?, ?, ?, ?);""";
 
-        KeyHolder keyHolder = new GeneratedKeyHolder();
-        int rowsAffected = jdbcTemplate.update(connection -> {
-            PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            ps.setString(1, article.getTitle());
-            ps.setString(2, article.getDescription());
-            ps.setString(3, article.getUrl());
-            ps.setDate(4, Date.valueOf(article.getDatePublished()));
-            ps.setString(5, article.getPublisher());
-            return ps;
-        }, keyHolder);
-        if (rowsAffected <= 0) {
-            return null;
-        }
-        article.setArticleId(keyHolder.getKey().intValue());
+        jdbcTemplate.update(sql,
+                article.getArticleId(),
+                article.getTitle(),
+                article.getImageUrl(),
+                article.getImageAlt());
+
         return article;
     }
 
     @Override
     public boolean update(Article article) {
-        final String sql =
-                "update article set " +
-                    "title = ?, " +
-                    "`description` = ?, " +
-                    "url = ?, " +
-                    "date_published = ?, " +
-                    "publisher = ? " +
-                    "where article_id = ?;";
+        final String sql = """
+                update article set
+                	title = ?,
+                    image_url = ?,
+                    image_alt = ?
+                where article_id = ?;
+                """;
 
         return jdbcTemplate.update(sql,
                 article.getTitle(),
-                article.getDescription(),
-                article.getUrl(),
-                article.getDatePublished(),
-                article.getPublisher(),
+                article.getImageUrl(),
+                article.getImageAlt(),
                 article.getArticleId()) > 0;
     }
 
@@ -91,6 +82,8 @@ public class ArticleJdbcTemplateRepository implements ArticleRepository {
                 "where article_id = ?;";
         return jdbcTemplate.update(sql, articleId) > 0;
     }
+
+    /* ***** ***** helpers ***** ***** */
 
     @Override
     @Transactional

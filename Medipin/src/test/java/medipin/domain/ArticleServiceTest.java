@@ -27,9 +27,10 @@ class ArticleServiceTest {
     @Test
     void shouldFindAllArticles() {
         List<Article> articles = List.of(
-            new Article(1, "test", "testing article", "http://test.com",
-                    LocalDate.of(2023, 7, 31), null)
-        );
+            new Article(30574,
+                    "Gestational Diabetes Screening: Questions for the Doctor",
+                    "https://health.gov/sites/default/files/2022-06/gdsqd.jpg",
+                    "Pregnant woman smiling."));
 
         when(repository.getAll()).thenReturn(articles);
         Result<List<Article>> result = service.getAll();
@@ -54,8 +55,10 @@ class ArticleServiceTest {
 
     @Test
     void shouldFindByValidId() {
-        Article article = new Article(1, "test", "testing article",
-                "http://test.com", LocalDate.of(2023, 7, 31), null);
+        Article article = new Article(30574,
+                "Gestational Diabetes Screening: Questions for the Doctor",
+                "https://health.gov/sites/default/files/2022-06/gdsqd.jpg",
+                "Pregnant woman smiling.");
         when(repository.getById(1)).thenReturn(article);
 
         Result<Article> result = service.getById(1);
@@ -80,46 +83,40 @@ class ArticleServiceTest {
         assertEquals(result.getType(), ResultType.INVALID);
         assertTrue(result.getMessages().contains("Article cannot be null"));
 
-        Article invalid = new Article(0, null, null, null, null, null);
+        Article invalid = new Article(0, null, null, null);
         result = service.add(invalid);
         assertFalse(result.isSuccess());
         assertEquals(result.getType(), ResultType.INVALID);
-        assertEquals(result.getMessages().size(), 3);
-        assertTrue(result.getMessages().contains("Article name cannot be blank"));
-        assertTrue(result.getMessages().contains("Article description cannot " +
-                "be blank"));
-        assertTrue(result.getMessages().contains("Article URL cannot be " +
+        assertEquals(result.getMessages().size(), 1);
+        assertTrue(result.getMessages().contains("Article title cannot be " +
                 "blank"));
     }
 
     @Test
     void shouldAddValidArticle() {
-        Article article = new Article(0, "test", "testing article",
-                "http://test.com", LocalDate.of(2023, 7, 31), null);
-        Article expected = new Article(1, "test", "testing article",
-                "http://test.com", LocalDate.of(2023, 7, 31), null);
+        Article article = new Article(30574,
+                "Gestational Diabetes Screening: Questions for the Doctor",
+                "https://health.gov/sites/default/files/2022-06/gdsqd.jpg",
+                "Pregnant woman smiling.");
+        Article expected = new Article(30574,
+                "Gestational Diabetes Screening: Questions for the Doctor",
+                "https://health.gov/sites/default/files/2022-06/gdsqd.jpg",
+                "Pregnant woman smiling.");
         when(repository.add(article)).thenReturn(expected);
 
         Result<Article> result = service.add(article);
+        result.getMessages().forEach(System.out::println);
+
         assertTrue(result.isSuccess());
         assertEquals(result.getPayload(), expected);
     }
 
     @Test
-    void shouldNotAddInvalidArticleId() {
-        Article article = new Article(1, "test", "testing article",
-                "http://test.com", LocalDate.of(2023, 7, 31), null);
-        Result<Article> result = service.add(article);
-        assertFalse(result.isSuccess());
-        assertEquals(result.getType(), ResultType.INVALID);
-        assertTrue(result.getMessages().contains("Cannot add article without " +
-                "id of 0"));
-    }
-
-    @Test
     void shouldUpdateValidArticle() {
-        Article article = new Article(1, "test", "testing article",
-                "http://test.com", LocalDate.of(2023, 7, 31), null);
+        Article article = new Article(30574,
+                "Gestational Diabetes Screening: Questions for the Doctor",
+                "https://health.gov/sites/default/files/2022-06/gdsqd.jpg",
+                "Pregnant woman smiling.");
         when(repository.update(article)).thenReturn(true);
         Result<Article> result = service.update(article);
         assertTrue(result.isSuccess());
@@ -128,8 +125,10 @@ class ArticleServiceTest {
     @Test
     void shouldNotUpdateInvalidArticle() {
         // invalid id
-        Article article = new Article(-1, "test", "testing article",
-                "http://test.com", LocalDate.of(2023, 7, 31), null);
+        Article article = new Article(-1,
+                "Gestational Diabetes Screening: Questions for the Doctor",
+                "https://health.gov/sites/default/files/2022-06/gdsqd.jpg",
+                "Pregnant woman smiling.");
         Result<Article> result = service.update(article);
         assertFalse(result.isSuccess());
         assertEquals(result.getType(), ResultType.INVALID);
@@ -137,14 +136,16 @@ class ArticleServiceTest {
                 "updating"));
 
         // missing id
-        article = new Article(100, "test", "testing article",
-                "http://test.com", LocalDate.of(2023, 7, 31), null);
+        article = new Article(1,
+                "Gestational Diabetes Screening: Questions for the Doctor",
+                "https://health.gov/sites/default/files/2022-06/gdsqd.jpg",
+                "Pregnant woman smiling.");
         when(repository.update(article)).thenReturn(false);
         result = service.update(article);
         assertFalse(result.isSuccess());
         assertEquals(result.getType(), ResultType.NOT_FOUND);
         assertTrue(result.getMessages().contains("Could not update missing " +
-                "article with id 100"));
+                "article with id 1"));
     }
 
     @Test

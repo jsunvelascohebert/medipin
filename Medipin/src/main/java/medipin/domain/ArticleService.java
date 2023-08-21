@@ -46,12 +46,6 @@ public class ArticleService {
             return result;
         }
 
-        if (article.getArticleId() != 0) {
-            result.addMessage("Cannot add article without id of 0",
-                    ResultType.INVALID);
-            return result;
-        }
-
         article = repository.add(article);
         result.setPayload(article);
         return result;
@@ -113,15 +107,7 @@ public class ArticleService {
         }
 
         if (article.getTitle() == null || article.getTitle().isBlank()) {
-            result.addMessage("Article name cannot be blank", ResultType.INVALID);
-        }
-
-        if (article.getDescription() == null || article.getDescription().isBlank()) {
-            result.addMessage("Article description cannot be blank", ResultType.INVALID);
-        }
-
-        if (article.getUrl() == null || article.getUrl().isBlank()) {
-            result.addMessage("Article URL cannot be blank",
+            result.addMessage("Article title cannot be blank",
                     ResultType.INVALID);
         }
 

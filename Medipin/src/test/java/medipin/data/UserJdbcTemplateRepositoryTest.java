@@ -26,7 +26,7 @@ class UserJdbcTemplateRepositoryTest {
     void shouldGetUserByValidId() {
         User user = repository.getById(1);
         assertNotNull(user);
-        assertEquals(user.getName(), "john smith");
+        assertEquals(user.getUsername(), "johnsmith");
     }
 
     @Test
@@ -37,40 +37,41 @@ class UserJdbcTemplateRepositoryTest {
 
     @Test
     void shouldGetUserByValidUsername() {
-        User user = repository.getByUsername("john@smith.com");
+        User user = repository.getByUsername("johnsmith");
         assertNotNull(user);
         assertEquals(user.getUserId(), 1);
     }
 
     @Test
     void shouldNotGetUserByInvalidUsername() {
-        User user = repository.getByUsername("non@existent.com");
+        User user = repository.getByUsername("nonexistent");
         assertNull(user);
     }
 
     @Test
     void shouldAddValidUser() {
-        User user = new User(0, "testing user add in java",
-                "testing@add.java", "fake password", true,
+        User user = new User(0, "testinguseradd",
+                "fake password", true,
                 List.of("USER"));
         User result = repository.add(user);
         assertNotNull(result);
+        System.out.println(user);
         assertTrue(result.getUserId() > 0);
     }
 
     @Test
     void shouldUpdateValidUser() {
-        User user = new User(2, "testing update in java",
-                "testing@update.java", "fake password", false,
-                List.of("ADMIN"));
+        User user = new User(2, "testadduser",
+                "fake password", true,
+                List.of("USER"));
         assertTrue(repository.update(user));
     }
 
     @Test
     void shouldNotUpdateMissingUser() {
-        User user = new User(100, "testing update in java",
-                "testingfake@update.java", "fake password", false,
-                List.of("ADMIN"));
+        User user = new User(100, "testfakeuser",
+                "fake password", true,
+                List.of("USER"));
         assertFalse(repository.update(user));
     }
 

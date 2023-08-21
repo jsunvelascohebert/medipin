@@ -6,7 +6,6 @@ use medipin;
 
 create table `user` (
 	user_id int primary key auto_increment,
-    `name` varchar(100) not null,
     username varchar(50) not null unique,
     password_hash varchar(2048) not null,
     enabled bit not null default(1)
@@ -23,12 +22,10 @@ create table topic (
 );
 
 create table article (
-	article_id int primary key auto_increment,
+	article_id int primary key,
     title varchar(255) not null,
-    `description` varchar(500) not null,
-    url varchar(500) unique not null,
-    date_published date null,
-    publisher varchar(100) null
+    image_url varchar(255) null,
+    image_alt varchar(255) null
 );
 
 create table note (

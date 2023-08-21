@@ -28,9 +28,9 @@ public class UserJdbcTemplateRepository implements UserRepository {
         List<String> roles = getRolesById(userId);
 
         final String sql = """
-            select user_id, `name`, username, password_hash, enabled
-            from `user`
-            where user_id = ?;""";
+                select user_id, username, password_hash, enabled
+                from `user`
+                where user_id = ?;""";
 
         return jdbcTemplate.query(sql, new UserMapper(roles), userId)
                 .stream().findFirst().orElse(null);
@@ -42,7 +42,7 @@ public class UserJdbcTemplateRepository implements UserRepository {
         List<String> roles = getRolesByUsername(username);
 
         final String sql = """
-            select user_id, `name`, username, password_hash, enabled
+            select user_id, username, password_hash, enabled
             from `user`
             where username = ?;""";
 
@@ -54,16 +54,15 @@ public class UserJdbcTemplateRepository implements UserRepository {
     @Transactional
     public User add(User user) {
         final String sql = """
-            insert into user (`name`, username, password_hash)
-            values (?, ?, ?);""";
+            insert into user (username, password_hash)
+            values (?, ?);""";
 
         GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
         int rowsAffected = jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(sql,
                     Statement.RETURN_GENERATED_KEYS);
-            ps.setString(1, user.getName());
-            ps.setString(2, user.getUsername());
-            ps.setString(3, user.getPassword());
+            ps.setString(1, user.getUsername());
+            ps.setString(2, user.getPassword());
             return ps;
         }, keyHolder);
 
@@ -81,14 +80,12 @@ public class UserJdbcTemplateRepository implements UserRepository {
     public boolean update(User user) {
         final String sql = """
             update user set
-                `name` = ?,
                 username = ?,
                 password_hash = ?,
                 enabled = ?
             where user_id = ?;""";
 
         int rowsReturned = jdbcTemplate.update(sql,
-                user.getName(),
                 user.getUsername(),
                 user.getPassword(),
                 user.isEnabled(),
@@ -115,6 +112,8 @@ public class UserJdbcTemplateRepository implements UserRepository {
         return jdbcTemplate.update("delete from user where user_id = ?;",
                 userId) > 0;
     }
+
+    /* ***** ***** helpers ***** ***** */
 
     private List<String> getRolesById(int id) {
         final String sql = """

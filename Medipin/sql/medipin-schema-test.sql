@@ -6,7 +6,6 @@ use medipin_test;
 
 create table `user` (
 	user_id int primary key auto_increment,
-    `name` varchar(100) not null,
     username varchar(50) not null unique,
     password_hash varchar(2048) not null,
     enabled bit not null default(1)
@@ -23,12 +22,10 @@ create table topic (
 );
 
 create table article (
-	article_id int primary key auto_increment,
+	article_id int primary key,
     title varchar(255) not null,
-    `description` varchar(500) not null,
-    url varchar(500) unique not null,
-    date_published date null,
-    publisher varchar(100) null
+    image_url varchar(255) null,
+    image_alt varchar(255) null
 );
 
 create table note (
@@ -129,28 +126,27 @@ begin
     delete from topic;
     alter table topic auto_increment = 1;
     delete from article;
-    alter table article auto_increment = 1;
     delete from note;
     alter table note auto_increment = 1;
     
 	-- populate test data for terminal nodes --
     
-    insert into `user` (`name`, username, password_hash, enabled)
+    insert into `user` (username, password_hash, enabled)
 		values
-    		('john smith', 'john@smith.com', '$2a$10$ntB7CsRKQzuLoKY3rfoAQen5nNyiC/U60wBsWnnYrtQQi8Z3IZzQa', 1),
-    		('sally jones', 'sally@jones.com', '$2a$10$ntB7CsRKQzuLoKY3rfoAQen5nNyiC/U60wBsWnnYrtQQi8Z3IZzQa', 1),
-            ('silly head', 'silly@head.com', '$2a$10$ntB7CsRKQzuLoKY3rfoAQen5nNyiC/U60wBsWnnYrtQQi8Z3IZzQa', 1),
-            ('another test', 'another@test.com', '$2a$10$ntB7CsRKQzuLoKY3rfoAQen5nNyiC/U60wBsWnnYrtQQi8Z3IZzQa', 1);
+    		('johnsmith', '$2a$10$ntB7CsRKQzuLoKY3rfoAQen5nNyiC/U60wBsWnnYrtQQi8Z3IZzQa', 1),
+    		('sallyjones', '$2a$10$ntB7CsRKQzuLoKY3rfoAQen5nNyiC/U60wBsWnnYrtQQi8Z3IZzQa', 1),
+            ('sillyhead', '$2a$10$ntB7CsRKQzuLoKY3rfoAQen5nNyiC/U60wBsWnnYrtQQi8Z3IZzQa', 1),
+            ('anothertest', '$2a$10$ntB7CsRKQzuLoKY3rfoAQen5nNyiC/U60wBsWnnYrtQQi8Z3IZzQa', 1);
             
     insert into topic (`name`)
 		values ('Personal'), ('Partner'), ('Friend'), ('Other');
 	
-    insert into article (title, `description`, url)
+    insert into article (article_id, title, image_url, image_alt)
 		values 
-        ('Diabetes', 'Description of diabetes', 'http://www.test.com/diabetes'),
-        ('Asthma', 'Description of asthma', 'http://www.test.com/asthma'),
-        ('Allergies', 'Description of allergies', 'http://www.test.com/allergies'),
-        ('Slay', 'Description of saly', 'http://www.test.com/slay');
+        (30574, 'Gestational Diabetes Screening: Questions for the Doctor', 'https://health.gov/sites/default/files/2022-06/gdsqd.jpg', 'Pregnant woman smiling.'),
+        (30536, 'Take Steps to Prevent Type 2 Diabetes', 'https://health.gov/sites/default/files/2022-06/tstpt2d.jpg', 'Two adults talking a walk.'),
+        (30591, 'Oral Health for Older Adults: Quick Tips', 'https://health.gov/sites/default/files/2022-06/ohfoa.jpg', 'Older man smiling.'),
+        (30617, 'Obesity, Physical Activity, Nutrition and Physical Activity', 'https://health.gov/sites/default/files/2022-06/sadp.jpg', 'A pregnant woman exercising.');
         
 	insert into note (`text`, datetime_made)
 		values
@@ -168,16 +164,15 @@ begin
 		values (1, 1), (1, 2), (2, 1), (3, 1);
         
 	insert into topic_article (topic_id, article_id)
-		values (1, 1), (1, 2), (3, 1), (3, 2), (3, 3);
+		values 
+			(1, 30574), (1, 30536),
+            (2, 30574), (2, 30536),
+            (3, 30574);
         
 	insert into user_topic_article_note (user_id, topic_id, article_id, note_id)
 		values
-			(1, 1, 1, 1),
-            (2, 3, 1, 3),
-            (2, 3, 2, 2),
-            (2, 3, 3, 1),
-            (2, 3, 3, 2),
-            (3, 3, 3, 1);
+			(1, 1, 30574, 1),
+            (1, 2, 30574, 2);
             
 	set sql_safe_updates = 1;
 

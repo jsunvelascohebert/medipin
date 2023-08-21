@@ -25,8 +25,8 @@ class UserTopicArticleNoteJdbcTemplateRepositoryTest {
     @Test
     void shouldGetByValidUserTopicArticle() {
         List<UserTopicArticleNote> utans =
-                repository.getByUserTopicArticle(2, 3, 3);
-        assertEquals(utans.size(), 2);
+                repository.getByUserTopicArticle(1, 1, 30574);
+        assertEquals(utans.size(), 1);
     }
 
     @Test
@@ -38,13 +38,13 @@ class UserTopicArticleNoteJdbcTemplateRepositoryTest {
 
     @Test
     void shouldAddValidUtan() {
-        UserTopicArticleNote utan = new UserTopicArticleNote(1, 1, 2, 2);
+        UserTopicArticleNote utan = new UserTopicArticleNote(1, 1, 30574, 3);
         assertTrue(repository.add(utan));
     }
 
     @Test
     void shouldDeleteExistingUTAN() {
-        assertTrue(repository.deleteByKey(1, 1, 1, 1));
+        assertTrue(repository.deleteByKey(1, 2, 30574, 2));
     }
 
     @Test

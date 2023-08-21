@@ -37,23 +37,23 @@ class TopicArticleJdbcTemplateRepositoryTest {
 
     @Test
     void shouldGetEmptyFromExistingTopicWithNoArticles() {
-        List<TopicArticle> topicArticles = repository.getByTopicId(2);
+        List<TopicArticle> topicArticles = repository.getByTopicId(4);
         assertEquals(topicArticles.size(), 0);
     }
 
     @Test
     void shouldAddValidTopicArticle() {
-        TopicArticle topicArticle = new TopicArticle(1, 3);
+        TopicArticle topicArticle = new TopicArticle(3, 30591);
         assertTrue(repository.add(topicArticle));
     }
 
     @Test
-    void shouldDeleteExistingUserTopic() {
-        assertTrue(repository.deleteByKey(3, 1));
+    void shouldDeleteExistingTopicArticle() {
+        assertTrue(repository.deleteByKey(3, 30591));
     }
 
     @Test
-    void shouldNotDeleteMissingUserTopic() {
-        assertFalse(repository.deleteByKey(100, 100));
+    void shouldNotDeleteMissingTopicArticle() {
+        assertFalse(repository.deleteByKey(1, 1));
     }
 }

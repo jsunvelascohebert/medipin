@@ -6,7 +6,7 @@ GET {{url}} HTTP/1.1
 
 ### test get by id
 
-GET {{url}}/5 HTTP/1.1
+GET {{url}}/30617 HTTP/1.1
 
 ### test post
 
@@ -14,28 +14,24 @@ POST {{url}} HTTP/1.1
 Content-Type: application/json
 
 {
-    "articleId" : 0,
-    "title" : "test article",
-    "description" : "test article",
-    "url" : "https://www.test.com/article/10",
-    "datePublished" : "2023-07-31",
-    "publisher" : "fake publisher"
+    "articleId" : 30617,
+    "title" : "Obesity, Physical Activity, Nutrition and Physical Activity",
+    "imageUrl" : "https://health.gov/sites/default/files/2022-06/sadp.jpg",
+    "imageAlt" : "A pregnant woman exercising."
 }
 
 ### test put
 
-PUT {{url}}/7 HTTP/1.1
+PUT {{url}}/30617 HTTP/1.1
 Content-Type: application/json
 
 {
-    "articleId" : 7,
-    "title" : "test title 6",
-    "description" : "test description 6",
-    "url" : "https://www.test.com/article/6",
-    "datePublished" : "2023-07-31",
-    "publisher" : "fake publisher"
+    "articleId" : 30617,
+    "title" : "test update",
+    "imageUrl" : "test update",
+    "imageAlt" : "test update"
 }
 
 ### test delete
 
-DELETE {{url}}/7 HTTP/1.1
+DELETE {{url}}/30617 HTTP/1.1

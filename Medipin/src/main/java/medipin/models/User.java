@@ -12,16 +12,14 @@ import java.util.stream.Collectors;
 
 public class User implements UserDetails {
     private int userId;
-    private String name;
     private String username;
     private String password;
     private boolean enabled;
     private Collection<GrantedAuthority> authorities;
 
-    public User(int userId, String name, String username, String password,
+    public User(int userId, String username, String password,
                 boolean enabled, List<String> authorities) {
         this.userId = userId;
-        this.name = name;
         this.username = username;
         this.password = password;
         this.enabled = enabled;
@@ -60,14 +58,6 @@ public class User implements UserDetails {
         this.userId = userId;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     @Override
     public String getUsername() {
         return username;
@@ -103,7 +93,6 @@ public class User implements UserDetails {
     public String toString() {
         return "User{" +
                 "userId=" + userId +
-                ", name='" + name + '\'' +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", enabled=" + enabled +
@@ -116,11 +105,11 @@ public class User implements UserDetails {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return userId == user.userId && enabled == user.enabled && Objects.equals(name, user.name) && Objects.equals(username, user.username) && Objects.equals(password, user.password) && Objects.equals(authorities, user.authorities);
+        return userId == user.userId && enabled == user.enabled && Objects.equals(username, user.username) && Objects.equals(password, user.password) && Objects.equals(authorities, user.authorities);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userId, name, username, password, enabled, authorities);
+        return Objects.hash(userId, username, password, enabled, authorities);
     }
 }

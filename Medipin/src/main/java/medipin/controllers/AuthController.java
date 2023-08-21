@@ -58,7 +58,6 @@ public class AuthController {
                         "username"));
                 if (result.isSuccess()) {
                     User user = result.getPayload();
-                    map.put("name", user.getName());
                     map.put("userId", Integer.toString(user.getUserId()));
                     return new ResponseEntity<>(map, HttpStatus.OK);
 
@@ -88,11 +87,10 @@ public class AuthController {
     public ResponseEntity<Object> createAccount (@RequestBody Map<String,
             String> credentials) {
 
-        String name = credentials.get("name");
         String username = credentials.get("username");
         String password = credentials.get("password");
 
-        Credentials creds = new Credentials(name, username, password);
+        Credentials creds = new Credentials(username, password);
         Result<User> result = service.add(creds);
 
         if(!result.isSuccess()){

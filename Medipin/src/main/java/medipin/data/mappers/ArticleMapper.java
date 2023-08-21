@@ -15,13 +15,8 @@ public class ArticleMapper implements RowMapper<Article> {
         Article article = new Article();
         article.setArticleId(rs.getInt("article_id"));
         article.setTitle(rs.getString("title"));
-        article.setDescription(rs.getString("description"));
-        article.setUrl(rs.getString("url"));
-        Date datePublished = rs.getObject("date_published", Date.class);
-        if (datePublished != null) {
-            article.setDatePublished(datePublished.toLocalDate());
-        }
-        article.setPublisher(rs.getString("publisher"));
+        article.setImageUrl(rs.getString("image_url"));
+        article.setImageAlt(rs.getString("image_alt"));
         return article;
     }
 }

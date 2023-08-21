@@ -6,11 +6,11 @@ GET {{url}} HTTP/1.1
 
 ### test get by existing id
 
-GET {{url}}/2 HTTP/1.1
+GET {{url}}/1 HTTP/1.1
 
 ### test by missing id
 
-GET {{url}}/1 HTTP/1.1
+GET {{url}}/1100 HTTP/1.1
 
 ### test valid add
 
@@ -58,4 +58,4 @@ Content-Type: application/json
 
 ### test valid delete
 
-DELETE {{url}}/3 HTTP/1.1
+DELETE {{url}}/1 HTTP/1.1

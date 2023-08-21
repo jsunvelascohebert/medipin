@@ -1,28 +1,28 @@
 use medipin_test;
+use medipin;
 
 -- ----- ----- queries for articles ----- ----- --
 
-select * from article;
+select article_id, title, image_url, image_alt
+from article;
 
-select article_id, title, `description`, url, date_published, publisher
+select article_id, title, image_url, image_alt
 from article
-where article_id = 1;
+where article_id = 30574;
 
 insert into article 
-	(title, `description`, url, date_published, publisher)
+	(article_id, title, image_url, image_alt)
 values
-    ('Test Article Add', 'Testing adding an article', 'https://test.com/testadd', null, null);
+	(30574, 'Gestational Diabetes Screening: Questions for the Doctor', 'https://health.gov/sites/default/files/2022-06/gdsqd.jpg', 'Pregnant woman smiling.');
     
 update article set
-	title = 'update',
-    `description` = 'description update',
-    url = 'http://testing.url/com',
-    date_published = '2023-07-29',
-    publisher = 'update publisher'
-where article_id = 3;
+	title = 'test title update',
+    image_url = 'test image_url update',
+    image_alt = 'test image_alt update'
+where article_id = 30574;
 
 delete from article
-where article_id = 4;    
+where article_id = 30574;    
     
 -- ----- ----- queries for topic ----- ----- --
 
@@ -66,33 +66,40 @@ where note_id = 2;
 
 select * from `user`;
 
-select user_id, `name`, username, password_hash, enabled
-from `user`;
-
-select user_id, `name`, username, password_hash, enabled
+select user_id, username, password_hash, enabled
 from `user`
 where user_id = 1;
 
-select user_id, `name`, username, password_hash, enabled
+insert into `user` (username, password_hash, enabled)
+		values
+    		('johnsmith', '$2a$10$ntB7CsRKQzuLoKY3rfoAQen5nNyiC/U60wBsWnnYrtQQi8Z3IZzQa', 1),
+    		('sallyjones', '$2a$10$ntB7CsRKQzuLoKY3rfoAQen5nNyiC/U60wBsWnnYrtQQi8Z3IZzQa', 1),
+            ('sillyhead', '$2a$10$ntB7CsRKQzuLoKY3rfoAQen5nNyiC/U60wBsWnnYrtQQi8Z3IZzQa', 1),
+            ('anothertest', '$2a$10$ntB7CsRKQzuLoKY3rfoAQen5nNyiC/U60wBsWnnYrtQQi8Z3IZzQa', 1);
+
+select user_id, username, password_hash, enabled
 from `user`
-where username = 'john@smith.com';
+where username = 'johnsmith';
 
-select r.`role` 
-from user_role ur 
-inner join access_role r on ur.role_id = r.role_id
-inner join `user` u on ur.user_id = u.user_id 
-where u.user_id = 1; 
+insert into user_role (user_id, role_id)
+	values (1, 1), (2, 1), (3, 1), (4, 1);
 
-select r.`role` 
-from user_role ur 
-inner join access_role r on ur.role_id = r.role_id
-inner join `user` u on ur.user_id = u.user_id 
-where u.username = 'john@smith.com'; 
+-- select r.`role` 
+-- from user_role ur 
+-- inner join access_role r on ur.role_id = r.role_id
+-- inner join `user` u on ur.user_id = u.user_id 
+-- where u.user_id = 1; 
 
-select * 
-from `user` u
-inner join user_role ur on ur.user_id = u.user_id
-inner join access_role ar on ar.role_id = ur.role_id;
+-- select r.`role` 
+-- from user_role ur 
+-- inner join access_role r on ur.role_id = r.role_id
+-- inner join `user` u on ur.user_id = u.user_id 
+-- where u.username = 'john@smith.com'; 
+
+-- select * 
+-- from `user` u
+-- inner join user_role ur on ur.user_id = u.user_id
+-- inner join access_role ar on ar.role_id = ur.role_id;
 
 -- ----- ----- user_topic queries ----- ----- --
 

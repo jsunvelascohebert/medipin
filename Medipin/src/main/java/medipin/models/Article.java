@@ -7,21 +7,16 @@ public class Article {
 
     private int articleId;
     private String title;
-    private String description;
-    private String url;
-    private LocalDate datePublished;
-    private String publisher;
+    private String imageUrl;
+    private String imageAlt;
 
     public Article() {}
 
-    public Article(int articleId, String title, String description,
-                   String url, LocalDate datePublished, String publisher) {
+    public Article(int articleId, String title, String imageUrl, String imageAlt) {
         this.articleId = articleId;
         this.title = title;
-        this.description = description;
-        this.url = url;
-        this.datePublished = datePublished;
-        this.publisher = publisher;
+        this.imageUrl = imageUrl;
+        this.imageAlt = imageAlt;
     }
 
     public int getArticleId() {
@@ -40,36 +35,20 @@ public class Article {
         this.title = title;
     }
 
-    public String getDescription() {
-        return description;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
-    public String getUrl() {
-        return url;
+    public String getImageAlt() {
+        return imageAlt;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
-    public LocalDate getDatePublished() {
-        return datePublished;
-    }
-
-    public void setDatePublished(LocalDate datePublished) {
-        this.datePublished = datePublished;
-    }
-
-    public String getPublisher() {
-        return publisher;
-    }
-
-    public void setPublisher(String publisher) {
-        this.publisher = publisher;
+    public void setImageAlt(String imageAlt) {
+        this.imageAlt = imageAlt;
     }
 
     @Override
@@ -77,10 +56,8 @@ public class Article {
         return "Article{" +
                 "articleId=" + articleId +
                 ", title='" + title + '\'' +
-                ", description='" + description + '\'' +
-                ", url='" + url + '\'' +
-                ", datePublished=" + datePublished +
-                ", publisher='" + publisher + '\'' +
+                ", imageUrl='" + imageUrl + '\'' +
+                ", imageAlt='" + imageAlt + '\'' +
                 '}';
     }
 
@@ -89,11 +66,11 @@ public class Article {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Article article = (Article) o;
-        return articleId == article.articleId && Objects.equals(title, article.title) && Objects.equals(description, article.description) && Objects.equals(url, article.url) && Objects.equals(datePublished, article.datePublished) && Objects.equals(publisher, article.publisher);
+        return articleId == article.articleId && Objects.equals(title, article.title) && Objects.equals(imageUrl, article.imageUrl) && Objects.equals(imageAlt, article.imageAlt);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(articleId, title, description, url, datePublished, publisher);
+        return Objects.hash(articleId, title, imageUrl, imageAlt);
     }
 }

@@ -37,9 +37,14 @@ class ArticleJdbcTemplateRepositoryTest {
 
     @Test
     void shouldGetByValidId() {
-        Article article = repository.getById(1);
+        Article article = repository.getById(30574);
         assertNotNull(article);
-        assertEquals(article.getTitle(), "Diabetes");
+        assertEquals(article.getTitle(),
+                "Gestational Diabetes Screening: Questions for the Doctor");
+        assertEquals(article.getImageUrl(),
+                "https://health.gov/sites/default/files/2022-06/gdsqd.jpg");
+        assertEquals(article.getImageAlt(),
+                "Pregnant woman smiling.");
     }
 
     @Test
@@ -52,78 +57,81 @@ class ArticleJdbcTemplateRepositoryTest {
 
     @Test
     void shouldAddValidArticle() {
-        Article article = new Article(0, "Test add",
-                "Testing description",
-                "http://www.test.com/testing/article",
-                LocalDate.of(2023, 7, 31),
-                "Test Publisher");
+        Article article = new Article(30594,
+                "Medicines to Prevent Heart Attack and Stroke: Questions for the Doctor",
+                "https://health.gov/sites/default/files/2022-07/mtphaasqftd.jpg",
+                "A health care provider shares information with an older woman.");
 
         Article result = repository.add(article);
         assertNotNull(result);
         assertTrue(result.getArticleId() > 0);
+        assertEquals(30594, result.getArticleId());
     }
 
     /* ***** ***** update tests ***** ***** */
 
     @Test
     void shouldUpdateValidArticle() {
-        Article article = new Article(2, "Test Update",
-                "Update Testing",
-                "http://updatetesting.com",
-                LocalDate.of(2023, 7, 31),
-                "update publisher test");
-        boolean result = repository.update(article);
-        assertTrue(result); // manually tested update in database
-    }
+        Article startingArticle = new Article(30536,
+                "Take Steps to Prevent Type 2 Diabetes",
+                "https://health.gov/sites/default/files/2022-06/tstpt2d.jpg",
+                "Two adults talking a walk.");
+        Article verifyArticle = repository.getById(30536);
+        assertEquals(verifyArticle, startingArticle);
 
-    @Test
-    void shouldUpdateValidArticleWithoutRequiredParts() {
-        Article article = new Article(2, "Test Update",
-                "Update Testing",
-                "http://updatetesting.com",
-                null, null);
-        assertTrue(repository.update(article));
+        Article endingArticle = new Article(
+                30536,
+                "test title update",
+                "test image url update",
+                "test image alt update"
+        );
+
+        boolean result = repository.update(endingArticle);
+        assertTrue(result);
+        verifyArticle = repository.getById(30536);
+        assertEquals(endingArticle, verifyArticle);
     }
 
     @Test
     void shouldNotUpdateMissingArticle() {
-        Article article = new Article(100, "Test Update",
-                "Update Testing",
-                "http://updatetesting.com",
-                LocalDate.of(2023, 7, 31),
-                "update publisher test");
+        Article article = new Article(100,
+                "test missing article update (title)",
+                "test missing article update (image url)",
+                "test missing article update (image alt)");
         assertFalse(repository.update(article));
     }
 
     /* ***** ***** delete tests ***** ***** */
 
     @Test
-    void shouldDeleteExistingUnattachedArticle() {
-        assertTrue(repository.deleteById(4));
+    void shouldDeleteExistingAndNotAttached() {
+        assertTrue(repository.deleteById(30591));
     }
 
     @Test
     void shouldNotDeleteMissingArticle() {
-        assertFalse(repository.deleteById(100));
+        assertFalse(repository.deleteById(1));
     }
 
     @Test
     void shouldBeAttachedToTopicArticle() {
-        assertTrue(repository.isAttachedToTopicArticle(1));
-    }
-
-    @Test
-    void shouldNotBeAttachedToTopicArticle() {
-        assertFalse(repository.isAttachedToTopicArticle(4));
+        assertTrue(repository.isAttachedToTopicArticle(30574));
     }
 
     @Test
     void shouldBeAttachedToUTAN() {
-        assertTrue(repository.isAttachedToUTAN(1));
+        assertTrue(repository.isAttachedToUTAN(30574));
+    }
+
+    @Test
+    void shouldNotBeAttachedToTopicArticle() {
+        assertFalse(repository.isAttachedToTopicArticle(30617));
     }
 
     @Test
     void shouldNotBeAttachedToUTAN() {
-        assertFalse(repository.isAttachedToUTAN(4));
+        assertFalse(repository.isAttachedToUTAN(30591));
     }
+
+
 }

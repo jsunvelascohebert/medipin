@@ -24,7 +24,7 @@ class UserServiceTest {
 
     @Test
     void shouldGetByValidId() {
-        User user = new User(1, "user one", "user1", "user1Password!",
+        User user = new User(1, "user1", "user1Password!",
                 true, List.of("USER"));
         when(repository.getById(1)).thenReturn(user);
 
@@ -45,7 +45,7 @@ class UserServiceTest {
 
     @Test
     void shouldGetByValidUsername() {
-        User user = new User(1, "user one", "user1", "user1Password!",
+        User user = new User(1, "user1", "user1Password!",
                 true, List.of("USER"));
         when(repository.getByUsername("user1")).thenReturn(user);
 

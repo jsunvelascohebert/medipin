@@ -65,7 +65,7 @@ public class UserService implements UserDetailsService {
         }
 
         String hashedPassword = encoder.encode(credentials.getPassword());
-        User user = new User(0, credentials.getName(),
+        User user = new User(0,
                 credentials.getUsername(),
                 hashedPassword, true, List.of("USER"));
 
@@ -81,8 +81,7 @@ public class UserService implements UserDetailsService {
     }
 
     public Result<User> update(User user) {
-        Credentials credentials = new Credentials(user.getName(),
-                user.getUsername(), user.getPassword());
+        Credentials credentials = new Credentials(user.getUsername(), user.getPassword());
 
         Result<User> result = validate(credentials);
 
@@ -123,10 +122,6 @@ public class UserService implements UserDetailsService {
             return result;
         }
 
-        if (credentials.getName() == null || credentials.getName().isBlank()) {
-            result.addMessage("Name is required", ResultType.INVALID);
-        }
-
         if (credentials.getUsername() == null || credentials.getUsername().isBlank()) {
             result.addMessage("Username is required", ResultType.INVALID);
         }
@@ -137,11 +132,6 @@ public class UserService implements UserDetailsService {
 
         if (!result.isSuccess()) {
             return result;
-        }
-
-        if (credentials.getName().length() > 150) {
-            result.addMessage("Name cannot be longer than 150 characters " +
-                    "long", ResultType.INVALID);
         }
 
         if (credentials.getUsername().length() > 50) {
