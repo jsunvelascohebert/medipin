@@ -6,7 +6,6 @@ POST {{url}}/create_account HTTP/1.1
 Content-Type: application/json
 
 {
-    "name" : "tester",
     "username" : "testernator30",
     "password" : "P@ssw0rd!"
 }
@@ -17,6 +16,6 @@ POST {{url}}/authenticate HTTP/1.1
 Content-Type: application/json
 
 {
-    "username" : "testernator2",
+    "username" : "testernator30",
     "password" : "P@ssw0rd!"
 }

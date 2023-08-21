@@ -2,7 +2,7 @@
 
 ### test get by topic id
 
-GET {{url}}/2 HTTP/1.1
+GET {{url}}/1 HTTP/1.1
 
 ### test post
 
@@ -10,10 +10,10 @@ POST {{url}} HTTP/1.1
 Content-Type: application/json
 
 {
-    "topicId" : 2,
-    "articleId" : 8
+    "topicId" : 1,
+    "articleId" : 30617
 }
 
 ### test delete by key
 
-DELETE {{url}}/2/8 HTTP/1.1 
+DELETE {{url}}/1/30617 HTTP/1.1 
