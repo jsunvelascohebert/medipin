@@ -66,6 +66,9 @@
   a.menu-item-purple {
     @apply text-darkPurple;
   }
+  .card {
+    @apply flex flex-col justify-center items-center rounded-xl border-2 shadow-md p-4 gap-2;
+  }
 }
 
 @media screen(md) {
