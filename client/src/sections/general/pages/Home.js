@@ -28,7 +28,7 @@ export default function Home() {
         <h2 className="text-darkBlue text-center">features</h2>
 
         {/* card container */}
-        <div className="flex flex-col mx-auto gap-4 justify-center items-center md:flex-row p-8 sm:p-16">
+        <div className="flex flex-col mx-auto gap-8 justify-center items-center md:flex-row p-8 sm:p-16">
 
           {/* search card */}
           <div className="card items-start bg-blue">

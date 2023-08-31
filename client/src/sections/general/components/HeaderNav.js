@@ -6,7 +6,7 @@ export default function HeaderNav() {
   return (
     <section id="header" className='sticky top-0 z-10'>
       {/* desktop menu */}
-      <div className="hidden sm:flex flex-row w-100 p-4 justify-between items-center gap-4 bg-blue border-2 border-darkBlue">
+      <div className="hidden sm:flex flex-row w-100 p-4 px-6 justify-between items-center gap-4 bg-blue border-2 border-darkBlue">
         {/* TODO -- logo */}
         <div>
           <h3 className="text-xl font-darkBlue">medipin</h3>
