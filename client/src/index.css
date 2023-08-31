@@ -1,0 +1,96 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  h1 {
+    @apply font-outfit font-extrabold text-5xl;
+  }
+  h2 {
+    @apply font-outfit font-bold text-3xl underline decoration-solid;
+  }
+  h3 {
+    @apply font-outfit font-semibold text-2xl tracking-wide;
+  }
+  h4 {
+    @apply font-nunito font-semibold text-xl underline decoration-solid;
+  }
+  h5 {
+    @apply font-nunito font-semibold text-lg tracking-wide;
+  }
+  p.p1 {
+    @apply font-nunito font-normal text-sm;
+  }
+  p.p2 {
+    @apply font-nunito font-light text-xs;
+  }
+  button {
+    @apply p-1 px-4 border-2 rounded-full font-nunito font-medium text-xs hover:-translate-y-0.5 hover:-translate-x-0.5 hover:shadow-sm active:translate-y-0.5 
+    active:translate-x-0.5 active:shadow-none;
+  }
+  button.btn-blue {
+    @apply bg-lightBlue border-darkBlue text-darkBlue 
+      hover:shadow-darkBlue;
+  }
+  button.btn-green {
+    @apply bg-lightGreen border-darkGreen text-darkGreen hover:shadow-darkGreen;
+  }
+  button.btn-red {
+    @apply bg-lightRed border-darkRed text-darkRed hover:shadow-darkRed;
+  }
+  button.btn-orange {
+    @apply bg-lightOrange border-darkOrange text-darkOrange hover:shadow-darkOrange;
+  }
+  button.btn-purple {
+    @apply bg-lightPurple border-darkPurple text-darkPurple hover:shadow-darkPurple;
+  }
+  a {
+    @apply font-normal hover:font-semibold hover:underline hover:decoration-solid;
+  }
+  a.menu-item-blue {
+    @apply text-darkBlue;
+  }
+  a.menu-item-red {
+    @apply text-darkRed;
+  }
+  a.menu-item-green {
+    @apply text-darkGreen;
+  }
+  a.menu-item-orange {
+    @apply text-darkOrange;
+  }
+  a.menu-item-purple {
+    @apply text-darkPurple;
+  }
+}
+
+@media screen(md) {
+  h1 {
+    @apply font-outfit font-extrabold text-8xl;
+  }
+  h2 {
+    @apply font-outfit font-bold text-6xl underline decoration-solid;
+  }
+  h3 {
+    @apply font-outfit font-semibold text-4xl tracking-wide;
+  }
+  h4 {
+    @apply font-nunito font-semibold text-2xl underline decoration-solid;
+  }
+  h5 {
+    @apply font-nunito font-semibold text-xl tracking-wide;
+  }
+  p.p1 {
+    @apply font-nunito font-normal text-base;
+  }
+  p.p2 {
+    @apply font-nunito font-light text-sm;
+  }
+  button {
+    @apply p-1 px-2 border-2 rounded-full font-nunito font-medium text-sm hover:-translate-y-0.5 hover:-translate-x-0.5 hover:shadow-md  active:translate-y-0.5 active:translate-x-0.5 active:shadow-none;
+  }
+}
