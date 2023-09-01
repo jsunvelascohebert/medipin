@@ -30,7 +30,7 @@
   }
   button {
     @apply p-1 px-4 border-2 rounded-full font-nunito font-medium text-xs hover:-translate-y-0.5 hover:-translate-x-0.5 hover:shadow-sm active:translate-y-0.5 
-    active:translate-x-0.5 active:shadow-none;
+    active:translate-x-0.5 active:shadow-none transition duration-75;
   }
   button.btn-blue {
     @apply bg-lightBlue border-darkBlue text-darkBlue 
@@ -67,7 +67,7 @@
     @apply text-darkPurple;
   }
   .card {
-    @apply flex flex-col justify-center items-center rounded-xl border-2 shadow-md p-4 gap-2;
+    @apply flex flex-col justify-center items-center rounded-xl border-2 shadow-md p-4 gap-2 hover:-translate-y-0.5 hover:-translate-x-0.5 hover:shadow-lg transition duration-100;
   }
 }
 
@@ -94,6 +94,6 @@
     @apply font-nunito font-light text-sm;
   }
   button {
-    @apply p-1 px-2 border-2 rounded-full font-nunito font-medium text-sm hover:-translate-y-0.5 hover:-translate-x-0.5 hover:shadow-md  active:translate-y-0.5 active:translate-x-0.5 active:shadow-none;
+    @apply p-1 px-2 border-2 rounded-full font-nunito font-medium text-sm hover:-translate-y-0.5 hover:-translate-x-0.5 hover:shadow-md  active:translate-y-0.5 active:translate-x-0.5 active:shadow-none transition duration-75;
   }
 }
