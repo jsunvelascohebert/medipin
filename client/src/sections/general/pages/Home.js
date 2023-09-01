@@ -68,8 +68,9 @@ export default function Home() {
         </div>
       </div>
       
-      {/* call to action */}
+      {/* call to action container */}
       <div id="cta" className="flex flex-col md:flex-row justify-center items-center px-4 sm:px-24 py-24 my-12 w-100 bg-blue gap-12 md:gap-24 border-y-2 border-darkBlue">
+
         {/* content */}
         <p className="w-3/4 md:w-1/2 text-center text-xl">medipin is free to use but for the full experience, it is recommended you sign up for an account.</p>
         {/* button */}
