@@ -14,7 +14,7 @@ export default function Search() {
 
         {/* search bar */}
         <form id="search-form" className="flex flex-col sm:flex-row gap-4 w-full mx-auto justify-center items-center">
-            <input type="text" className=" w-full h-100 px-3 py-1  rounded-full border-2 shadow-md-inner border-darkGreen" />
+            <input id="search-input" type="text" className=" w-full h-100 px-3 py-1  rounded-full border-2 shadow-md-inner border-darkGreen text-darkGreen focus:ring-4 outline-none ring-green" placeholder='enter search query'/>
             <button className='btn-green'>search</button>
         </form>
 
