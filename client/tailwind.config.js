@@ -39,7 +39,9 @@ module.exports = {
         'lg' : '8px 8px 0px rgba(0, 0, 0, 1)',
         'md': '4px 4px 0px rgba(0, 0, 0, 1)',
         'sm': '2px 2px 0px rgba(0, 0, 0, 1)',
-        'lg-blur': '8px 8px 0 rgba(0, 0, 0, 0.5)'
+        'lg-blur': '8px 8px 0 rgba(0, 0, 0, 0.5)',
+        'sm-inner': 'inset 2px 2px 0px rgba(0, 0, 0, 0.25)',
+        'md-inner': 'inset 3px 3px 0px rgba(0, 0, 0, 0.25)',
       },
     },
   },
