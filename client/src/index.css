@@ -22,7 +22,7 @@
   h5 {
     @apply font-nunito font-semibold text-lg tracking-wide;
   }
-  p.p1 {
+  p {
     @apply font-nunito font-normal text-sm;
   }
   p.p2 {
@@ -87,7 +87,7 @@
   h5 {
     @apply font-nunito font-semibold text-xl tracking-wide;
   }
-  p.p1 {
+  p {
     @apply font-nunito font-normal text-base;
   }
   p.p2 {
