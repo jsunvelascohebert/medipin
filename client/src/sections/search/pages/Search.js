@@ -31,7 +31,7 @@ export default function Search() {
   /* ***** ***** return ***** ***** */
 
   return (
-    <section id="search" className="w-full min-h-screen p-12 md:p-24 bg-gradient-to-b from-lightGreen to-white">
+    <section id="search" className="w-full min-h-screen p-6 sm:p-12 md:p-24 bg-gradient-to-b from-lightGreen to-white">
       {/* general container */}
       <div className="flex flex-col gap-12 max-auto justify-center items-center">
 
@@ -48,7 +48,7 @@ export default function Search() {
         </form>
 
         {/* results */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {articles.map(a => <ArticleSearchCard key={a.articleId} article={a} />)}
         </div>
         
