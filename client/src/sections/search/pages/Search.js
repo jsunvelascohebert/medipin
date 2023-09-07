@@ -49,7 +49,7 @@ export default function Search() {
 
         {/* results */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {articles.map(a => <ArticleSearchCard key={a.articleId} article={a} />)}
+          {articles.map(a => <ArticleSearchCard key={a.Id} article={a} />)}
         </div>
         
       </div>

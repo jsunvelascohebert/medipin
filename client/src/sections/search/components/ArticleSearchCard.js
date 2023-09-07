@@ -2,12 +2,13 @@ import React, { useState } from 'react';
 import Modal from '../../utility/Modal';
 
 import { getArticleContentById } from '../../../fetches/ExternalAPI';
-import { parseRelatedAndSections, parseSection } from '../../utility/ArticleParser';
+import { parseRelated, parseRelatedAndSections, parseSection } from '../../utility/ArticleParser';
 
 export default function ArticleSearchCard({ article }) {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [articleContent, setArticleContent] = useState('');
+  const [relatedArticles, setRelatedArticles] = useState('');
 
   // TODO -- change this and overall modal to accept a custom footer
 
@@ -29,8 +30,8 @@ export default function ArticleSearchCard({ article }) {
       .then(data => {
         const [related, sections] = parseRelatedAndSections(data);
         setArticleContent(sections.map(s => parseSection(s)));
-        
-        // open the populated modal
+        setRelatedArticles(related.map(r => parseRelated(r)));
+
         setIsModalOpen(true);
       }).catch(errs => {
         console.log(errs);
@@ -42,11 +43,11 @@ export default function ArticleSearchCard({ article }) {
   return (
     <>
       {/* main card container */}
-      <div key={article.Id} id={article.Id}
-        className="flex flex-col gap-4 p-4 rounded-lg bg-green border-2 border-darkGreen shadow-md hover:-translate-y-1 hover:-translate-x-1 hover:shadow-lg shadow-darkGreen hover:shadow-darkGreen hover:cursor-pointer"
+      <div id={article.Id}
+        className="flex flex-col gap-4 p-4 rounded-lg bg-green border-2 border-darkGreen shadow-md hover:-translate-y-1 hover:-translate-x-1 hover:shadow-lg shadow-darkGreen hover:shadow-darkGreen hover:cursor-pointer active:translate-x-1 active:translate-y-1 active:shadow-none"
         onClick={handleCardClick}>
         
-        <img src={article.ImageUrl} alt={article.ImageAlt} className="rounded-lg border-2 border-darkGreen" />
+        <img src={article.ImageUrl} alt={article.ImageAlt} className="rounded-lg border-2 border-darkGreen h-full object-cover" />
         <h3 className='text-darkGreen text-lg sm:text-xl md:text-2xl'>
           {article.Title}
         </h3>
@@ -58,11 +59,22 @@ export default function ArticleSearchCard({ article }) {
         header='pin article'
         footerBtn={modalBtn}>
         
-        <div className="flex flex-col gap-2 justify-start items-start">
-          {articleContent}
+        {/* modal content container */}
+        <div className="flex flex-col gap-8 justify-start items-start text-darkGreen lg:flex-row-reverse">
+
+          {/* article content */}
+          <div className='flex flex-col gap-10 justify-start items-start lg:w-9/12'>
+            <h2>{article.Title}</h2>
+            {articleContent}
+          </div>
+
+          {/* related articles */}
+          <div className='flex flex-col gap-2 justify-start items-start lg:w-3/12'>
+            <h4>related articles</h4>
+            <ul>{relatedArticles}</ul>
+          </div>
         </div>
-        
-        </Modal>
+      </Modal>
     </>
   );
 

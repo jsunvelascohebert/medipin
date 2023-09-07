@@ -14,8 +14,20 @@ export function parseRelatedAndSections(data) {
 }
 
 export function parseSection(section) {
-  return (<>
-    {section.Title ? <h3>{section.Title}</h3> : null}
-    {section.Content ? parse(section.Content) : null}
-  </>);
+  return (
+    <div className='flex flex-col gap-4'>
+      {section.Title ? <h3>{section.Title}</h3> : null}
+      {section.Content ? parse(section.Content) : null}
+    </div>
+  );
+}
+
+export function parseRelated(related) {
+  return (
+    <li>
+      { related.Title
+        ? <a id={related.Id}>{related.Title}</a>
+        : null }
+    </li>
+  );
 }

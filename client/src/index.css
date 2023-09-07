@@ -11,22 +11,22 @@
     @apply font-outfit font-extrabold text-5xl;
   }
   h2 {
-    @apply font-outfit font-bold text-3xl underline decoration-solid;
+    @apply font-outfit font-bold text-4xl underline decoration-solid;
   }
   h3 {
-    @apply font-outfit font-semibold text-2xl tracking-wide;
+    @apply font-outfit font-semibold text-2xl tracking-wide text-inherit;
   }
   h4 {
-    @apply font-nunito font-semibold text-xl underline decoration-solid;
+    @apply font-nunito font-semibold text-xl underline decoration-solid text-inherit;
   }
   h5 {
     @apply font-nunito font-semibold text-lg tracking-wide;
   }
   p {
-    @apply font-nunito font-normal text-sm;
+    @apply font-nunito font-normal text-sm text-black;
   }
   p.p2 {
-    @apply font-nunito font-light text-xs;
+    @apply font-nunito font-light text-xs text-black;
   }
   button {
     @apply p-1 px-4 border-2 rounded-full font-nunito font-medium text-xs hover:-translate-y-0.5 hover:-translate-x-0.5 hover:shadow-sm active:translate-y-0.5 
@@ -49,7 +49,7 @@
     @apply bg-lightPurple border-darkPurple text-darkPurple hover:shadow-darkPurple;
   }
   a {
-    @apply font-normal hover:font-semibold hover:underline hover:decoration-solid;
+    @apply font-normal hover:font-semibold hover:underline hover:decoration-solid hover:cursor-pointer;
   }
   a.menu-item-blue {
     @apply text-darkBlue;
@@ -68,6 +68,15 @@
   }
   .card {
     @apply flex flex-col justify-center items-center rounded-xl border-2 shadow-md p-4 gap-2 hover:-translate-y-0.5 hover:-translate-x-0.5 hover:shadow-lg transition duration-100;
+  }
+  ul {
+    @apply list-outside ml-6 list-disc;
+  }
+  ol {
+    @apply list-outside ml-6 list-decimal;
+  }
+  li {
+    @apply text-sm text-black font-nunito;
   }
 }
 
@@ -95,5 +104,8 @@
   }
   button {
     @apply p-1 px-2 border-2 rounded-full font-nunito font-medium text-sm hover:-translate-y-0.5 hover:-translate-x-0.5 hover:shadow-md  active:translate-y-0.5 active:translate-x-0.5 active:shadow-none transition duration-75;
+  }
+  li {
+    @apply text-sm;
   }
 }
