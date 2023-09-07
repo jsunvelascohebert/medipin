@@ -60,7 +60,7 @@ export default function ArticleSearchCard({ article }) {
         footerBtn={modalBtn}>
         
         {/* modal content container */}
-        <div className="flex flex-col gap-8 justify-start items-start text-darkGreen lg:flex-row-reverse">
+        <div className="flex flex-col gap-10 justify-start items-start text-darkGreen lg:flex-row-reverse">
 
           {/* article content */}
           <div className='flex flex-col gap-10 justify-start items-start lg:w-9/12'>
