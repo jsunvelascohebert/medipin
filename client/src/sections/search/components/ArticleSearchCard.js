@@ -14,7 +14,7 @@ export default function ArticleSearchCard({ article }) {
   const footer = 
     <div className="w-full flex flex-col sm:flex-row justify-center sm:justify-between items-center gap-2 sm:gap-0">
       {/* back button */}
-      <a className={`group hidden sm:flex flex-row justify-start items-center gap-2 hover:cursor-pointer text-darkGreen}`} onClick={() => setIsModalOpen(false)}>
+      <a href="#" className={`group hidden sm:flex flex-row justify-start items-center gap-2 hover:cursor-pointer text-darkGreen}`} onClick={() => setIsModalOpen(false)}>
         <FaArrowLeft className='text-lg group-hover:text-xl' />
         back
       </a>

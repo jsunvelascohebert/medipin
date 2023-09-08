@@ -58,7 +58,7 @@
     @apply bg-lightPurple border-darkPurple text-darkPurple hover:shadow-darkPurple;
   }
   a {
-    @apply font-normal hover:font-semibold hover:underline hover:decoration-solid hover:cursor-pointer;
+    @apply font-normal text-sm hover:font-semibold hover:underline hover:decoration-solid hover:cursor-pointer;
   }
   a.menu-item-blue {
     @apply text-darkBlue;
@@ -98,6 +98,9 @@
   }
   h5 {
     @apply font-nunito font-semibold text-xl tracking-wide;
+  }
+  a {
+    @apply text-base;
   }
   p {
     @apply font-nunito font-normal text-base;

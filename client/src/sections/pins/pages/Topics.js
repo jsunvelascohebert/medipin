@@ -4,7 +4,6 @@ import TopicCard from '../components/TopicCard';
 import { GrAdd } from 'react-icons/gr';
 import AddTopicModal from '../components/AddTopicModal';
 
-
 export default function Topics() {
 
   const [topics, setTopics] = useState([]);
@@ -18,7 +17,7 @@ export default function Topics() {
       }).catch(errs => {
         console.log(errs);
       });
-  }, []);
+  }, [topics]);
 
   return (
     <section id="topics" className="w-full min-h-screen p-6 sm:p-12 md:p-24 bg-gradient-to-b from-lightOrange to-white">
@@ -38,7 +37,7 @@ export default function Topics() {
           <div className='w-full group relative'>
             {/* sort select */}
             <select name="topic-sort" id="topic-sort" className='w-full p-1 px-2 rounded-full border-2 border-darkOrange text-darkOrange shadow-sm-inner disabled:opacity-25' disabled>
-              <option value="" disabled selected>sort: TBA</option>
+              <option value="" disabled defaultChecked>sort: TBA</option>
               <option value="alphabetical">alphabetical: a-z</option>
               <option value="recent">time: recent-early</option>
             </select> 
