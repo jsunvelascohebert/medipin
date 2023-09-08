@@ -6,6 +6,7 @@ import Footer from './sections/general/components/Footer';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import About from './sections/general/pages/About';
 import Search from './sections/search/pages/Search';
+import Topics from './sections/pins/pages/Topics';
 
 function App() {
   return (
@@ -16,7 +17,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
           <Route path="/search" element={<Search />} />
-          <Route path="/pins" element={<About />} />
+          <Route path="/pins" element={<Topics />} />
           <Route path="/note" element={<About />} />
         </Routes>
         <Footer />

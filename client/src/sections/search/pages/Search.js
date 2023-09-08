@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { getArticlesByQuery } from '../../../fetches/ExternalAPI';
 import ArticleSearchCard from '../components/ArticleSearchCard';
 
@@ -33,7 +33,7 @@ export default function Search() {
   return (
     <section id="search" className="w-full min-h-screen p-6 sm:p-12 md:p-24 bg-gradient-to-b from-lightGreen to-white">
       {/* general container */}
-      <div className="flex flex-col gap-12 max-auto justify-center items-center">
+      <div className="flex flex-col gap-12 mx-auto justify-center items-center">
 
         {/* banner */}
         <div className="flex flex-col gap-4 mx-auto justify-center items-center">
@@ -43,7 +43,7 @@ export default function Search() {
 
         {/* search bar */}
         <form id="search-form" className="flex flex-col sm:flex-row gap-4 w-full mx-auto justify-center items-center" onSubmit={handleSearch}>
-          <input id="search-input" type="text" className=" w-full h-100 px-3 py-1  rounded-full border-2 shadow-md-inner border-darkGreen text-darkGreen focus:ring-4 outline-none ring-green" onChange={handleChange} placeholder='enter search query'/>
+          <input id="search-input" type="text" className="text-input border-darkGreen text-darkGreen ring-green" onChange={handleChange} placeholder='enter search query'/>
             <button className='btn-green' form="search-form">search</button>
         </form>
 
@@ -51,7 +51,6 @@ export default function Search() {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {articles.map(a => <ArticleSearchCard key={a.Id} article={a} />)}
         </div>
-        
       </div>
     </section>
   );

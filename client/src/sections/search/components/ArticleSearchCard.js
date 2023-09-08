@@ -3,6 +3,7 @@ import Modal from '../../utility/Modal';
 
 import { getArticleContentById } from '../../../fetches/ExternalAPI';
 import { parseRelated, parseRelatedAndSections, parseSection } from '../../utility/ArticleParser';
+import { FaArrowLeft } from 'react-icons/fa6';
 
 export default function ArticleSearchCard({ article }) {
 
@@ -10,19 +11,26 @@ export default function ArticleSearchCard({ article }) {
   const [articleContent, setArticleContent] = useState('');
   const [relatedArticles, setRelatedArticles] = useState('');
 
-  // TODO -- change this and overall modal to accept a custom footer
-
-  const modalBtn = 
-    <div className="flex flex-col sm:flex-row gap-4 justify-end items-center w-full md:w-1/2">
-      <p as="label" htmlFor="topic-select" className='w-full text-right hidden sm:inline-block'>select a topic:</p>
-      <div className='flex flex-row gap-2 justify-center items-center w-full'>
-        <select name="topic-select" id="topic-select"
-          className='p-2 rounded-full border-2 border-darkGreen shadow-sm-inner w-full text-sm'>
-          <option>personal</option>
-        </select>
-        <button className="btn-green">pin</button>
+  const footer = 
+    <div className="w-full flex flex-col sm:flex-row justify-center sm:justify-between items-center gap-2 sm:gap-0">
+      {/* back button */}
+      <a className={`group hidden sm:flex flex-row justify-start items-center gap-2 hover:cursor-pointer text-darkGreen}`} onClick={() => setIsModalOpen(false)}>
+        <FaArrowLeft className='text-lg group-hover:text-xl' />
+        back
+      </a>
+      {/* pin to topic input */}
+      <div className="flex flex-col sm:flex-row gap-4 justify-end items-center w-full md:w-1/2">
+        <p as="label" htmlFor="topic-select" className='w-full text-right hidden sm:inline-block'>select a topic:</p>
+        <div className='flex flex-row gap-2 justify-center items-center w-full'>
+          <select name="topic-select" id="topic-select"
+            className='p-2 rounded-full border-2 border-darkGreen shadow-sm-inner w-full text-sm'>
+            <option>personal</option>
+          </select>
+          <button className="btn-green">pin</button>
+        </div>
       </div>
     </div>
+
   
   const handleCardClick = () => {
     // pull and parse all the article content
@@ -44,7 +52,7 @@ export default function ArticleSearchCard({ article }) {
     <>
       {/* main card container */}
       <div id={article.Id}
-        className="flex flex-col gap-4 p-4 rounded-lg bg-green border-2 border-darkGreen shadow-md hover:-translate-y-1 hover:-translate-x-1 hover:shadow-lg shadow-darkGreen hover:shadow-darkGreen hover:cursor-pointer active:translate-x-1 active:translate-y-1 active:shadow-none"
+        className="card bg-green border-darkGreen shadow-darkGreen hover:shadow-darkGreen"
         onClick={handleCardClick}>
         
         <img src={article.ImageUrl} alt={article.ImageAlt} className="rounded-lg border-2 border-darkGreen h-full object-cover" />
@@ -57,7 +65,7 @@ export default function ArticleSearchCard({ article }) {
       <Modal color='green' isOpen={isModalOpen}
         setOpen={(val) => setIsModalOpen(val)}
         header='pin article'
-        footerBtn={modalBtn}>
+        footer={footer}>
         
         {/* modal content container */}
         <div className="flex flex-col gap-10 justify-start items-start text-darkGreen lg:flex-row-reverse">
@@ -69,7 +77,7 @@ export default function ArticleSearchCard({ article }) {
           </div>
 
           {/* related articles */}
-          <div className='flex flex-col gap-2 justify-start items-start lg:w-3/12'>
+          <div className='sticky top-0 flex flex-col gap-2 justify-start items-start lg:w-3/12 overflow-y-auto'>
             <h4>related articles</h4>
             <ul>{relatedArticles}</ul>
           </div>

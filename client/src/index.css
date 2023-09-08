@@ -28,8 +28,17 @@
   p.p2 {
     @apply font-nunito font-light text-xs text-black;
   }
+  ul {
+    @apply list-outside ml-6 list-disc;
+  }
+  ol {
+    @apply list-outside ml-6 list-decimal;
+  }
+  li {
+    @apply text-sm text-black font-nunito;
+  }
   button {
-    @apply p-1 px-4 border-2 rounded-full font-nunito font-medium text-xs hover:-translate-y-0.5 hover:-translate-x-0.5 hover:shadow-sm active:translate-y-0.5 
+    @apply p-1 px-2 border-2 rounded-full font-nunito font-medium text-xs hover:-translate-y-0.5 hover:-translate-x-0.5 hover:shadow-sm active:translate-y-0.5 
     active:translate-x-0.5 active:shadow-none transition duration-75;
   }
   button.btn-blue {
@@ -67,16 +76,10 @@
     @apply text-darkPurple;
   }
   .card {
-    @apply flex flex-col justify-center items-center rounded-xl border-2 shadow-md p-4 gap-2 hover:-translate-y-0.5 hover:-translate-x-0.5 hover:shadow-lg transition duration-100;
+    @apply flex flex-col justify-center items-center rounded-xl border-2 shadow-md p-4 gap-4 hover:-translate-y-0.5 hover:-translate-x-0.5 hover:shadow-lg transition duration-100 hover:cursor-pointer active:translate-y-1 active:translate-x-1 active:shadow-none;
   }
-  ul {
-    @apply list-outside ml-6 list-disc;
-  }
-  ol {
-    @apply list-outside ml-6 list-decimal;
-  }
-  li {
-    @apply text-sm text-black font-nunito;
+  .text-input {
+    @apply w-full px-3 py-1 rounded-full border-2 shadow-md-inner focus:ring-4 outline-none;
   }
 }
 

@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { CgClose } from 'react-icons/cg';
-import { FaArrowLeft } from 'react-icons/fa6';
 
-
-
-export default function Modal({ color, isOpen, setOpen, header, footerBtn, children }) {
+export default function Modal({ color, isOpen, setOpen, header, footer, children }) {
 
   /* ***** ***** color scheme handlers ***** ***** */
 
@@ -49,16 +46,11 @@ export default function Modal({ color, isOpen, setOpen, header, footerBtn, child
             {children}
           </div>
 
-          {/* modal footer */}
-          <div className={`w-full flex flex-col sm:flex-row justify-between items-center border-t-2 p-4 border-${darkColor} gap-2 sm:gap-0`}>
-            {/* go back */}
-            <a className={`group hidden sm:flex flex-row justify-start items-center gap-2 hover:cursor-pointer text-${darkColor}`} onClick={toggleModalState}>
-              <FaArrowLeft className='text-lg group-hover:text-xl' />
-              back
-            </a>
-            {/* confirm button */}
-            {footerBtn}
+          {/* modal footer container */}
+          <div className={`w-full border-t-2 p-4 border-${darkColor}`}>
+            {footer}
           </div>
+
         </div>
       </div>
     ) : null}</>
