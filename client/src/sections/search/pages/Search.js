@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { getArticlesByQuery } from '../../../fetches/ExternalAPI';
 import ArticleSearchCard from '../components/ArticleSearchCard';
+import LoadingOverlay from '../../utility/LoadingOverlay';
 
 export default function Search() {
 
   const [searchTerm, setSearchTerm] = useState('');
   const [articles, setArticles] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   /* ***** ***** event handlers ***** ***** */
 
@@ -15,7 +17,7 @@ export default function Search() {
 
   const handleSearch = (event) => {
     event.preventDefault();
-
+    setIsLoading(true);
     getArticlesByQuery(searchTerm)
       .then(data => {
         if (data.Result.Resources) {
@@ -23,6 +25,7 @@ export default function Search() {
         } else {
           console.log('no articles');
         }
+        setIsLoading(false);
       }).catch(errs => {
         console.log(errs);
       });
@@ -30,7 +33,7 @@ export default function Search() {
 
   /* ***** ***** return ***** ***** */
 
-  return (
+  return (<>
     <section id="search" className="w-full min-h-screen p-6 sm:p-12 md:p-24 bg-gradient-to-b from-lightGreen to-white">
       {/* general container */}
       <div className="flex flex-col gap-12 mx-auto justify-center items-center">
@@ -53,5 +56,8 @@ export default function Search() {
         </div>
       </div>
     </section>
-  );
+
+    {/* loading content */}
+    {isLoading && <LoadingOverlay color='green'/>}
+  </>);
 }

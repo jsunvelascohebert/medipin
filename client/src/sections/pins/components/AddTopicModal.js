@@ -48,6 +48,7 @@ export default function AddTopicModal({ isOpen, setOpen }) {
   return (
     <Modal color='orange' isOpen={isModalOpen}
       setOpen={handleAddClick}
+      size='sm'
       header='add topic'
       footer={footer}>
       {/* form */}
