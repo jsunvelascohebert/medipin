@@ -23,6 +23,7 @@ export default function DeleteTopicModal({ isOpen, setOpen, topic }) {
     deleteTopic(topic.topicId)
       .then(() => {
         console.log('success!');
+        closeModal(true);
       }).catch(errs => {
         console.log(errs);
       });
@@ -47,7 +48,7 @@ export default function DeleteTopicModal({ isOpen, setOpen, topic }) {
 
   /* ***** ***** return ***** ***** */
 
-  return (
+  return (<>
     <Modal color='orange' isOpen={isModalOpen}
       setOpen={closeModal}
       size='sm'
@@ -67,5 +68,5 @@ export default function DeleteTopicModal({ isOpen, setOpen, topic }) {
         </p>
       </div>
     </Modal>
-  );
+  </>);
 }

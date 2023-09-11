@@ -22,7 +22,6 @@ export default function ArticleSearchCard({ article }) {
         const [related, sections] = parseRelatedAndSections(data);
         setArticleContent(sections.map(s => parseSection(s)));
         setRelatedArticles(related.map(r => parseRelated(r)));
-
         setIsModalOpen(true);
         setIsLoading(false);
       }).catch(errs => {
@@ -47,7 +46,7 @@ export default function ArticleSearchCard({ article }) {
 
       {/* article modal */}
       {isModalOpen && 
-        <ArticleSearchModal isOpen={isModalOpen}
+        <ArticleSearchModal key={article.id} isOpen={isModalOpen}
           setOpen={(val) => setIsModalOpen(val)}
           article={article} articleContent={articleContent}
           relatedArticles={relatedArticles}/>

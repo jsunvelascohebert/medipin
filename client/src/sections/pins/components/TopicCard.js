@@ -1,27 +1,17 @@
 import React, { useState } from 'react';
 import { AiOutlineEdit, AiOutlineDelete } from 'react-icons/ai';
-import { deleteTopic } from '../../../fetches/internal/TopicFetches';
 import DeleteTopicModal from './DeleteTopicModal';
 
 
-export default function TopicCard({ topic }) {
 
-  /* ***** ***** modal handlers ***** ***** */
+export default function TopicCard({ topic }) {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   /* ***** ***** update handlers ***** ***** */
 
-  /* ***** ***** delete handlers ***** ***** */
 
-  const handleDelete = () => {
-    deleteTopic(topic.topicId)
-      .then(() => {
-        console.log('success!');
-      }).catch(errs => {
-        console.log(errs);
-      });
-  }
+  /* ***** ***** delete handlers ***** ***** */
 
   /* ***** ***** return ***** ***** */
 
@@ -51,5 +41,5 @@ export default function TopicCard({ topic }) {
         setOpen={(val) => setIsModalOpen(val)}
         topic={topic} />
     }
-    </>);
+  </>);
 }
