@@ -38,8 +38,7 @@
     @apply text-sm text-black font-nunito;
   }
   button {
-    @apply p-1 px-2 border-2 rounded-full font-nunito font-medium text-xs hover:-translate-y-0.5 hover:-translate-x-0.5 hover:shadow-sm active:translate-y-0.5 
-    active:translate-x-0.5 active:shadow-none transition duration-75;
+    @apply p-1 px-2 border-2 rounded-full font-nunito font-medium text-xs hover:-translate-y-0.5 hover:-translate-x-0.5 hover:shadow-sm active:translate-y-0.5 active:translate-x-0.5 active:shadow-none transition duration-75 ring-0;
   }
   button.btn-blue {
     @apply bg-lightBlue border-darkBlue text-darkBlue 
@@ -63,19 +62,19 @@
   .menu-item {
     @apply font-normal text-sm hover:font-semibold hover:underline hover:decoration-solid hover:cursor-pointer;
   }
-  a.menu-item-blue {
+  .menu-item-blue {
     @apply text-darkBlue;
   }
-  a.menu-item-red {
+  .menu-item-red {
     @apply text-darkRed;
   }
-  a.menu-item-green {
+  .menu-item-green {
     @apply text-darkGreen;
   }
-  a.menu-item-orange {
+  .menu-item-orange {
     @apply text-darkOrange;
   }
-  a.menu-item-purple {
+  .menu-item-purple {
     @apply text-darkPurple;
   }
   .card {

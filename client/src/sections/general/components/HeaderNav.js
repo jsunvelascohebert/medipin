@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { FaBars, FaRegWindowClose } from 'react-icons/fa';
+import { FaBars } from 'react-icons/fa';
 import { CgClose } from 'react-icons/cg';
 import { Link, useLocation } from 'react-router-dom';
 import LoginModal from './LoginModal';

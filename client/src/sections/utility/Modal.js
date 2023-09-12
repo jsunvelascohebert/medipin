@@ -43,6 +43,19 @@ export default function Modal({ color, isOpen, setOpen, size, header, footer, ch
     setIsModalOpen(isOpen);    
   }, [isOpen]);
 
+  useEffect(() => {
+    const keyDownHandler = event => {
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        toggleModalState();
+      }
+    };
+    document.addEventListener('keydown', keyDownHandler);
+    return () => {
+      document.removeEventListener('keydown', keyDownHandler);
+    };
+  }, []);
+
   /* ***** ***** return statement ***** ***** */
 
   return (
