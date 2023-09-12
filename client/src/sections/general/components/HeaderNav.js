@@ -3,6 +3,7 @@ import { FaBars, FaRegWindowClose } from 'react-icons/fa';
 import { CgClose } from 'react-icons/cg';
 import { Link, useLocation } from 'react-router-dom';
 import LoginModal from './LoginModal';
+import RegisterModal from './RegisterModal';
 
 export default function HeaderNav() {
 
@@ -75,19 +76,10 @@ export default function HeaderNav() {
     setMobileMenuOpen(!isMobileMenuOpen);
   };
 
-  /* ***** ***** login handlers ***** ***** */
+  /* ***** ***** login/register handlers ***** ***** */
 
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
-
-  useEffect(() => {
-    setIsLoginModalOpen(isLoginModalOpen);
-  }, [isLoginModalOpen]);
-
-  /* ***** ***** register handlers ***** ***** */
-
-
-
-
+  const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
 
   /* ***** ***** return ***** ***** */
 
@@ -109,8 +101,10 @@ export default function HeaderNav() {
         </div>
         {/* authentication */}
         <div className="flex flex-row justify-center items-center gap-4 md:gap-8">
-          <div className={`menu-item ${menuItemColor}`} onClick={() => setIsLoginModalOpen(true)}>login</div>
-          <button className={buttonColor}>sign up</button>
+          <div className={`menu-item ${menuItemColor}`}
+            onClick={() => setIsLoginModalOpen(true)}>login</div>
+          <button className={buttonColor}
+            onClick={() => setIsRegisterModalOpen(true)}>sign up</button>
         </div>
       </div>
 
@@ -170,7 +164,10 @@ export default function HeaderNav() {
                 onClick={() => setIsLoginModalOpen(true)}>
                 login
               </div>
-              <button className={buttonColor}>sign up</button>
+              <button className={buttonColor}
+                onClick={() => setIsRegisterModalOpen(true)}>
+                sign up
+              </button>
             </div>
           </div>
         </div>
@@ -180,8 +177,13 @@ export default function HeaderNav() {
     {/* login modal */}
     {isLoginModalOpen &&
       <LoginModal isOpen={true} color={generalColor}
-        setOpen={(val) => setIsLoginModalOpen(val)} 
-        />    
+        setOpen={(val) => setIsLoginModalOpen(val)} />    
+    }
+
+    {/* register modal */}
+    {isRegisterModalOpen &&
+      <RegisterModal isOpen={true} color={generalColor}
+        setOpen={(val) => setIsRegisterModalOpen(val)} />
     }
   </>);
 
