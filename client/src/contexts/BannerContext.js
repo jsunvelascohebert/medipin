@@ -3,7 +3,6 @@ import React, { useState, createContext } from 'react';
 const BannerContext = createContext();
 
 const EMPTY_CONTENT = {
-  color: '',
   message: '',
   status: ''
 }

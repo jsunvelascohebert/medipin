@@ -18,7 +18,6 @@ export default function About() {
   const openBanner = () => {
     setIsBannerOpen(true);
     showBanner({
-      color: 'orange',
       message: 'testing banner',
       status: '420'
     });

@@ -6,38 +6,32 @@ import { BannerContext } from '../../../contexts/BannerContext';
 
 export default function DeleteTopicModal({ isOpen, setOpen, topic }) {
 
+  const { showBanner } = useContext(BannerContext);
+
   /* ***** ***** modal handlers ***** ***** */
 
   const [isModalOpen, setIsModalOpen] = useState(isOpen);
 
-  const closeModal = (val) => {
+  const showModal = (val) => {
     setIsModalOpen(val);
     setOpen(val);
   }
 
-  /* ***** ***** banner handlers ***** ***** */
-
-  const { showBanner } = useContext(BannerContext);
-
-
-
-
-  /* ***** ***** * ***** ***** */
-  /* ***** ***** * ***** ***** */
   /* ***** ***** delete handlers ***** ***** */
 
   const handleDelete = () => {
+    showModal(false);
     deleteTopic(topic.topicId)
       .then(() => {
         showBanner({
-          color: 'orange',
-          message: 'testing banner show',
+          message: `successfully deleted topic '${topic.name}'`,
           status: 'success'
         });
-        console.log('success!');
-        closeModal(true);
       }).catch(errs => {
-        console.log(errs);
+        showBanner({
+          message: `could not delete topic '${topic.name}'`,
+          status: 'error'
+        });
       });
   }
 
@@ -48,7 +42,7 @@ export default function DeleteTopicModal({ isOpen, setOpen, topic }) {
       {/* back statement */}
       <a href="#" className="flex flex-row justify-start gap-2 
       items-center group text-darkOrange"
-        onClick={() => closeModal(false)}>
+        onClick={() => showModal(false)}>
         <FaArrowLeft className='text-sm md:text-lg group-hover:text-xl' />
         cancel
       </a>
@@ -62,7 +56,7 @@ export default function DeleteTopicModal({ isOpen, setOpen, topic }) {
 
   return (<>
     <Modal color='orange' isOpen={isModalOpen}
-      setOpen={closeModal}
+      setOpen={showModal}
       size='sm'
       header='delete topic'
       footer={footer}>
