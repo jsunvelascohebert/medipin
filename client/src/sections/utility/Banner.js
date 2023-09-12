@@ -28,7 +28,7 @@ export default function Banner() {
 
   return (<>
     {/* full width container */}
-    <div className={`fixed ${visible ? 'top-2' : '-top-24'} left-0 right-0 z-50 flex flex-col justify-center items-center min-h-1/6 transition-all duration-300`} >
+    <div className={`fixed ${visible ? 'top-1' : '-top-24'} left-0 right-0 z-50 flex flex-col justify-center items-center min-h-1/6 transition-all duration-300`} >
 
       {/* inner container */}
       <div className={`flex flex-col gap-2 py-2 px-4 w-5/6 ${colorStyle} border-2 rounded-full opacity-100`}>

@@ -2,30 +2,28 @@ import React, { useEffect, useState } from 'react';
 import { FaBars, FaRegWindowClose } from 'react-icons/fa';
 import { CgClose } from 'react-icons/cg';
 import { Link, useLocation } from 'react-router-dom';
+import LoginModal from './LoginModal';
 
 export default function HeaderNav() {
 
+  /* ***** ***** color styling ***** ***** */
+
   const location = useLocation();
 
+  const [generalColor, setGeneralColor] = useState('');
   const [containerColor, setContainerColor] = useState('');
   const [fontColor, setFontColor] = useState('');
   const [buttonColor, setButtonColor] = useState('');
   const [menuItemColor, setMenuItemColor] = useState('');
   const [bgGradient, setBgGradient] = useState('');
 
-  const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
-
-  const expandMobileMenu = () => {
-    setMobileMenuOpen(!isMobileMenuOpen);
-  };
-
   useEffect(() => {
-
     const splitPath = location.pathname.split('/');
 
     // checks pathname and sets color of components
     switch (splitPath[1]) {
       case '':
+        setGeneralColor('blue');
         setContainerColor('bg-blue border-darkBlue');
         setFontColor('text-darkBlue');
         setButtonColor('btn-blue');
@@ -33,6 +31,7 @@ export default function HeaderNav() {
         setBgGradient('from-lightBlue');
         break;
       case 'about':
+        setGeneralColor('red');
         setContainerColor('bg-red border-darkRed');
         setFontColor('text-darkRed');
         setButtonColor('btn-red');
@@ -40,6 +39,7 @@ export default function HeaderNav() {
         setBgGradient('from-lightRed');
         break;
       case 'search':
+        setGeneralColor('green');
         setContainerColor('bg-green border-darkGreen');
         setFontColor('text-darkGreen');
         setButtonColor('btn-green');
@@ -47,6 +47,7 @@ export default function HeaderNav() {
         setBgGradient('from-lightGreen');
         break;
       case 'pins':
+        setGeneralColor('orange');
         setContainerColor('bg-orange border-darkOrange');
         setFontColor('text-darkOrange');
         setButtonColor('btn-orange');
@@ -54,6 +55,7 @@ export default function HeaderNav() {
         setBgGradient('from-lightOrange');
         break;
       case 'note':
+        setGeneralColor('purple');
         setContainerColor('bg-purple border-darkPurple');
         setFontColor('text-darkPurple');
         setButtonColor('btn-purple');
@@ -65,9 +67,31 @@ export default function HeaderNav() {
     }
   }, [location.pathname]);
 
-  return (
-    // <section id="header" className='sticky top-0 z-10'>
+  /* ***** ***** mobile menu handlers ***** ***** */
 
+  const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const expandMobileMenu = () => {
+    setMobileMenuOpen(!isMobileMenuOpen);
+  };
+
+  /* ***** ***** login handlers ***** ***** */
+
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+
+  useEffect(() => {
+    setIsLoginModalOpen(isLoginModalOpen);
+  }, [isLoginModalOpen]);
+
+  /* ***** ***** register handlers ***** ***** */
+
+
+
+
+
+  /* ***** ***** return ***** ***** */
+
+  return (<>
     <section id="header" className='z-10'>
       {/* desktop menu */}
       <div className={`hidden sm:flex flex-row w-100 p-4 px-6 justify-between items-center gap-4 border-2 ${containerColor}`}>
@@ -85,7 +109,7 @@ export default function HeaderNav() {
         </div>
         {/* authentication */}
         <div className="flex flex-row justify-center items-center gap-4 md:gap-8">
-          <a href="#" className={menuItemColor}>login</a>
+          <div className={`menu-item ${menuItemColor}`} onClick={() => setIsLoginModalOpen(true)}>login</div>
           <button className={buttonColor}>sign up</button>
         </div>
       </div>
@@ -102,7 +126,6 @@ export default function HeaderNav() {
           className={`text-xl hover:cursor-pointer ${fontColor}`}
           onClick={expandMobileMenu}
         />
-
       </div>
 
       {/* todo -- mobile menu expanded */}
@@ -143,13 +166,23 @@ export default function HeaderNav() {
             <div className={`border w-1/2 ${containerColor}`}></div>
             {/* authentication container */}
             <div className="flex flex-col gap-4 justify-center items-center mt-4">
-              <Link to="/" className={menuItemColor}>login</Link>
+              <div className={`menu-item ${menuItemColor}`}
+                onClick={() => setIsLoginModalOpen(true)}>
+                login
+              </div>
               <button className={buttonColor}>sign up</button>
             </div>
           </div>
         </div>
       )}
     </section>
-  );
+
+    {/* login modal */}
+    {isLoginModalOpen &&
+      <LoginModal isOpen={true} color={generalColor}
+        setOpen={(val) => setIsLoginModalOpen(val)} 
+        />    
+    }
+  </>);
 
 }

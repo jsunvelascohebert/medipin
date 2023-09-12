@@ -60,6 +60,9 @@
   a {
     @apply font-normal text-sm hover:font-semibold hover:underline hover:decoration-solid hover:cursor-pointer;
   }
+  .menu-item {
+    @apply font-normal text-sm hover:font-semibold hover:underline hover:decoration-solid hover:cursor-pointer;
+  }
   a.menu-item-blue {
     @apply text-darkBlue;
   }
