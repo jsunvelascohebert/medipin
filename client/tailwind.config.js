@@ -43,6 +43,9 @@ module.exports = {
         'sm-inner': 'inset 2px 2px 0px rgba(0, 0, 0, 0.25)',
         'md-inner': 'inset 3px 3px 0px rgba(0, 0, 0, 0.25)',
       },
+      transitionDuration: {
+        '3000': '3000ms',
+      }
     },
   },
   plugins: []

@@ -13,13 +13,12 @@ const BannerProvider = ({ children }) => {
   const [content, setContent] = useState(EMPTY_CONTENT);
   const [visible, setVisible] = useState(false);
 
-
   const showBanner = (content) => {
     setContent(content);
     setVisible(true);
     setTimeout(() => {
       hideBanner();
-    }, 4000);
+    }, 3000);
   }
   
   const hideBanner = () => {
