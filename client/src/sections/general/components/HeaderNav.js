@@ -100,7 +100,9 @@ export default function HeaderNav() {
         <div className="flex flex-row justify-center items-center gap-4 md:gap-8">
           <Link to="/about" className={menuItemColor}>about</Link>
           <Link to="/search" className={menuItemColor}>search</Link>
-          <Link to="/pins" className={menuItemColor}>pins</Link>
+          {auth.isLoggedIn() &&
+            <Link to="/pins" className={menuItemColor}>pins</Link>
+          }
         </div>
         {/* authentication */}
         {auth.isLoggedIn()
@@ -119,7 +121,6 @@ export default function HeaderNav() {
               onClick={() => setIsRegisterModalOpen(true)}>sign up</button>
           </div>
         }
-        
       </div>
 
       {/* mobile menu collapsed */}
