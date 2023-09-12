@@ -21,7 +21,7 @@ import java.util.Map;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/api")
+@RequestMapping("/security")
 @ConditionalOnWebApplication
 public class AuthController {
 
@@ -67,7 +67,6 @@ public class AuthController {
                     return new ResponseEntity<>(result.getMessages(),
                             HttpStatus.BAD_REQUEST);
                 }
-
             }
 
         } catch (AuthenticationException ex) {
@@ -97,10 +96,12 @@ public class AuthController {
             return new ResponseEntity<>(result.getMessages(), HttpStatus.BAD_REQUEST);
         }
 
-        HashMap<String, Integer> map = new HashMap<>();
-        map.put("userId", result.getPayload().getUserId());
+        User newUser = result.getPayload();
+        HashMap<String, Object> response = new HashMap<>();
+        response.put("userId", newUser.getUserId());
+        response.put("username", newUser.getUsername());
 
-        return new ResponseEntity<>(map, HttpStatus.CREATED);
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
     private HashMap<String, String> makeUserTokenMap(User user){

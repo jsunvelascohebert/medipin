@@ -1,22 +1,39 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Modal from '../../utility/Modal';
+import AuthContext from '../../../contexts/AuthContext';
+import { authenticate, createAccount } from '../../../fetches/internal/AuthFetches';
 
-export default function LoginModal({ isOpen, setOpen, color }) {
+export default function RegisterModal({ isOpen, setOpen, color }) {
 
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [creds, setCredentials] = useState({
+    username: '',
+    password: ''
+  });
+
+  const auth = useContext(AuthContext);
 
   const toggleModal = () => {
     setOpen(!isOpen);
-    setUsername('');
-    setPassword('');
+    setCredentials({ username: '', password: '' });
   }
 
   /* ***** ***** submit handler ***** ***** */
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    console.log(`username: ${username} ... password: ${password}`);
+
+    createAccount(creds)
+      .then(() => {
+        authenticate(creds)
+          .then(data => {
+            auth.onAuthenticated(data);
+            toggleModal();
+          }).catch(errs => {
+            console.log(errs);
+          });
+      }).catch(errs => {
+        console.log(errs);
+      });
   }
 
   /* ***** ***** footer ***** ***** */
@@ -35,7 +52,7 @@ export default function LoginModal({ isOpen, setOpen, color }) {
   /* ***** ***** return ***** ***** */
 
   return (
-<Modal color={color} isOpen={isOpen}
+    <Modal color={color} isOpen={isOpen}
       setOpen={toggleModal}
       size='md'
       header='sign up'
@@ -45,20 +62,21 @@ export default function LoginModal({ isOpen, setOpen, color }) {
         {/* username input */}
         <div className="w-4/5 flex flex-col sm:flex-row justify-center sm:justify-start items-center gap-2 sm:gap-4">
           <label htmlFor="register-username" className='text-sm font-bold opacity-50'>username:</label>
-          <input type="text" id="register-username" className={`w-full text-input ring-${color}`}
-            placeholder='enter username'
-            onChange={(evt) => setUsername(evt.target.value)} />
+          <input type="text" id="register-username"
+            className={`w-full text-input ring-${color}`}
+            name='username' placeholder='enter username'
+            onChange={(event) => creds.username = event.target.value} />
         </div>
         {/* password input */}
         <div className="w-4/5 flex flex-col sm:flex-row justify-center sm:justify-start items-center gap-2 sm:gap-4">
           <label htmlFor="register-password" className='text-sm font-bold opacity-50'>password:</label>
-          <input type="password" id="register-password" className={`w-full text-input ring-${color}`}
-            placeholder='enter password'
-            onChange={(evt) => setPassword(evt.target.value)} />
+          <input type="password" id="register-password"
+            className={`w-full text-input ring-${color}`}
+            placeholder='enter password' name='password'
+            onChange={(event) => creds.password = event.target.value} />
         </div>
       </form>
     </Modal>
   );
-
 
 }

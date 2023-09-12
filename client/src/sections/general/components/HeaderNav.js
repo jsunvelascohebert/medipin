@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { FaBars } from 'react-icons/fa';
 import { CgClose } from 'react-icons/cg';
 import { Link, useLocation } from 'react-router-dom';
 import LoginModal from './LoginModal';
 import RegisterModal from './RegisterModal';
+import AuthContext from '../../../contexts/AuthContext';
 
 export default function HeaderNav() {
 
@@ -81,6 +82,8 @@ export default function HeaderNav() {
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
 
+  const auth = useContext(AuthContext);
+
   /* ***** ***** return ***** ***** */
 
   return (<>
@@ -100,12 +103,23 @@ export default function HeaderNav() {
           <Link to="/pins" className={menuItemColor}>pins</Link>
         </div>
         {/* authentication */}
-        <div className="flex flex-row justify-center items-center gap-4 md:gap-8">
-          <div className={`menu-item ${menuItemColor}`}
-            onClick={() => setIsLoginModalOpen(true)}>login</div>
-          <button className={buttonColor}
-            onClick={() => setIsRegisterModalOpen(true)}>sign up</button>
-        </div>
+        {auth.isLoggedIn()
+          ? // if logged in
+          <div className='flex flex-row justify-center items-center gap-4'>
+            <p className='opacity-25'>{auth.user.username}</p>
+            <button className={buttonColor} onClick={() => auth.signOut()}>
+              logout
+            </button>
+          </div>
+          : // if logged out
+          <div className="flex flex-row justify-center items-center gap-4 md:gap-8">
+            <div className={`menu-item ${menuItemColor}`}
+              onClick={() => setIsLoginModalOpen(true)}>login</div>
+            <button className={buttonColor}
+              onClick={() => setIsRegisterModalOpen(true)}>sign up</button>
+          </div>
+        }
+        
       </div>
 
       {/* mobile menu collapsed */}

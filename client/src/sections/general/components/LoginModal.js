@@ -1,16 +1,24 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import Modal from '../../utility/Modal';
+import AuthContext from '../../../contexts/AuthContext';
+import { authenticate } from '../../../fetches/internal/AuthFetches';
 
 export default function LoginModal({ isOpen, setOpen, color }) {
 
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
   const [ringColor, setRingColor] = useState(`ring-${color}`);
+  const auth = useContext(AuthContext);
+
+  const [creds, setCredentials] = useState({
+    username: '',
+    password: ''
+  });
 
   const toggleModal = () => {
     setOpen(!isOpen);
-    setUsername('');
-    setPassword('');
+    setCredentials({
+      username: '',
+      password: ''
+    });
   }
 
   useEffect(() => {
@@ -21,7 +29,13 @@ export default function LoginModal({ isOpen, setOpen, color }) {
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    console.log(`username: ${username} ... password: ${password}`);
+    authenticate(creds)
+      .then(data => {
+        auth.onAuthenticated(data);
+        toggleModal();
+      }).catch(errs => {
+        console.log(errs);
+      });
   }
 
   /* ***** ***** footer ***** ***** */
@@ -52,14 +66,14 @@ export default function LoginModal({ isOpen, setOpen, color }) {
           <label htmlFor="login-username" className='text-sm font-bold opacity-50'>username:</label>
           <input type="text" id="login-username" className={`w-full text-input ${ringColor}`}
             placeholder='enter username'
-            onChange={(evt) => setUsername(evt.target.value)} />
+            onChange={(evt) => creds.username = evt.target.value} />
         </div>
         {/* password input */}
         <div className="w-4/5 flex flex-col sm:flex-row justify-center sm:justify-start items-center gap-2 sm:gap-4">
           <label htmlFor="login-password" className='text-sm font-bold opacity-50'>password:</label>
           <input type="password" id="login-password" className={`w-full text-input ${ringColor}`}
             placeholder='enter password'
-            onChange={(evt) => setPassword(evt.target.value)} />
+            onChange={(evt) => creds.password = evt.target.value} />
         </div>
       </form>
     </Modal>
