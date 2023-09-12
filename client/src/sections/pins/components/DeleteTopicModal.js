@@ -1,20 +1,27 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Modal from '../../utility/Modal';
 import { FaArrowLeft } from 'react-icons/fa6';
 import { deleteTopic } from '../../../fetches/internal/TopicFetches';
+import { BannerContext } from '../../../contexts/BannerContext';
 
 export default function DeleteTopicModal({ isOpen, setOpen, topic }) {
 
-  const [isModalOpen, setIsModalOpen] = useState(isOpen);
-
   /* ***** ***** modal handlers ***** ***** */
+
+  const [isModalOpen, setIsModalOpen] = useState(isOpen);
 
   const closeModal = (val) => {
     setIsModalOpen(val);
     setOpen(val);
   }
 
-  /* ***** ***** * ***** ***** */
+  /* ***** ***** banner handlers ***** ***** */
+
+  const { showBanner } = useContext(BannerContext);
+
+
+
+
   /* ***** ***** * ***** ***** */
   /* ***** ***** * ***** ***** */
   /* ***** ***** delete handlers ***** ***** */
@@ -22,6 +29,11 @@ export default function DeleteTopicModal({ isOpen, setOpen, topic }) {
   const handleDelete = () => {
     deleteTopic(topic.topicId)
       .then(() => {
+        showBanner({
+          color: 'orange',
+          message: 'testing banner show',
+          status: 'success'
+        });
         console.log('success!');
         closeModal(true);
       }).catch(errs => {

@@ -66,7 +66,9 @@ export default function HeaderNav() {
   }, [location.pathname]);
 
   return (
-    <section id="header" className='sticky top-0 z-10'>
+    // <section id="header" className='sticky top-0 z-10'>
+
+    <section id="header" className='z-10'>
       {/* desktop menu */}
       <div className={`hidden sm:flex flex-row w-100 p-4 px-6 justify-between items-center gap-4 border-2 ${containerColor}`}>
         {/* TODO -- logo */}
