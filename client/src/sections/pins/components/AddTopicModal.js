@@ -6,7 +6,7 @@ import { addUserTopic } from '../../../fetches/internal/UserTopicFetches';
 import AuthContext from '../../../contexts/AuthContext';
 
 
-export default function AddTopicModal({ isOpen, setOpen }) {
+export default function AddTopicModal({ isOpen, setOpen, isUpdated }) {
 
   const [isModalOpen, setIsModalOpen] = useState(isOpen);
   const [newTopic, setNewTopic] = useState('');
@@ -29,12 +29,19 @@ export default function AddTopicModal({ isOpen, setOpen }) {
         addUserTopic(auth.user.userId, data.topicId)
           .then(data => {
             console.log(data);
+            isUpdated();
+
           }).catch(errs => {
             console.log(errs);
+            isUpdated();
+
           });
       }).catch(errs => {
         console.log(errs);
+        isUpdated();
+
       });
+
     handleAddClick(false);
   }
 

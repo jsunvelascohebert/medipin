@@ -31,7 +31,6 @@ export async function addUserTopic(userId, topicId) {
     body: JSON.stringify(userTopic)
   }
   const response = await fetch(URL, init);
-  console.log(response);
   if (response.status === 201) {
     return await response.json();
   } else {
@@ -41,3 +40,14 @@ export async function addUserTopic(userId, topicId) {
 }
 
 /* ***** ***** delete user topic ***** ***** */
+
+export async function deleteUserTopicByKey(userId, topicId) {
+  const init = {
+    method: 'DELETE'
+  }
+  const response = await fetch(`${URL}/${userId}/${topicId}`, init);
+  if (response.status !== 204) {
+    const errs = await response.json();
+    return Promise.reject(errs);
+  }
+}

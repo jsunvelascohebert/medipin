@@ -4,7 +4,7 @@ import DeleteTopicModal from './DeleteTopicModal';
 
 
 
-export default function TopicCard({ topic }) {
+export default function TopicCard({ topic, isUpdated }) {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -39,7 +39,7 @@ export default function TopicCard({ topic }) {
     { isModalOpen &&
       <DeleteTopicModal isOpen={isModalOpen}
         setOpen={(val) => setIsModalOpen(val)}
-        topic={topic} />
+        topic={topic} isUpdated={() => isUpdated()} />
     }
   </>);
 }

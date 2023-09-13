@@ -25,21 +25,6 @@ public class JwtConverter {
     private final int EXPIRATION_MINUTES = 720;
     private final int EXPIRATION_MILLIS = EXPIRATION_MINUTES * 60 * 1000;
 
-//    public String getTokenFromUser(User user){
-//
-//        String authorities = user.getAuthorities().stream().map(i -> i.getAuthority())
-//                .collect(Collectors.joining(","));
-//
-//        return Jwts.builder()
-//                .setIssuer(ISSUER)
-//                .setSubject(user.getUsername())
-//                .claim("authorities", authorities)
-//                .claim("userId", user.getUserId())
-//                .setExpiration(new Date(System.currentTimeMillis() + EXPiRATION_MILLIS))
-//                .signWith(key)
-//                .compact();
-//    }
-
     public String getTokenFromUser(UserDetails userDetails) {
         User user = (User) userDetails;
 
@@ -62,24 +47,6 @@ public class JwtConverter {
         if(token == null || !token.startsWith("Bearer")){
             return null;
         }
-
-//        try{
-//            Jws<Claims> jws = Jwts.parserBuilder()
-//                    .requireIssuer(ISSUER)
-//                    .setSigningKey(key)
-//                    .build()
-//                    .parseClaimsJws(token.substring(7));
-//
-//            String username = jws.getBody().getSubject();
-//            String authStr = (String) jws.getBody().get("authorities");
-//
-//            List<SimpleGrantedAuthority> roles = Arrays.stream(authStr.split(","))
-//                    .map(r -> new SimpleGrantedAuthority(r))
-//                    .collect(Collectors.toList());
-//
-//            User user = new User(0, username, "", true, null);
-//            user.setAuthorities(roles);
-//            return new User(0, username, "", true, null);
 
         try {
             Jws<Claims> jws = Jwts.parserBuilder()

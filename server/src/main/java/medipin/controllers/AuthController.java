@@ -36,7 +36,6 @@ public class AuthController {
         this.service = service;
     }
 
-
     @PostMapping("/authenticate")
     public ResponseEntity<Object> authenticate(@RequestBody Map<String,
                 String> credentials){
@@ -55,11 +54,9 @@ public class AuthController {
                 map.put("jwt_token", jwtToken);
 
                 // get user from database
-                Result<User> result = service.getByUsername(credentials.get(
-                        "username"));
+                Result<User> result =
+                        service.getByUsername(credentials.get("username"));
                 if (result.isSuccess()) {
-//                    User user = result.getPayload();
-//                    map.put("userId", Integer.toString(user.getUserId()));
                     return new ResponseEntity<>(map, HttpStatus.OK);
                 } else {
                     map.put("name", "N/A");

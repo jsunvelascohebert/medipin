@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { getTopicById, getTopics } from '../../../fetches/internal/TopicFetches';
+import { getTopicById } from '../../../fetches/internal/TopicFetches';
 import TopicCard from '../components/TopicCard';
 import { GrAdd } from 'react-icons/gr';
 import AddTopicModal from '../components/AddTopicModal';
@@ -11,24 +11,30 @@ export default function Topics() {
   const [topics, setTopics] = useState([]);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const auth = useContext(AuthContext);
+  const [updated, setUpdated] = useState(false);
 
-  useEffect(() => {
+  const updateTopics = () => {
+    setTopics([]);
     getTopicsByUserId(auth.user.userId)
     .then(data => {
       for (let d of data) {
         getTopicById(d.topicId)
           .then(data => {
             const topic = { topicId: data.topicId, name: data.name };
-            const tempTopics = [...topics, topic];
-            setTopics(tempTopics);
-          }).catch(errs => {
-            console.log(errs);
+            setTopics(prev => [...prev, topic]);
           })
+          .catch(errs => {
+            console.log(errs);
+          });
       }
     }).catch(errs => {
       console.log(errs);
     })
-  }, []);
+  }
+
+  useEffect(() => {
+    updateTopics();
+  }, [updated, auth.user.userId]);
 
   return (
     <section id="topics" className="w-full min-h-screen p-6 sm:p-12 md:p-24 bg-gradient-to-b from-lightOrange to-white">
@@ -68,13 +74,15 @@ export default function Topics() {
 
         {/* topic results */}
         <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          { topics.map(t => <TopicCard key={t.topicId} topic={t} />) }
+          {topics.map(t => <TopicCard key={t.topicId} topic={t}
+            isUpdated={() => setUpdated(!updated)} />)}
         </div>
 
         {/* add modal content */}
         {isAddModalOpen && 
           <AddTopicModal isOpen={true}
-            setOpen={(val) => setIsAddModalOpen(val)} />
+          setOpen={(val) => setIsAddModalOpen(val)}
+          isUpdated={() => setUpdated(!updated)}/>
         }
       </div>
     </section>

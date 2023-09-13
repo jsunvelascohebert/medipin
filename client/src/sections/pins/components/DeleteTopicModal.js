@@ -3,10 +3,13 @@ import Modal from '../../utility/Modal';
 import { FaArrowLeft } from 'react-icons/fa6';
 import { deleteTopic } from '../../../fetches/internal/TopicFetches';
 import { BannerContext } from '../../../contexts/BannerContext';
+import { deleteUserTopicByKey } from '../../../fetches/internal/UserTopicFetches';
+import AuthContext from '../../../contexts/AuthContext';
 
-export default function DeleteTopicModal({ isOpen, setOpen, topic }) {
+export default function DeleteTopicModal({ isOpen, setOpen, topic, isUpdated }) {
 
   const { showBanner } = useContext(BannerContext);
+  const auth = useContext(AuthContext);
 
   /* ***** ***** modal handlers ***** ***** */
 
@@ -21,18 +24,29 @@ export default function DeleteTopicModal({ isOpen, setOpen, topic }) {
 
   const handleDelete = () => {
     showModal(false);
-    deleteTopic(topic.topicId)
+
+    // delete user topic bridge
+    deleteUserTopicByKey(auth.user.userId, topic.topicId)
       .then(() => {
-        showBanner({
-          message: `successfully deleted topic '${topic.name}'`,
-          status: 'success'
+        // delete actual topic
+        deleteTopic(topic.topicId)
+        .then(() => {
+          showBanner({
+            message: `successfully deleted topic '${topic.name}'`,
+            status: 'success'
+          });
+          isUpdated();
+        }).catch(errs => {
+          showBanner({
+            message: `could not delete topic '${topic.name}'`,
+            status: 'error'
+          });
+          isUpdated();
         });
       }).catch(errs => {
-        showBanner({
-          message: `could not delete topic '${topic.name}'`,
-          status: 'error'
-        });
-      });
+        console.log(errs);
+        isUpdated();
+      });    
   }
 
   /* ***** ***** footer components ***** ***** */
