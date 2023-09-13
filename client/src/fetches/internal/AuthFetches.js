@@ -70,7 +70,6 @@ export function signOut() {
 const makeUser = (authResponse) => {
   const jwtToken = authResponse.jwt_token;
   localStorage.setItem('jwt_token', jwtToken);
-  console.log(authResponse);
   return makeUserFromJwt(jwtToken);
 };
 

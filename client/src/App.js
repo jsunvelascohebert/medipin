@@ -36,9 +36,6 @@ function App() {
   const login = (token) => {
     localStorage.setItem('jwt_token', token);
     const { sub: username, authorities: authoritiesString, userId } = jwtDecode(token);
-    // if (!localStorage.getItem('user_id')) {
-    //   localStorage.setItem(userId);
-    // }
     const roles = authoritiesString.split(',');
     const user = {
       userId,
@@ -63,13 +60,9 @@ function App() {
     },
     onAuthenticated(user) {
       setUser(user);
-      // if (!localStorage.getItem('user_id')) {
-      //   localStorage.setItem('user_id', user.userId);
-      // }
     },
     signOut() {
       localStorage.removeItem('jwt_token');
-      // localStorage.removeItem('user_id');
       setUser(EMPTY_USER);
     }
   };
