@@ -34,7 +34,11 @@ export default function TopicCard({ topic, isUpdated }) {
             <AiOutlineEdit className='text-darkOrange sm:text-lg'/>
           </button>
           <button className='btn-orange'
-            onClick={() => setIsModalOpen(true)}>
+            onClick={(e) => {
+              e.stopPropagation()
+              setIsModalOpen(true)
+            }
+            }>
             <AiOutlineDelete className='text-darkOrange sm:text-lg' />
           </button>
         </div>

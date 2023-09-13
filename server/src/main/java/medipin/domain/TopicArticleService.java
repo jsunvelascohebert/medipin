@@ -45,6 +45,17 @@ public class TopicArticleService {
         return result;
     }
 
+    public Result<TopicArticle> deleteByTopicId(int topicId) { // untested
+        Result<TopicArticle> result = new Result<>();
+        boolean response = repository.deleteByTopicId(topicId);
+        if (!response) {
+            String msg = String.format("Could not delete all articles " +
+                    "associated with topic id %s", topicId);
+            result.addMessage(msg, ResultType.NOT_FOUND);
+        }
+        return result;
+    }
+
     public Result<TopicArticle> deleteByKey(int topicId, int articleId) {
         TopicArticle topicArticle = new TopicArticle(topicId, articleId);
         Result<TopicArticle> result = validate(topicArticle);

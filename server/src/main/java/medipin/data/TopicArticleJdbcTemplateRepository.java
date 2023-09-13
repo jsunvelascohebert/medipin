@@ -39,6 +39,13 @@ public class TopicArticleJdbcTemplateRepository implements TopicArticleRepositor
 
     @Override
     @Transactional
+    public boolean deleteByTopicId(int topicId) { // untested
+        return jdbcTemplate.update(
+                "delete from topic_article where topic_id = ?;", topicId) > 0;
+    }
+
+    @Override
+    @Transactional
     public boolean deleteByKey(int topicId, int articleId) {
         return jdbcTemplate.update("delete from topic_article where " +
                 "topic_id = ? and article_id = ?;", topicId, articleId) > 0;

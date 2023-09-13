@@ -13,5 +13,8 @@ public interface TopicArticleRepository {
     boolean add(TopicArticle topicArticle);
 
     @Transactional
+    boolean deleteByTopicId(int topicId);
+
+    @Transactional
     boolean deleteByKey(int topicId, int articleId);
 }

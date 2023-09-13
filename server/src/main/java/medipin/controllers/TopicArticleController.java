@@ -39,6 +39,15 @@ public class TopicArticleController {
         return ErrorResponse.build(result);
     }
 
+    @DeleteMapping("/{topicId}") // untested
+    public ResponseEntity<Object> deleteByTopicId(@PathVariable int topicId) {
+        Result<TopicArticle> result = service.deleteByTopicId(topicId);
+        if (result.isSuccess()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return ErrorResponse.build(result);
+    }
+
     @DeleteMapping("/{topicId}/{articleId}")
     public ResponseEntity<Object> deleteByKey(@PathVariable int topicId,
                                               @PathVariable int articleId) {

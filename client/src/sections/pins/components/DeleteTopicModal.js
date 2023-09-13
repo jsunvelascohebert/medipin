@@ -5,6 +5,7 @@ import { deleteTopic } from '../../../fetches/internal/TopicFetches';
 import { BannerContext } from '../../../contexts/BannerContext';
 import { deleteUserTopicByKey } from '../../../fetches/internal/UserTopicFetches';
 import AuthContext from '../../../contexts/AuthContext';
+import { deleteTopicArticle, deleteTopicArticleByTopicId } from '../../../fetches/internal/TopicArticleFetches';
 
 export default function DeleteTopicModal({ isOpen, setOpen, topic, isUpdated }) {
 
@@ -28,21 +29,28 @@ export default function DeleteTopicModal({ isOpen, setOpen, topic, isUpdated }) 
     // delete user topic bridge
     deleteUserTopicByKey(auth.user.userId, topic.topicId)
       .then(() => {
-        // delete actual topic
-        deleteTopic(topic.topicId)
-        .then(() => {
-          showBanner({
-            message: `successfully deleted topic '${topic.name}'`,
-            status: 'success'
-          });
-          isUpdated();
-        }).catch(errs => {
-          showBanner({
-            message: `could not delete topic '${topic.name}'`,
-            status: 'error'
-          });
-          isUpdated();
-        });
+        // delete topic article bridge
+        deleteTopicArticleByTopicId(topic.topicId)
+          .then(data => {
+            console.log(data);
+            // delete actual topic
+            deleteTopic(topic.topicId)
+            .then(() => {
+              showBanner({
+                message: `successfully deleted topic '${topic.name}'`,
+                status: 'success'
+              });
+              isUpdated();
+            }).catch(errs => {
+              showBanner({
+                message: `could not delete topic '${topic.name}'`,
+                status: 'error'
+              });
+              isUpdated();
+            });
+          }).catch(errs => {
+            console.log(errs);
+          })
       }).catch(errs => {
         console.log(errs);
         isUpdated();

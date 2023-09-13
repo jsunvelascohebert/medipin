@@ -22,4 +22,29 @@ export async function addTopicArticle(topicArticle) {
   }
 }
 
+/* ***** ***** delete all by topic id ***** ***** */
+
+export async function deleteTopicArticleByTopicId(topicId) {
+  const init = {
+    method: 'DELETE'
+  }
+  const response = await fetch(`${URL}/${topicId}`, init);
+  if (response.status !== 204) {
+    const errs = await response.json();
+    return Promise.reject(errs);
+  }
+}
+
 /* ***** ***** delete topic article by key ***** ***** */
+
+export async function deleteTopicArticle(topicArticle) {
+  const init = {
+    method: 'DELETE'
+  }
+  const response = await fetch(`${URL}/${topicArticle.topicId}/${topicArticle.articleId}`, init);
+  if (response.status !== 204) {
+    const errs = await response.json();
+    return Promise.reject(errs);
+  }
+
+}
