@@ -2,6 +2,22 @@ const URL = "http://localhost:8080/api/topic/article";
 
 /* ***** ***** get articles by topic id ***** ***** */
 
+export async function getArticleTopics(topicId) {
+  const init = {
+    method: 'GET',
+    headers: {
+      'Accept': 'application/json'
+    }
+  }
+  const response = await fetch(`${URL}/${topicId}`, init);
+  if (response.status === 200) {
+    return await response.json();
+  } else {
+    const errs = await response.json();
+    return Promise.reject(errs);
+  }
+}
+
 /* ***** ***** add topic article ***** ***** */
 
 export async function addTopicArticle(topicArticle) {

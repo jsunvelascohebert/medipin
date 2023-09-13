@@ -50,6 +50,7 @@ export default function DeleteTopicModal({ isOpen, setOpen, topic, isUpdated }) 
             });
           }).catch(errs => {
             console.log(errs);
+            isUpdated();
           })
       }).catch(errs => {
         console.log(errs);
