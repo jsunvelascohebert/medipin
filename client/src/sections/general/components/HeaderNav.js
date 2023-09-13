@@ -48,7 +48,7 @@ export default function HeaderNav() {
         setMenuItemColor('menu-item-green');
         setBgGradient('from-lightGreen');
         break;
-      case 'pins':
+      case 'topics':
         setGeneralColor('orange');
         setContainerColor('bg-orange border-darkOrange');
         setFontColor('text-darkOrange');
@@ -101,7 +101,7 @@ export default function HeaderNav() {
           <Link to="/about" className={menuItemColor}>about</Link>
           <Link to="/search" className={menuItemColor}>search</Link>
           {auth.isLoggedIn() &&
-            <Link to="/pins" className={menuItemColor}>pins</Link>
+            <Link to="/topics" className={menuItemColor}>pins</Link>
           }
         </div>
         {/* authentication */}

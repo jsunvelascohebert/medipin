@@ -1,12 +1,18 @@
 import React, { useState } from 'react';
 import { AiOutlineEdit, AiOutlineDelete } from 'react-icons/ai';
 import DeleteTopicModal from './DeleteTopicModal';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 
 
 export default function TopicCard({ topic, isUpdated }) {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const navigate = useNavigate();
+    
+  /* ***** ***** routing handlers ***** ***** */
+
+
 
   /* ***** ***** update handlers ***** ***** */
 
@@ -17,7 +23,8 @@ export default function TopicCard({ topic, isUpdated }) {
 
   return (<>
     {/* main container */}
-    <div id={topic.topicId} className="card w-full bg-orange border-darkOrange shadow-darkOrange hover:shadow-darkOrange">
+    <div id={topic.topicId} className="card w-full bg-orange border-darkOrange shadow-darkOrange hover:shadow-darkOrange"
+      onClick={() => navigate(`/topics/${topic.topicId}/${topic.name}`)}>
       {/* top content container */}
       <div className='w-full flex flex-row justify-between items-center'>
         <h5 className='text-left text-darkOrange text-base md:text-lg break-all mr-4'>{topic.name}</h5>

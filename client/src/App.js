@@ -11,6 +11,7 @@ import { BannerProvider } from './contexts/BannerContext';
 import Banner from './sections/utility/Banner';
 import AuthContext from './contexts/AuthContext';
 import jwtDecode from "jwt-decode";
+import PinnedArticles from './sections/pins/pages/PinnedArticles';
 
 const EMPTY_USER = {
   userId: 0,
@@ -87,12 +88,21 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
             <Route path="/search" element={<Search />} />
-            <Route path="/pins"
-              element={localStorage.getItem('jwt_token')
-                ? <Topics /> : <Navigate to="/" />} />
+            <Route path="/topics"
+              element={auth.isLoggedIn()
+                ? <Topics />
+                : <Navigate to="/" />
+              } />
+            <Route path="/topics/:topicId/:topicName"
+              element={auth.isLoggedIn()
+                ? <PinnedArticles />
+                : <Navigate to='/' /> 
+              }/>
             <Route path="/note"
-              element={localStorage.getItem('jwt_token')
-                ? < About /> : <Navigate to='/' />} />
+              element={auth.isLoggedIn()
+                ? <About />
+                : <Navigate to='/' />
+              }/>
           </Routes>
           <Footer />
         </BannerProvider>

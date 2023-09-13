@@ -30,7 +30,7 @@ export default function Footer() {
         setFontColor('text-darkGreen');
         setMenuItemColor('menu-item-green');
         break;
-      case 'pins':
+      case 'topics':
         setContainerColor('bg-orange border-darkOrange');
         setFontColor('text-darkOrange');
         setMenuItemColor('menu-item-orange');
