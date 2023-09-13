@@ -139,7 +139,7 @@ public class UserJdbcTemplateRepository implements UserRepository {
     private void updateRoles(User user) {
         jdbcTemplate.update("delete from user_role where user_id = ?;", user.getUserId());
 
-        Collection<GrantedAuthority> authorities = user.getAuthorities();
+        Collection<? extends GrantedAuthority> authorities = user.getAuthorities();
         if (authorities == null) {
             return;
         }

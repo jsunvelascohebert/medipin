@@ -1,36 +1,53 @@
-import React, { useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { FaArrowLeft } from 'react-icons/fa6';
 import Modal from '../../utility/Modal';
+import AuthContext from '../../../contexts/AuthContext';
 
 
 export default function ArticleSearchModal({ isOpen, setOpen, article, articleContent, relatedArticles }) {
 
   const [isModalOpen, setIsModalOpen] = useState(isOpen);
+  const [topics, setTopics] = useState([]);
+  const auth = useContext(AuthContext);
 
   const handleClose = () => {
     setIsModalOpen(false);
     setOpen(false);
   }
 
-  const footer = 
-  <div className="w-full flex flex-col sm:flex-row justify-center sm:justify-between items-center gap-2 sm:gap-0">
-    {/* back button */}
-    <a href="#" className={`group hidden sm:flex flex-row justify-start items-center gap-2 hover:cursor-pointer text-darkGreen}`} onClick={handleClose}>
-      <FaArrowLeft className='text-lg group-hover:text-xl' />
-      back
-    </a>
-    {/* pin to topic input */}
-    <div className="flex flex-col sm:flex-row gap-4 justify-end items-center w-full md:w-1/2">
-      <p as="label" htmlFor="topic-select" className='w-full text-right hidden sm:inline-block'>select a topic:</p>
-      <div className='flex flex-row gap-2 justify-center items-center w-full'>
-        <select name="topic-select" id="topic-select"
-          className='p-2 rounded-full border-2 border-darkGreen shadow-sm-inner w-full text-sm'>
-          <option>personal</option>
-        </select>
-        <button className="btn-green">pin</button>
+  /* ***** ***** pull user topics ***** ***** */
+
+  useEffect(() => {
+    // pull all user topics from the user
+
+    // pull all topics from those user topics
+
+  }, []);
+
+  /* ***** ***** footer ***** ***** */
+
+  const footer = auth.isLoggedIn()
+    ? <div className="w-full flex flex-col sm:flex-row justify-center sm:justify-between items-center gap-2 sm:gap-0">
+      {/* back button */}
+      <a href="#" className={`group hidden sm:flex flex-row justify-start items-center gap-2 hover:cursor-pointer text-darkGreen}`} onClick={handleClose}>
+        <FaArrowLeft className='text-lg group-hover:text-xl' />
+        back
+      </a>
+      {/* pin to topic input */}
+      <div className="flex flex-col sm:flex-row gap-4 justify-end items-center w-full md:w-1/2">
+        <p as="label" htmlFor="topic-select" className='w-full text-right hidden sm:inline-block'>select a topic:</p>
+        <div className='flex flex-row gap-2 justify-center items-center w-full'>
+          <select name="topic-select" id="topic-select"
+            className='p-2 rounded-full border-2 border-darkGreen shadow-sm-inner w-full text-sm'>
+            <option>personal</option>
+          </select>
+          <button className="btn-green">pin</button>
+        </div>
       </div>
     </div>
-  </div>
+    : null;
+  
+  /* ***** ***** return ***** ***** */
 
   return (<>
     <Modal color='green' isOpen={isModalOpen}

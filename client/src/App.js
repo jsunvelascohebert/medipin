@@ -21,32 +21,39 @@ const EMPTY_USER = {
 function App() {
 
   const [user, setUser] = useState(EMPTY_USER);
+  const [restoreLoginAttemptCompleted, setRestoreLoginAttemptCompleted] = useState(false);
+
 
   useEffect(() => {
     const token = localStorage.getItem('jwt_token');
     if (token) {
       login(token);
     }
+    setRestoreLoginAttemptCompleted(true);
   }, []);
 
   const login = (token) => {
     localStorage.setItem('jwt_token', token);
-    const { sub: username, authorities: authoritiesString } = jwtDecode(token);
-		const roles = authoritiesString.split(',');
+    const { sub: username, authorities: authoritiesString, userId } = jwtDecode(token);
+    // if (!localStorage.getItem('user_id')) {
+    //   localStorage.setItem(userId);
+    // }
+    const roles = authoritiesString.split(',');
     const user = {
+      userId,
 		  username,
 		  roles,
 		  token,
 		  hasRole(role) {
 			return this.roles.includes(role);
 		  }
-		};
-		setUser(user);
+    };
+    setUser(user);
 		return user;
   }
 
   const auth = {
-    user: user ? { ...user } : EMPTY_USER,
+    user: user.username ? { ...user } : EMPTY_USER,
     isLoggedIn() {
       return !!user.username;
     },
@@ -55,13 +62,20 @@ function App() {
     },
     onAuthenticated(user) {
       setUser(user);
-      console.log(user);
+      // if (!localStorage.getItem('user_id')) {
+      //   localStorage.setItem('user_id', user.userId);
+      // }
     },
     signOut() {
       localStorage.removeItem('jwt_token');
+      // localStorage.removeItem('user_id');
       setUser(EMPTY_USER);
     }
   };
+
+  if (!restoreLoginAttemptCompleted) {
+    return null;
+  }
 
   return (<>
     <AuthContext.Provider value={auth}>
@@ -76,7 +90,9 @@ function App() {
             <Route path="/pins"
               element={localStorage.getItem('jwt_token')
                 ? <Topics /> : <Navigate to="/" />} />
-            <Route path="/note" element={<About />} />
+            <Route path="/note"
+              element={localStorage.getItem('jwt_token')
+                ? < About /> : <Navigate to='/' />} />
           </Routes>
           <Footer />
         </BannerProvider>

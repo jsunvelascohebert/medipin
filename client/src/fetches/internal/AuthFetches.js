@@ -35,7 +35,6 @@ export async function createAccount(creds) {
     const response = await fetch(`${URL}/create_account`, init);
     if (response.status === 201) {
         return await response.json();
-
     } else {
         const errs = await response.json();
         return Promise.reject(errs);
@@ -69,20 +68,21 @@ export function signOut() {
 }
 
 const makeUser = (authResponse) => {
-    const jwtToken = authResponse.jwt_token;
-    localStorage.setItem('jwt_token', jwtToken);
-    return makeUserFromJwt(jwtToken, authResponse.userId);
+  const jwtToken = authResponse.jwt_token;
+  localStorage.setItem('jwt_token', jwtToken);
+  console.log(authResponse);
+  return makeUserFromJwt(jwtToken);
 };
 
-const makeUserFromJwt = (jwtToken, userId) => {
+const makeUserFromJwt = (jwtToken) => {
   const tokenParts = jwtToken.split('.');
   if (tokenParts.length > 1) {
-        const userData = tokenParts[1];
-        const decodedUserData = JSON.parse(atob(userData));
-        return {
-            userId: userId,
-            username: decodedUserData.sub,
-            roles: decodedUserData.authorities.split(',')
-        }
+    const userData = tokenParts[1];
+    const decodedUserData = JSON.parse(atob(userData));
+    return {
+      userId: decodedUserData.userId,
+      username: decodedUserData.sub,
+      roles: decodedUserData.authorities.split(',')
     }
+  }
 };

@@ -1,13 +1,16 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Modal from '../../utility/Modal';
 import { FaArrowLeft } from 'react-icons/fa6';
 import { addTopic } from '../../../fetches/internal/TopicFetches';
+import { addUserTopic } from '../../../fetches/internal/UserTopicFetches';
+import AuthContext from '../../../contexts/AuthContext';
 
 
 export default function AddTopicModal({ isOpen, setOpen }) {
 
   const [isModalOpen, setIsModalOpen] = useState(isOpen);
   const [newTopic, setNewTopic] = useState('');
+  const auth = useContext(AuthContext);
 
   const handleAddClick = (val) => {
     setIsModalOpen(val);
@@ -18,10 +21,17 @@ export default function AddTopicModal({ isOpen, setOpen }) {
   /* ***** ***** add form functionality ***** ***** */
 
   const handleSubmit = (event) => {
-    event.preventDefault();
+    event.preventDefault(); 
+    // add topic to database
     addTopic({ topicId: 0, name: newTopic })
       .then(data => {
-        console.log(data);
+        // create user_topic bridge
+        addUserTopic(auth.user.userId, data.topicId)
+          .then(data => {
+            console.log(data);
+          }).catch(errs => {
+            console.log(errs);
+          });
       }).catch(errs => {
         console.log(errs);
       });

@@ -4,13 +4,17 @@ import medipin.data.UserRepository;
 import medipin.models.User;
 import medipin.security.Credentials;
 import org.springframework.dao.DuplicateKeyException;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -67,7 +71,9 @@ public class UserService implements UserDetailsService {
         String hashedPassword = encoder.encode(credentials.getPassword());
         User user = new User(0,
                 credentials.getUsername(),
-                hashedPassword, true, List.of("USER"));
+                hashedPassword, true, null);
+        List<String> roles = List.of("USER");
+        user.setAuthorities(roles.stream().map(r -> new SimpleGrantedAuthority(r)).collect(Collectors.toList()));
 
         try {
             user = repository.add(user);

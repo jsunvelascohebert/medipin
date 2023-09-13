@@ -13,6 +13,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -48,7 +49,7 @@ public class AuthController {
 
             if (authentication.isAuthenticated()) {
                 String jwtToken =
-                        converter.getTokenFromUser((User) authentication.getPrincipal());
+                        converter.getTokenFromUser((UserDetails) authentication.getPrincipal());
 
                 HashMap<String, String> map = new HashMap<>();
                 map.put("jwt_token", jwtToken);
@@ -57,10 +58,9 @@ public class AuthController {
                 Result<User> result = service.getByUsername(credentials.get(
                         "username"));
                 if (result.isSuccess()) {
-                    User user = result.getPayload();
-                    map.put("userId", Integer.toString(user.getUserId()));
+//                    User user = result.getPayload();
+//                    map.put("userId", Integer.toString(user.getUserId()));
                     return new ResponseEntity<>(map, HttpStatus.OK);
-
                 } else {
                     map.put("name", "N/A");
                     map.put("userId", "0");

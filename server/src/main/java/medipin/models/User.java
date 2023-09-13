@@ -15,15 +15,16 @@ public class User implements UserDetails {
     private String username;
     private String password;
     private boolean enabled;
-    private Collection<GrantedAuthority> authorities;
+    private Collection<? extends GrantedAuthority> authorities;
 
     public User(int userId, String username, String password,
-                boolean enabled, List<String> authorities) {
+                boolean enabled, Collection<? extends GrantedAuthority> authorities) {
         this.userId = userId;
         this.username = username;
         this.password = password;
         this.enabled = enabled;
-        this.authorities = convertRolesToAuthorities(authorities);
+//        this.authorities = convertRolesToAuthorities(authorities);
+        this.authorities = authorities;
     }
 
     private static Collection<GrantedAuthority> convertRolesToAuthorities(List<String> roles){
@@ -81,11 +82,11 @@ public class User implements UserDetails {
     }
 
     @Override
-    public Collection<GrantedAuthority> getAuthorities() {
+    public Collection<? extends GrantedAuthority> getAuthorities() {
         return authorities;
     }
 
-    public void setAuthorities(Collection<GrantedAuthority> authorities) {
+    public void setAuthorities(Collection<? extends GrantedAuthority> authorities) {
         this.authorities = authorities;
     }
 

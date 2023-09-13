@@ -1,23 +1,34 @@
-import React, { useEffect, useState } from 'react';
-import { getTopics } from '../../../fetches/internal/TopicFetches';
+import React, { useContext, useEffect, useState } from 'react';
+import { getTopicById, getTopics } from '../../../fetches/internal/TopicFetches';
 import TopicCard from '../components/TopicCard';
 import { GrAdd } from 'react-icons/gr';
 import AddTopicModal from '../components/AddTopicModal';
+import { getTopicsByUserId } from '../../../fetches/internal/UserTopicFetches';
+import AuthContext from '../../../contexts/AuthContext';
 
 export default function Topics() {
 
   const [topics, setTopics] = useState([]);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const auth = useContext(AuthContext);
 
-  // pull topics and present
   useEffect(() => {
-    getTopics()
-      .then(data => {
-        setTopics([...data]);
-      }).catch(errs => {
-        console.log(errs);
-      });
-  }, [topics]);
+    getTopicsByUserId(auth.user.userId)
+    .then(data => {
+      for (let d of data) {
+        getTopicById(d.topicId)
+          .then(data => {
+            const topic = { topicId: data.topicId, name: data.name };
+            const tempTopics = [...topics, topic];
+            setTopics(tempTopics);
+          }).catch(errs => {
+            console.log(errs);
+          })
+      }
+    }).catch(errs => {
+      console.log(errs);
+    })
+  }, []);
 
   return (
     <section id="topics" className="w-full min-h-screen p-6 sm:p-12 md:p-24 bg-gradient-to-b from-lightOrange to-white">

@@ -11,9 +11,27 @@ export async function getTopics() {
   }
   const response = await fetch(URL, init);
   if (response.status === 200) {
-    return response.json();
+    return await response.json();
   } else {
-    const errs = response.json();
+    const errs = await response.json();
+    return Promise.reject(errs);
+  }
+}
+
+/* ***** ***** get topic by id ***** ***** */
+
+export async function getTopicById(topicId) {
+  const init = {
+    method: 'GET',
+    headers: {
+      'Accept': 'application/json'
+    }
+  }
+  const response = await fetch(`${URL}/${topicId}`, init);
+  if (response.status === 200) {
+    return await response.json();
+  } else {
+    const errs = await response.json();
     return Promise.reject(errs);
   }
 }
