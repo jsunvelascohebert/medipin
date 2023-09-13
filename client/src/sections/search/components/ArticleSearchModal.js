@@ -2,12 +2,16 @@ import React, { useContext, useState, useEffect } from 'react';
 import { FaArrowLeft } from 'react-icons/fa6';
 import Modal from '../../utility/Modal';
 import AuthContext from '../../../contexts/AuthContext';
-
+import { getTopicsByUserId } from '../../../fetches/internal/UserTopicFetches';
+import { getTopicById } from '../../../fetches/internal/TopicFetches';
+import { addArticle, getArticleById } from '../../../fetches/internal/ArticleFetches';
+import { addTopicArticle } from '../../../fetches/internal/TopicArticleFetches';
 
 export default function ArticleSearchModal({ isOpen, setOpen, article, articleContent, relatedArticles }) {
 
   const [isModalOpen, setIsModalOpen] = useState(isOpen);
   const [topics, setTopics] = useState([]);
+  const [selectedTopic, setSelectedTopic] = useState(0);
   const auth = useContext(AuthContext);
 
   const handleClose = () => {
@@ -15,13 +19,69 @@ export default function ArticleSearchModal({ isOpen, setOpen, article, articleCo
     setOpen(false);
   }
 
+  const addTA = (topicArticle) => {
+    addTopicArticle(topicArticle)
+      .then(data => {
+        console.log(data)
+      }).catch(errs => {
+        console.log(errs)
+      })
+  }
+
+  const handlePin = () => {
+    // check if article in database
+    getArticleById(article.Id)
+      .then(data => {
+        const topicArticle = {
+          topicId: parseInt(selectedTopic),
+          articleId: data.articleId
+        }
+        // add topic article bridge
+        addTA(topicArticle);
+      }).catch(() => {
+        // restructure article to fit backend
+        const parsedArticle = {
+          articleId: article.Id,
+          title: article.Title,
+          imageUrl: article.ImageUrl,
+          imageAlt: article.ImageAlt
+        }
+        // add article
+        addArticle(parsedArticle)
+          .then(data => {
+            // add topic article bridge
+            const topicArticle = {
+              topicId: parseInt(selectedTopic),
+              articleId: data.articleId
+            }
+            addTA(topicArticle)
+          }).catch(errs => {
+            console.log(errs)
+          })
+      })
+    
+    console.log(selectedTopic);
+  }
+
   /* ***** ***** pull user topics ***** ***** */
 
   useEffect(() => {
-    // pull all user topics from the user
-
-    // pull all topics from those user topics
-
+    setTopics([]);
+    getTopicsByUserId(auth.user.userId)
+    .then(data => {
+      for (let d of data) {
+        getTopicById(d.topicId)
+          .then(data => {
+            const topic = { topicId: data.topicId, name: data.name };
+            setTopics(prev => [...prev, topic]);
+          })
+          .catch(errs => {
+            console.log(errs);
+          });
+      }
+    }).catch(errs => {
+      console.log(errs);
+    })
   }, []);
 
   /* ***** ***** footer ***** ***** */
@@ -34,14 +94,17 @@ export default function ArticleSearchModal({ isOpen, setOpen, article, articleCo
         back
       </a>
       {/* pin to topic input */}
-      <div className="flex flex-col sm:flex-row gap-4 justify-end items-center w-full md:w-1/2">
-        <p as="label" htmlFor="topic-select" className='w-full text-right hidden sm:inline-block'>select a topic:</p>
+      <div className="flex flex-col sm:flex-row gap-4 justify-end items-center w-full md:w-4/5">
+        <p as="label" htmlFor="topic-select" className='w-full text-right hidden sm:inline-block'>topic:</p>
         <div className='flex flex-row gap-2 justify-center items-center w-full'>
           <select name="topic-select" id="topic-select"
-            className='p-2 rounded-full border-2 border-darkGreen shadow-sm-inner w-full text-sm'>
-            <option>personal</option>
+            className='p-2 rounded-full border-2 border-darkGreen shadow-sm-inner w-full text-sm'
+            onChange={(event) => setSelectedTopic(event.target.value)}
+            defaultValue={0}>
+            <option disabled value={0}>choose a topic</option>
+            {topics.map(t => <option value={t.topicId}>{t.name}</option>)}
           </select>
-          <button className="btn-green">pin</button>
+          <button className="btn-green" onClick={handlePin}>pin</button>
         </div>
       </div>
     </div>

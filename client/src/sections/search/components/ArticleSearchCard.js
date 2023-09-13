@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-
 import { getArticleContentById } from '../../../fetches/ExternalAPI';
 import { parseRelated, parseRelatedAndSections, parseSection } from '../../utility/ArticleParser';
 import ArticleSearchModal from './ArticleSearchModal';
@@ -11,6 +10,8 @@ export default function ArticleSearchCard({ article }) {
   const [articleContent, setArticleContent] = useState('');
   const [relatedArticles, setRelatedArticles] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+
+
 
   /* ***** ***** footer ***** ***** */
 
