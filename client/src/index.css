@@ -8,7 +8,7 @@
 
 @layer base {
   h1 {
-    @apply font-outfit font-extrabold text-5xl;
+    @apply font-outfit font-extrabold text-5xl text-center;
   }
   h2 {
     @apply font-outfit font-bold text-4xl underline decoration-solid;
@@ -87,7 +87,7 @@
 
 @media screen(md) {
   h1 {
-    @apply font-outfit font-extrabold text-8xl;
+    @apply font-outfit font-extrabold text-8xl text-center;
   }
   h2 {
     @apply font-outfit font-bold text-6xl underline decoration-solid;

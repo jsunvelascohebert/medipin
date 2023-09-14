@@ -64,7 +64,9 @@ export default function PinnedArticles() {
       
         {/* articles */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cals-4 gap-4">
-          {articles.map(a => <PinnedArticleCard article={a} />)}
+          {articles
+            .sort((a, b) => a.title.localeCompare(b.title))
+            .map(a => <PinnedArticleCard key={a.articleId} article={a} />)}
         </div>
       </div>
     </section>
