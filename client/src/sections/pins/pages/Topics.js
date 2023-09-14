@@ -74,7 +74,8 @@ export default function Topics() {
 
         {/* topic results */}
         <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {topics.map(t => <TopicCard key={t.topicId} topic={t}
+            .sort((a, b) => a.name.localeCompare(b.name))
+            .map(t => <TopicCard key={t.topicId} topic={t}
             isUpdated={() => setUpdated(!updated)} />)}
         </div>
 

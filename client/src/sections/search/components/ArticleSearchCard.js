@@ -11,8 +11,6 @@ export default function ArticleSearchCard({ article }) {
   const [relatedArticles, setRelatedArticles] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
-
-
   /* ***** ***** footer ***** ***** */
 
   const handleCardClick = () => {
