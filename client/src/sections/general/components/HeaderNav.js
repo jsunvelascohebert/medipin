@@ -168,7 +168,7 @@ export default function HeaderNav() {
                 onClick={expandMobileMenu}>about</Link>
               <Link to="/search" className={menuItemColor}
                 onClick={expandMobileMenu}>search</Link>
-              <Link to="/pins" className={menuItemColor}
+              <Link to="/topics" className={menuItemColor}
                 onClick={expandMobileMenu}>pins</Link>
             </div>
             {/* divider */}

@@ -45,10 +45,7 @@ export async function deleteTopicArticleByTopicId(topicId) {
     method: 'DELETE'
   }
   const response = await fetch(`${URL}/${topicId}`, init);
-  if (response.status !== 204) {
-    const errs = await response.json();
-    return Promise.reject(errs);
-  }
+  return await response.json();
 }
 
 /* ***** ***** delete topic article by key ***** ***** */

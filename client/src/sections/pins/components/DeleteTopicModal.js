@@ -23,6 +23,24 @@ export default function DeleteTopicModal({ isOpen, setOpen, topic, isUpdated }) 
 
   /* ***** ***** delete handlers ***** ***** */
 
+  const handleDeleteTopic = () => {
+    // delete actual topic
+    deleteTopic(topic.topicId)
+    .then(() => {
+      showBanner({
+        message: `successfully deleted topic '${topic.name}'`,
+        status: 'success'
+      });
+      isUpdated();
+    }).catch(errs => {
+      showBanner({
+        message: 'could not delete',
+        status: 'error'
+      });
+      isUpdated();
+    });
+  }
+
   const handleDelete = () => {
     showModal(false);
 
@@ -31,26 +49,10 @@ export default function DeleteTopicModal({ isOpen, setOpen, topic, isUpdated }) 
       .then(() => {
         // delete topic article bridge
         deleteTopicArticleByTopicId(topic.topicId)
-          .then(data => {
-            console.log(data);
-            // delete actual topic
-            deleteTopic(topic.topicId)
-            .then(() => {
-              showBanner({
-                message: `successfully deleted topic '${topic.name}'`,
-                status: 'success'
-              });
-              isUpdated();
-            }).catch(errs => {
-              showBanner({
-                message: `could not delete topic '${topic.name}'`,
-                status: 'error'
-              });
-              isUpdated();
-            });
-          }).catch(errs => {
-            console.log(errs);
-            isUpdated();
+          .then(() => {
+            handleDeleteTopic();
+          }).catch(() => {
+            handleDeleteTopic();
           })
       }).catch(errs => {
         console.log(errs);
