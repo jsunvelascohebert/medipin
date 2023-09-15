@@ -56,7 +56,7 @@ export default function HeaderNav() {
         setMenuItemColor('menu-item-orange');
         setBgGradient('from-lightOrange');
         break;
-      case 'note':
+      case 'notes':
         setGeneralColor('purple');
         setContainerColor('bg-purple border-darkPurple');
         setFontColor('text-darkPurple');

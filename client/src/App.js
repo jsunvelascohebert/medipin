@@ -12,6 +12,7 @@ import Banner from './sections/utility/Banner';
 import AuthContext from './contexts/AuthContext';
 import jwtDecode from "jwt-decode";
 import PinnedArticles from './sections/pins/pages/PinnedArticles';
+import ArticleNotes from './sections/notes/pages/ArticleNotes';
 
 const EMPTY_USER = {
   userId: 0,
@@ -91,11 +92,11 @@ function App() {
                 ? <PinnedArticles />
                 : <Navigate to='/' /> 
               }/>
-            <Route path="/note"
+            <Route path="/notes/:topicId/:topicName/:articleId"
               element={auth.isLoggedIn()
-                ? <About />
+                ? <ArticleNotes />
                 : <Navigate to='/' />
-              }/>
+              } />
           </Routes>
           <Footer />
         </BannerProvider>

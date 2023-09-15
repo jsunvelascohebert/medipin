@@ -35,7 +35,7 @@ export default function Footer() {
         setFontColor('text-darkOrange');
         setMenuItemColor('menu-item-orange');
         break;
-      case 'note':
+      case 'notes':
         setContainerColor('bg-purple border-darkPurple');
         setFontColor('text-darkPurple');
         setMenuItemColor('menu-item-purple');
