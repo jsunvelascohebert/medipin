@@ -11,6 +11,10 @@ export default function LoadingOverlay({ color }) {
         setContainerColor('bg-lightGreen');
         setTextColor('text-darkGreen');
         break;
+      case 'purple':
+        setContainerColor('bg-lightPurple');
+        setTextColor('text-darkPurple');
+        break;
       default:
         break;
     }

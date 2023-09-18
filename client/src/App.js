@@ -92,7 +92,7 @@ function App() {
                 ? <PinnedArticles />
                 : <Navigate to='/' /> 
               }/>
-            <Route path="/notes/:topicId/:topicName/:articleId"
+            <Route path="/notes/:topicId/:topicName/:articleId/:articleName"
               element={auth.isLoggedIn()
                 ? <ArticleNotes />
                 : <Navigate to='/' />

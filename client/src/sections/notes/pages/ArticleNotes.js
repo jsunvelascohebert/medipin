@@ -2,23 +2,38 @@ import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { FaArrowLeft } from 'react-icons/fa6';
 import { RiUnpinLine } from 'react-icons/ri';
+import { getArticleContentById } from '../../../fetches/ExternalAPI';
+import { parseRelated, parseRelatedAndSections, parseSection } from '../../utility/ArticleParser';
+import LoadingOverlay from '../../utility/LoadingOverlay';
+import NotesContainer from '../components/NotesContainer';
 
 
 export default function () {
 
-  const { topicId, topicName, articleId } = useParams();
-  const [article, setArticle] = useState({});
+  const { topicId, topicName, articleId, articleName } = useParams();
+  const [isLoading, setIsLoading] = useState(false);
+  const [articleContent, setArticleContent] = useState('');
+  const [relatedArticles, setRelatedArticles] = useState('')
   const [notes, setNotes] = useState([]);
+  const [hideNotes, setHideNotes] = useState(true);
 
   /* ***** ***** set up handlers ***** ***** */
 
   useEffect(() => {
     // pull in article info with loading screen
       // ^^^ done similarly to the search feature
-
-    // once article pulled, get all notes from user
-
-    
+    setIsLoading(true);
+    getArticleContentById(articleId)
+      .then(data => {
+        const [related, sections] = parseRelatedAndSections(data);
+        setArticleContent(sections.map(s => parseSection(s)));
+        setRelatedArticles(related.map(r => parseRelated(r)));
+        setIsLoading(false);
+        setHideNotes(false);
+        // once article pulled, get all notes from user
+      }).catch(errs => {
+        console.log(errs);
+      })
   }, []);
   
   /* ***** ***** return ***** ***** */
@@ -48,18 +63,27 @@ export default function () {
             </button>
 
           </div>
-          
-          {/* header */}
-          <h1 className='text-darkPurple'>{articleId}</h1>
         </div>
 
         {/* main content container */}
-
-            {/* notes container */}
+        <div className="relative w-full flex flex-col md:flex-row justify-center items-start gap-10">
+          {/* notes */}
+          {!hideNotes && <NotesContainer />  }
         
-            {/* articles container */}
-      
+          {/* articles container */}
+          <div className="flex flex-col gap-10 justify-start items-start md:w-2/3 text-darkPurple">
+            {/* header */}
+            <h1 className='md:text-6xl text-left'>
+              {articleName}
+            </h1>
+            {articleContent}
+          </div>
+
+        </div>
       </div>
     </section>
+
+    {/* loading content */}
+    {isLoading && <LoadingOverlay color='purple' />}
   </>);
 }

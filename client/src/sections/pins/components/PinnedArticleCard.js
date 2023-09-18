@@ -9,7 +9,7 @@ export default function PinnedArticleCard({ topic, article }) {
   return (<>
     <div id={article.articleId} className="relative card bg-orange border-darkOrange shadow-darkOrange hover:shadow-darkOrange"
       onClick={() =>
-        navigate(`/notes/${topic.id}/${topic.name}/${article.articleId}`)}>
+        navigate(`/notes/${topic.id}/${topic.name}/${article.articleId}/${article.title}`)}>
       {/* unpin button */}
       <button className="absolute top-2 right-2 btn-orange p-3">
         <RiUnpinLine className='scale-150 font-extrabold text-darkOrange'/>
