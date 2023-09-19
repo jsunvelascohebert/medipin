@@ -8,7 +8,6 @@ export default function AddEditNoteCard({ id = 0, placeholder = '', isUpdated })
   const dateTime = new Date();
 
   const handleSubmit = (e) => {
-    console.log(dateTime)
     e.preventDefault();
     const note = {
       noteId: id,
@@ -16,8 +15,7 @@ export default function AddEditNoteCard({ id = 0, placeholder = '', isUpdated })
       datetimeMade: dateTime.toISOString()
     }
     addNote(note)
-      .then(data => {
-        console.log(data);
+      .then(() => {
         isUpdated(true);
         setIsShown('hidden');
       }).catch(errs => {

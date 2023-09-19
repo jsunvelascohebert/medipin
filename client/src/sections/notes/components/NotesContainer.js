@@ -70,7 +70,7 @@ export default function NotesContainer() {
           {notes && notes
             .sort((a, b) => a.datetimeMade.localeCompare(b.datetimeMade))
             .reverse()
-            .map(n => <NotesCard note={n} />)}
+            .map(n => <NotesCard key={n.noteId} note={n} />)}
         </div>
       }
     </div>
@@ -95,7 +95,7 @@ export default function NotesContainer() {
         {notes && notes
           .sort((a, b) => a.datetimeMade.localeCompare(b.datetimeMade))
           .reverse()
-          .map(n => <NotesCard note={n} />)}
+          .map(n => <NotesCard key={n.noteId} note={n} />)}
       </div>
     </div>  
   </>);
