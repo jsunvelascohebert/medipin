@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { addNote } from '../../../fetches/internal/NotesFetches';
 
-export default function AddEditNoteCard({ id = 0, placeholder = '' }) {
+export default function AddEditNoteCard({ id = 0, placeholder = '', isUpdated }) {
 
   const [noteText, setNoteText] = useState(placeholder);
+  const [isShown, setIsShown] = useState('flex');
   const dateTime = new Date();
 
   const handleSubmit = (e) => {
@@ -17,13 +18,15 @@ export default function AddEditNoteCard({ id = 0, placeholder = '' }) {
     addNote(note)
       .then(data => {
         console.log(data);
+        isUpdated(true);
+        setIsShown('hidden');
       }).catch(errs => {
         console.log(errs);
       })
   }
 
   return (
-    <div className="flex flex-col w-full justify-center items-center bg-lightPurple p-4 gap-2 rounded-xl border-2 border-darkPurple shadow-sm shadow-darkPurple">
+    <div className={`${isShown} flex-col w-full justify-center items-center bg-lightPurple p-4 gap-2 rounded-xl border-2 border-darkPurple shadow-sm shadow-darkPurple`} >
 
       {/* input field */}
       <form id='note-form' onSubmit={handleSubmit} className='w-full'>

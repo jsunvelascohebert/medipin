@@ -10,15 +10,21 @@ export default function NotesContainer() {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [isAddNoteOpen, setIsAddNoteOpen] = useState(false);
   const [notes, setNotes] = useState([]);
+  const [updated, setIsUpdated] = useState(false);
 
   useEffect(() => {
     getAllNotes()
       .then(data => {
-        console.log(data);
+        setNotes([...data]);
       }).catch(errs => {
         console.log(errs);
       })
-  }, []);
+  }, [updated]);
+
+  const updateAndToggleVisibility = (val) => {
+    setIsAddNoteOpen(val);
+    setIsUpdated(val);
+  }
 
   /* ***** ***** return ***** ***** */
 
@@ -38,6 +44,7 @@ export default function NotesContainer() {
               onClick={(e) => {
                 e.stopPropagation()
                 setIsAddNoteOpen(!isAddNoteOpen)
+                setIsUpdated(false)
               }}>
               <IoMdAdd className='scale-150 text-darkPurple'/>
             </button>
@@ -59,8 +66,12 @@ export default function NotesContainer() {
       {/* notes content (mobile expanded) */}
       {isMobileOpen &&
         <div className="flex flex-col gap-2 justify-start items-start overflow-y-scroll scrollbar-none p-1">
-          {isAddNoteOpen && <AddEditNoteCard /> }
-          {notes && notes.map(n => <NotesCard note={n} />)}
+          {isAddNoteOpen && <AddEditNoteCard
+            isUpdated={updateAndToggleVisibility} />}
+          {notes && notes
+            .sort((a, b) => a.datetimeMade.localeCompare(b.datetimeMade))
+            .reverse()
+            .map(n => <NotesCard note={n} />)}
         </div>
       }
     </div>
@@ -70,14 +81,22 @@ export default function NotesContainer() {
       {/* header and add container */}
       <div className="flex justify-between items-center p-1">
         <h4 className='text-darkPurple'>notes</h4>
-        <button className='btn-purple rounded-full p-2' onClick={() => setIsAddNoteOpen(!isAddNoteOpen)}>
+        <button className='btn-purple rounded-full p-2'
+          onClick={() => {
+            setIsAddNoteOpen(!isAddNoteOpen)
+            setIsUpdated(false)
+          }}>
           <IoMdAdd className='scale-150'/>
         </button>
       </div>
       {/* notes container */}
       <div className="flex flex-col gap-2 justify-start items-start overflow-scroll max-h-[50vh] scrollbar-none p-1">
-        {isAddNoteOpen && <AddEditNoteCard /> }
-        {notes && notes.map(n => <NotesCard note={n} />)}
+        {isAddNoteOpen && <AddEditNoteCard
+          isUpdated={updateAndToggleVisibility} />}
+        {notes && notes
+          .sort((a, b) => a.datetimeMade.localeCompare(b.datetimeMade))
+          .reverse()
+          .map(n => <NotesCard note={n} />)}
       </div>
     </div>  
   </>);
