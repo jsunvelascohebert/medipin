@@ -1,9 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { IoMdAdd } from 'react-icons/io';
 import { BiExpandVertical, BiCollapseVertical } from 'react-icons/bi';
 import NotesCard from './NotesCard';
 import AddEditNoteCard from './AddEditNoteCard';
-import { getAllNotes } from '../../../fetches/internal/NotesFetches';
+import { getAllNotes, getNoteById } from '../../../fetches/internal/NotesFetches';
+import { getUTANsByKey } from '../../../fetches/internal/UserTopicArticleNoteFetches';
+import AuthContext from '../../../contexts/AuthContext';
+import { useParams } from 'react-router-dom';
 
 export default function NotesContainer() {
 
@@ -11,13 +14,25 @@ export default function NotesContainer() {
   const [isAddNoteOpen, setIsAddNoteOpen] = useState(false);
   const [notes, setNotes] = useState([]);
   const [updated, setIsUpdated] = useState(false);
+  const auth = useContext(AuthContext);
+  const { topicId, articleId } = useParams();
 
   useEffect(() => {
-    getAllNotes()
+    setNotes([]);
+    // get notes by utan
+    getUTANsByKey(auth.user.userId, parseInt(topicId), parseInt(articleId))
       .then(data => {
-        setNotes([...data]);
+        for (let n of data) {
+          getNoteById(n.noteId)
+            .then(data => {
+              const note = { noteId: data.noteId, text: data.text, datetimeMade: data.datetimeMade }
+              setNotes(prev => [...prev, note])
+            }).catch(errs => {
+              console.log(errs);
+            })
+        }
       }).catch(errs => {
-        setNotes([]);
+        console.log(errs);
       })
   }, [updated]);
 

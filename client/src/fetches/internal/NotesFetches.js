@@ -18,6 +18,24 @@ export async function getAllNotes() {
   }
 }
 
+/* ***** ***** get note by id ***** ***** */
+
+export async function getNoteById(noteId) {
+  const init = {
+    method: 'GET',
+    headers: {
+      'Accept' : 'application/json'
+    }
+  }
+  const response = await fetch(`${URL}/${noteId}`, init)
+  if (response.status === 200) {
+    return await response.json()
+  } else {
+    const errs = await response.json()
+    return Promise.reject(errs)
+  }
+}
+
 /* ***** ***** add note ***** ***** */
 
 export async function addNote(note) {

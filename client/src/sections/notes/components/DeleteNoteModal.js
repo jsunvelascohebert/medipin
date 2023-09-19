@@ -3,11 +3,16 @@ import Modal from '../../utility/Modal';
 import { FaArrowLeft } from 'react-icons/fa';
 import { deleteNote } from '../../../fetches/internal/NotesFetches';
 import { BannerContext } from '../../../contexts/BannerContext';
+import { useParams } from 'react-router-dom';
+import AuthContext from '../../../contexts/AuthContext';
+import { deleteUtan } from '../../../fetches/internal/UserTopicArticleNoteFetches';
 
 export default function DeleteNoteModal({ isOpen, setOpen, note, isUpdated }) {
   
   const { showBanner } = useContext(BannerContext);
   const [isModalOpen, setIsModalOpen] = useState(isOpen);
+  const { topicId, articleId } = useParams();
+  const auth = useContext(AuthContext);
 
   const changeModal = (val) => {
     setIsModalOpen(val);
@@ -15,20 +20,35 @@ export default function DeleteNoteModal({ isOpen, setOpen, note, isUpdated }) {
   }
 
   const handleDeleteNote = () => {
-    // delete note
-    deleteNote(note.noteId)
-      .then(data => {
-        showBanner({
-          message: 'successfully deleted note',
-          status: 'success'
+    const utan = {
+      userId: auth.user.userId,
+      topicId: parseInt(topicId),
+      articleId: parseInt(articleId),
+      noteId: note.noteId
+    }
+    // delete utan
+    deleteUtan(utan)
+      .then(() => {
+        // delete note
+        deleteNote(note.noteId)
+        .then(() => {
+          showBanner({
+            message: 'successfully deleted note',
+            status: 'success'
+          })
+          isUpdated();
+        }).catch(errs => {
+          showBanner({
+            message: 'failed to delete note',
+            status: 'error'
+          })
+          isUpdated();
         })
-        isUpdated();
       }).catch(errs => {
         showBanner({
           message: 'failed to delete note',
           status: 'error'
         })
-        isUpdated();
       })
   }
 
