@@ -21,9 +21,9 @@ export default function NotesContainer() {
       })
   }, [updated]);
 
-  const updateAndToggleVisibility = (val) => {
-    setIsAddNoteOpen(val);
-    setIsUpdated(val);
+  const updateAndToggleVisibility = () => {
+    setIsAddNoteOpen(!isAddNoteOpen);
+    setIsUpdated(!updated);
   }
 
   /* ***** ***** return ***** ***** */
@@ -43,8 +43,7 @@ export default function NotesContainer() {
             <button className='btn-purple rounded-full p-1'
               onClick={(e) => {
                 e.stopPropagation()
-                setIsAddNoteOpen(!isAddNoteOpen)
-                setIsUpdated(false)
+                updateAndToggleVisibility(true)
               }}>
               <IoMdAdd className='scale-150 text-darkPurple'/>
             </button>
@@ -82,9 +81,9 @@ export default function NotesContainer() {
       <div className="flex justify-between items-center p-1">
         <h4 className='text-darkPurple'>notes</h4>
         <button className='btn-purple rounded-full p-2'
-          onClick={() => {
-            setIsAddNoteOpen(!isAddNoteOpen)
-            setIsUpdated(false)
+          onClick={(e) => {
+            e.stopPropagation()
+            updateAndToggleVisibility(true)
           }}>
           <IoMdAdd className='scale-150'/>
         </button>
