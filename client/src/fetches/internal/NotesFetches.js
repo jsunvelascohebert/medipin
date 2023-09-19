@@ -37,3 +37,16 @@ export async function addNote(note) {
     return Promise.reject(errs);
   }
 }
+
+/* ***** ***** delete note ***** ***** */
+
+export async function deleteNote(noteId) {
+  const init = {
+    method: 'DELETE'
+  }
+  const response = await fetch(`${URL}/${noteId}`, init)
+  if (response.status != 204) {
+    const errs = await response.json();
+    return Promise.reject(errs);
+  }
+}

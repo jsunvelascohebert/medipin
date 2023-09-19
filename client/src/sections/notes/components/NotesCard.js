@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { AiOutlineEdit, AiOutlineDelete } from 'react-icons/ai';
+import DeleteNoteModal from './DeleteNoteModal';
 
-export default function NotesCard({ note }) {
+export default function NotesCard({ note, isUpdated }) {
 
   const noteParsed = new Date(note.datetimeMade);
   
-
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (<>
     <div key={note.noteId} className="flex flex-col w-full bg-lightPurple p-4 gap-2 rounded-xl border-2 border-darkPurple shadow-sm shadow-darkPurple">
@@ -22,10 +23,14 @@ export default function NotesCard({ note }) {
           <AiOutlineEdit
             className='text-lg text-darkPurple hover:text-xl hover:cursor-pointer' />
           <AiOutlineDelete
-            className='text-lg text-darkPurple hover:text-xl hover:cursor-pointer' />
+            className='text-lg text-darkPurple hover:text-xl hover:cursor-pointer' onClick={() => setIsModalOpen(true)} />
         </div>
       </div>
-
     </div>
+
+    {/* delete note confirmation modal */}
+    { isModalOpen &&
+      <DeleteNoteModal isOpen={isModalOpen} setOpen={(val) => setIsModalOpen(val)} note={note} isUpdated={() => isUpdated()} />
+    }
   </>);
 }

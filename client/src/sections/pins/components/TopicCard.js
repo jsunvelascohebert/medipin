@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { AiOutlineEdit, AiOutlineDelete } from 'react-icons/ai';
 import DeleteTopicModal from './DeleteTopicModal';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 
 

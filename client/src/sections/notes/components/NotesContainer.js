@@ -17,7 +17,7 @@ export default function NotesContainer() {
       .then(data => {
         setNotes([...data]);
       }).catch(errs => {
-        console.log(errs);
+        setNotes([]);
       })
   }, [updated]);
 
@@ -70,7 +70,8 @@ export default function NotesContainer() {
           {notes && notes
             .sort((a, b) => a.datetimeMade.localeCompare(b.datetimeMade))
             .reverse()
-            .map(n => <NotesCard key={n.noteId} note={n} />)}
+            .map(n => <NotesCard key={n.noteId} note={n}
+              isUpdated={() => setIsUpdated(!updated)} />)}
         </div>
       }
     </div>
@@ -95,7 +96,8 @@ export default function NotesContainer() {
         {notes && notes
           .sort((a, b) => a.datetimeMade.localeCompare(b.datetimeMade))
           .reverse()
-          .map(n => <NotesCard key={n.noteId} note={n} />)}
+          .map(n => <NotesCard key={n.noteId} note={n}
+            isUpdated={() => setIsUpdated(!updated)} />)}
       </div>
     </div>  
   </>);
