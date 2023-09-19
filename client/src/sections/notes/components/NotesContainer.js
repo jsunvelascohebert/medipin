@@ -1,13 +1,24 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { IoMdAdd } from 'react-icons/io';
 import { BiExpandVertical, BiCollapseVertical } from 'react-icons/bi';
 import NotesCard from './NotesCard';
 import AddEditNoteCard from './AddEditNoteCard';
+import { getAllNotes } from '../../../fetches/internal/NotesFetches';
 
 export default function NotesContainer() {
 
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [isAddNoteOpen, setIsAddNoteOpen] = useState(false);
+  const [notes, setNotes] = useState([]);
+
+  useEffect(() => {
+    getAllNotes()
+      .then(data => {
+        console.log(data);
+      }).catch(errs => {
+        console.log(errs);
+      })
+  }, []);
 
   /* ***** ***** return ***** ***** */
 
@@ -48,10 +59,8 @@ export default function NotesContainer() {
       {/* notes content (mobile expanded) */}
       {isMobileOpen &&
         <div className="flex flex-col gap-2 justify-start items-start overflow-y-scroll scrollbar-none p-1">
-          {isAddNoteOpen &&
-            <AddEditNoteCard placeholder='enter note' />
-          }
-          <NotesCard />
+          {isAddNoteOpen && <AddEditNoteCard /> }
+          {notes && notes.map(n => <NotesCard note={n} />)}
         </div>
       }
     </div>
@@ -67,10 +76,8 @@ export default function NotesContainer() {
       </div>
       {/* notes container */}
       <div className="flex flex-col gap-2 justify-start items-start overflow-scroll max-h-[50vh] scrollbar-none p-1">
-        {isAddNoteOpen &&
-          <AddEditNoteCard placeholder='enter text' />
-        }
-        <NotesCard />
+        {isAddNoteOpen && <AddEditNoteCard /> }
+        {notes && notes.map(n => <NotesCard note={n} />)}
       </div>
     </div>  
   </>);

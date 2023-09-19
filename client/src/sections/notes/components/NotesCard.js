@@ -1,8 +1,6 @@
 import React from 'react';
 
-export default function NotesCard() {
-
-  
+export default function NotesCard({ note }) {
 
   return (<>
     <div className="flex flex-col w-full bg-lightPurple p-4 gap-2 rounded-xl border-2 border-darkPurple shadow-sm shadow-darkPurple">

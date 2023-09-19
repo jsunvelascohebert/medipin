@@ -10,7 +10,7 @@ public class Note {
     private int noteId;
     private String text;
 
-    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
     private LocalDateTime datetimeMade;
 
     public Note() {};
