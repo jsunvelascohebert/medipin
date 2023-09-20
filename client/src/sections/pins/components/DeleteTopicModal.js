@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import Modal from '../../utility/Modal';
 import { FaArrowLeft } from 'react-icons/fa6';
-import { deleteTopic } from '../../../fetches/internal/TopicFetches';
+import { deleteTopic, hardDeleteTopicById } from '../../../fetches/internal/TopicFetches';
 import { BannerContext } from '../../../contexts/BannerContext';
 import { deleteUserTopicByKey } from '../../../fetches/internal/UserTopicFetches';
 import AuthContext from '../../../contexts/AuthContext';
@@ -24,21 +24,36 @@ export default function DeleteTopicModal({ isOpen, setOpen, topic, isUpdated }) 
   /* ***** ***** delete handlers ***** ***** */
 
   const handleDeleteTopic = () => {
-    // delete actual topic
-    deleteTopic(topic.topicId)
-    .then(() => {
-      showBanner({
-        message: `successfully deleted topic '${topic.name}'`,
-        status: 'success'
-      });
-      isUpdated();
-    }).catch(() => {
-      showBanner({
-        message: 'could not delete',
-        status: 'error'
-      });
-      isUpdated();
-    });
+    // hard delete topic
+    hardDeleteTopicById(topic.topicId)
+      .then(() => {
+        showBanner({
+          message: `successfully deleted topic '${topic.name}'`,
+          status: 'success'
+        })
+        isUpdated();
+      }).catch(errs => {
+        showBanner({
+          message: 'failed to delete topic',
+          status: 'error'
+        })
+        isUpdated()
+      })
+
+    // deleteTopic(topic.topicId)
+    // .then(() => {
+    //   showBanner({
+    //     message: `successfully deleted topic '${topic.name}'`,
+    //     status: 'success'
+    //   });
+    //   isUpdated();
+    // }).catch(() => {
+    //   showBanner({
+    //     message: 'could not delete',
+    //     status: 'error'
+    //   });
+    //   isUpdated();
+    // });
   }
 
   const handleDelete = () => {

@@ -102,6 +102,16 @@ public class TopicService {
         return result;
     }
 
+    public Result<Topic> hardDeleteById(int topicId) { // untested
+        Result<Topic> result = new Result<>();
+        boolean response = repository.hardDeleteById(topicId);
+        if (!response) {
+            String msg = "Failed to hard delete topic";
+            result.addMessage(msg, ResultType.NOT_FOUND);
+        }
+        return result;
+    }
+
     /* ***** ***** validations ***** ***** */
 
     private Result<Topic> validate(Topic topic) {

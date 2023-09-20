@@ -20,6 +20,9 @@ public interface TopicRepository {
     boolean deleteById(int topicId);
 
     @Transactional
+    boolean hardDeleteById(int topicId);
+
+    @Transactional
     boolean isAttachedToUserTopic(int topicId);
 
     @Transactional

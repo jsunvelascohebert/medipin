@@ -78,6 +78,17 @@ public class TopicJdbcTemplateRepository implements TopicRepository {
     }
 
     @Override
+    public boolean hardDeleteById(int topicId) { // untested
+        jdbcTemplate.update("delete from user_topic where topic_id = ?;",
+                topicId);
+        jdbcTemplate.update("delete from topic_article where topic_id = ?;",
+                topicId);
+        jdbcTemplate.update("delete from user_topic_article_note where " +
+                "topic_id = ?;", topicId);
+        return deleteById(topicId);
+    }
+
+    @Override
     @Transactional
     public boolean isAttachedToUserTopic(int topicId) {
         final String sql = """

@@ -63,7 +63,20 @@ export async function deleteTopic(topidId) {
     method: 'DELETE'
   }
   const response = await fetch(`${URL}/${topidId}`, init);
-  if (response.status != 204) {
+  if (response.status !== 204) {
+    const errs = await response.json();
+    return Promise.reject(errs);
+  }
+}
+
+/* ***** ***** hard delete topic ***** ***** */
+
+export async function hardDeleteTopicById(topicId) {
+  const init = {
+    method: 'DELETE'
+  }
+  const response = await fetch(`${URL}/hard/${topicId}`, init)
+  if (response.status !== 204) {
     const errs = await response.json();
     return Promise.reject(errs);
   }

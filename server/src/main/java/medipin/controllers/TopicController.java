@@ -70,4 +70,13 @@ public class TopicController {
         }
         return ErrorResponse.build(result);
     }
+
+    @DeleteMapping("/hard/{topicId}") // not tested
+    public ResponseEntity<Object> hardDeleteById(@PathVariable int topicId) {
+        Result<Topic> result = service.hardDeleteById(topicId);
+        if (result.isSuccess()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return ErrorResponse.build(result);
+    }
 }
