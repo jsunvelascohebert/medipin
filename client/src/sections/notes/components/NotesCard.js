@@ -11,7 +11,6 @@ export default function NotesCard({ note, isUpdated }) {
   const [updated, setUpdated] = useState(false);
 
   return (<>
-      <div className="flex flex-row justify-between items-center">
     {!updated ?
           <div key={note.noteId} className="flex flex-col w-full bg-lightPurple p-4 gap-2 rounded-xl border-2 border-darkPurple shadow-sm shadow-darkPurple">
           {/* note body */}
