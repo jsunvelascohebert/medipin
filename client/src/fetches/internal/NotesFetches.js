@@ -56,6 +56,24 @@ export async function addNote(note) {
   }
 }
 
+/* ***** ***** update note ***** ***** */
+
+export async function updateNote(note) {
+  const init = {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+    },
+    body: JSON.stringify(note)
+  }
+  const response = await fetch(`${URL}/${note.noteId}`, init)
+  if (response.status !== 204) {
+    const errs = await response.json();
+    return Promise.reject(errs);
+  }
+}
+
 /* ***** ***** delete note ***** ***** */
 
 export async function deleteNote(noteId) {

@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { addNote } from '../../../fetches/internal/NotesFetches';
+import { addNote, updateNote } from '../../../fetches/internal/NotesFetches';
 import { BannerContext } from '../../../contexts/BannerContext';
 import AuthContext from '../../../contexts/AuthContext';
 import { useParams } from 'react-router-dom';
@@ -21,37 +21,56 @@ export default function AddEditNoteCard({ id = 0, placeholder = '', isUpdated })
       text: noteText,
       datetimeMade: dateTime.toISOString()
     }
-    // add note
-    addNote(note)
-      .then((data) => {
-        const utan = {
-          userId: auth.user.userId,
-          topicId: parseInt(topicId),
-          articleId: parseInt(articleId),
-          noteId: data.noteId
-        }
-        addUTAN(utan)
-          .then(() => {
-            isUpdated(true);
-            setIsShown('hidden');
-            showBanner({
-              message: 'successfully added note',
-              status: 'success'
+
+    if (id === 0) {
+      // add note
+      addNote(note)
+        .then((data) => {
+          const utan = {
+            userId: auth.user.userId,
+            topicId: parseInt(topicId),
+            articleId: parseInt(articleId),
+            noteId: data.noteId
+          }
+          addUTAN(utan)
+            .then(() => {
+              isUpdated(true);
+              setIsShown('hidden');
+              showBanner({
+                message: 'successfully added note',
+                status: 'success'
+              })
+            }).catch(() => {
+              isUpdated(true);
+              setIsShown('hidden');
+              showBanner({
+                message: 'successfully added note',
+                status: 'success'
+              })
             })
-          }).catch(() => {
-            isUpdated(true);
-            setIsShown('hidden');
-            showBanner({
-              message: 'successfully added note',
-              status: 'success'
-            })
+        }).catch(errs => {
+          showBanner({
+            message: 'failed to add note',
+            status: 'error'
           })
-      }).catch(errs => {
-        showBanner({
-          message: 'failed to add note',
-          status: 'error'
         })
-      })
+    } else {
+      // update note
+      updateNote(note)
+        .then(() => {
+          isUpdated(true);
+          setIsShown('hidden');
+          showBanner({
+            message: 'successfully updated note',
+            status: 'success'
+          })
+        }).catch(errs => {
+          showBanner({
+            message: 'failed to update note',
+            status: 'error'
+          })
+        });
+    }
   }
 
   return (
@@ -71,7 +90,7 @@ export default function AddEditNoteCard({ id = 0, placeholder = '', isUpdated })
           {dateTime.toLocaleString()}
         </p>
         {/* submit button */}
-        <button type="submit" htmlFor='note-form' className='btn-purple' onClick={handleSubmit}>add</button>
+        <button type="submit" htmlFor='note-form' className='btn-purple' onClick={handleSubmit}>save</button>
       </div>
     </div>
   );

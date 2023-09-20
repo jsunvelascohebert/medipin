@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { AiOutlineEdit, AiOutlineDelete } from 'react-icons/ai';
 import DeleteTopicModal from './DeleteTopicModal';
 import { useNavigate } from 'react-router-dom';
+import AddEditNoteCard from '../../notes/components/AddEditNoteCard';
 
 
 
@@ -10,20 +11,16 @@ export default function TopicCard({ topic, isUpdated }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
     
-  /* ***** ***** routing handlers ***** ***** */
-
-
-
   /* ***** ***** update handlers ***** ***** */
 
 
-  /* ***** ***** delete handlers ***** ***** */
 
   /* ***** ***** return ***** ***** */
 
   return (<>
     {/* main container */}
-    <div id={topic.topicId} className="card w-full bg-orange border-darkOrange shadow-darkOrange hover:shadow-darkOrange"
+
+      <div id={topic.topicId} className="card w-full bg-orange border-darkOrange shadow-darkOrange hover:shadow-darkOrange"
       onClick={() => navigate(`/topics/${topic.topicId}/${topic.name}`)}>
       {/* top content container */}
       <div className='w-full flex flex-row justify-between items-center'>
@@ -44,7 +41,9 @@ export default function TopicCard({ topic, isUpdated }) {
         </div>
       </div>
       {/* TODO: bottom image gallery */}
-    </div>
+      </div>
+    
+    
 
     {/* delete confirmation modal */}
     { isModalOpen &&
@@ -52,5 +51,6 @@ export default function TopicCard({ topic, isUpdated }) {
         setOpen={(val) => setIsModalOpen(val)}
         topic={topic} isUpdated={() => isUpdated()} />
     }
+
   </>);
 }
