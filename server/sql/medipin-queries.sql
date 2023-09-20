@@ -1,6 +1,25 @@
 use medipin_test;
 use medipin;
 
+-- ----- ----- general query ----- ----- --
+
+select 
+	u.username,
+    t.topic_id as 'topic_id',
+    t.`name` as 'topic_name',
+    a.title as 'article_title',
+    n.text as 'note_text'
+from `user` u
+left join user_topic ut on u.user_id = ut.user_id
+left join topic t on ut.topic_id = t.topic_id
+left join topic_article ta on t.topic_id = ta.topic_id
+left join article a on ta.article_id = a.article_id
+left join user_topic_article_note utan on 
+u.user_id = utan.user_id AND
+t.topic_id = utan.topic_id AND
+a.article_id = utan.article_id 
+left join note n on utan.note_id = n.note_id;
+
 -- ----- ----- queries for articles ----- ----- --
 
 select article_id, title, image_url, image_alt

@@ -50,4 +50,6 @@ public class TopicArticleJdbcTemplateRepository implements TopicArticleRepositor
         return jdbcTemplate.update("delete from topic_article where " +
                 "topic_id = ? and article_id = ?;", topicId, articleId) > 0;
     }
+
+
 }

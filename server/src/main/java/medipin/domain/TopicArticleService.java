@@ -75,6 +75,7 @@ public class TopicArticleService {
         return result;
     }
 
+
     /* ***** ***** validation ***** ***** */
 
     private Result<TopicArticle> validate(TopicArticle topicArticle) {

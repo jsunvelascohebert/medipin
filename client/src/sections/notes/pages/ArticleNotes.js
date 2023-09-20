@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import React, { useState, useEffect, useContext } from 'react';
+import { Link, Navigate, useNavigate, useParams } from 'react-router-dom';
 import { FaArrowLeft } from 'react-icons/fa6';
 import { RiUnpinLine } from 'react-icons/ri';
 import { getArticleContentById } from '../../../fetches/ExternalAPI';
 import { parseRelated, parseRelatedAndSections, parseSection } from '../../utility/ArticleParser';
 import LoadingOverlay from '../../utility/LoadingOverlay';
 import NotesContainer from '../components/NotesContainer';
+import { deleteTopicArticle, deleteTopicArticleByTopicId } from '../../../fetches/internal/TopicArticleFetches';
+import { BannerContext } from '../../../contexts/BannerContext';
 
 
 export default function () {
@@ -14,8 +16,9 @@ export default function () {
   const [isLoading, setIsLoading] = useState(false);
   const [articleContent, setArticleContent] = useState('');
   const [relatedArticles, setRelatedArticles] = useState('')
-  const [notes, setNotes] = useState([]);
   const [hideNotes, setHideNotes] = useState(true);
+  const { showBanner } = useContext(BannerContext);
+  const navigate = useNavigate();
 
   /* ***** ***** set up handlers ***** ***** */
 
@@ -35,6 +38,22 @@ export default function () {
         console.log(errs);
       })
   }, []);
+
+  /* ***** ***** handle unpin ***** ***** */
+
+  const handleUnpin = () => {
+    const topicArticle = { topicId: topicId, articleId: articleId };
+    deleteTopicArticle(topicArticle)
+      .then(() => {
+        navigate(`/topics/${topicId}/${topicName}`)
+        showBanner({
+          message: 'successfully unpinned article',
+          status: 'success'
+        });
+      }).catch(errs => {
+        console.log(errs);
+      })
+  }
   
   /* ***** ***** return ***** ***** */
 
@@ -58,7 +77,7 @@ export default function () {
             <div className='bg-purple px-3 py-1 text-darkPurple border-2 border-darkPurple rounded-full'>{topicName}</div>
 
             {/* unpin button */}
-            <button className='btn-purple p-3'>
+            <button className='btn-purple p-3' onClick={handleUnpin}>
               <RiUnpinLine className='scale-150 font-extrabold text-darkPurple' />
             </button>
 

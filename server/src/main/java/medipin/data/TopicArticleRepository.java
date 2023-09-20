@@ -17,4 +17,6 @@ public interface TopicArticleRepository {
 
     @Transactional
     boolean deleteByKey(int topicId, int articleId);
+
+
 }
