@@ -34,7 +34,8 @@ public class TopicArticleController {
     public ResponseEntity<Object> add(@RequestBody TopicArticle topicArticle) {
         Result<TopicArticle> result = service.add(topicArticle);
         if (result.isSuccess()) {
-            return new ResponseEntity<>(HttpStatus.CREATED);
+            return new ResponseEntity<>(result.getPayload(),
+                    HttpStatus.CREATED);
         }
         return ErrorResponse.build(result);
     }

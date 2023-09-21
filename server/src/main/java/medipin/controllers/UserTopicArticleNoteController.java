@@ -37,7 +37,7 @@ public class UserTopicArticleNoteController {
     public ResponseEntity<Object> add(@RequestBody UserTopicArticleNote utan) {
         Result<UserTopicArticleNote> result = service.add(utan);
         if (result.isSuccess()) {
-            return new ResponseEntity<>(HttpStatus.CREATED);
+            return new ResponseEntity<>(result.getPayload(), HttpStatus.CREATED);
         }
         return ErrorResponse.build(result);
     }

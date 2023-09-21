@@ -29,13 +29,13 @@ export async function addTopicArticle(topicArticle) {
     },
     body: JSON.stringify(topicArticle)
   }
+  console.log(JSON.stringify(topicArticle))
   const response = await fetch(URL, init);
-  if (response.status === 201) {
-    return await response.json()
-  } else {
+  console.log(response);
+  if (response.status !== 201) {
     const errs = await response.json();
     return Promise.reject(errs);
-  }
+  } 
 }
 
 /* ***** ***** delete all by topic id ***** ***** */

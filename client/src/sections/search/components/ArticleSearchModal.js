@@ -6,13 +6,17 @@ import { getTopicsByUserId } from '../../../fetches/internal/UserTopicFetches';
 import { getTopicById } from '../../../fetches/internal/TopicFetches';
 import { addArticle, getArticleById } from '../../../fetches/internal/ArticleFetches';
 import { addTopicArticle } from '../../../fetches/internal/TopicArticleFetches';
+import ArticlePinModal from './ArticlePinModal';
+import { BannerContext } from '../../../contexts/BannerContext';
 
 export default function ArticleSearchModal({ isOpen, setOpen, article, articleContent, relatedArticles }) {
 
   const [isModalOpen, setIsModalOpen] = useState(isOpen);
+  const [isPinModalOpen, setIsPinModalOpen] = useState(false);
   const [topics, setTopics] = useState([]);
   const [selectedTopic, setSelectedTopic] = useState(0);
   const auth = useContext(AuthContext);
+  const { showBanner } = useContext(BannerContext);
 
   const handleClose = () => {
     setIsModalOpen(false);
@@ -21,10 +25,14 @@ export default function ArticleSearchModal({ isOpen, setOpen, article, articleCo
 
   const addTA = (topicArticle) => {
     addTopicArticle(topicArticle)
-      .then(data => {
-        console.log(data)
+      .then(() => {      
+        setIsPinModalOpen(true);
       }).catch(errs => {
         console.log(errs)
+        showBanner({
+          message: 'could not add',
+          status: 'error'
+        });
       })
   }
 
@@ -134,6 +142,11 @@ export default function ArticleSearchModal({ isOpen, setOpen, article, articleCo
             <ul>{relatedArticles}</ul>
           </div>
         </div>
-      </Modal>
+    </Modal>
+    
+    {isPinModalOpen && 
+      <ArticlePinModal isOpen={isPinModalOpen}
+        setOpen={(val) => setIsPinModalOpen(val)} article={article} topicId={selectedTopic} />
+    }
   </>);
 }

@@ -33,7 +33,8 @@ public class UserTopicController {
     public ResponseEntity<Object> add(@RequestBody UserTopic userTopic) {
         Result<UserTopic> result = service.add(userTopic);
         if (result.isSuccess()) {
-            return new ResponseEntity<>(HttpStatus.CREATED);
+            return new ResponseEntity<>(result.getPayload(),
+                    HttpStatus.CREATED);
         }
         return ErrorResponse.build(result);
     }
