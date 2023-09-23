@@ -31,7 +31,7 @@ export default function Banner() {
     <div tabIndex={-1} className={`fixed ${visible ? 'top-1' : '-top-24'} left-0 right-0 z-75 flex flex-col justify-center items-center min-h-1/6 transition-all duration-300`} >
 
       {/* inner container */}
-      <div className={`z-100 flex flex-col gap-2 py-2 px-4 w-5/6 ${colorStyle} border-2 rounded-full opacity-100`}>
+      <div className={`flex flex-col gap-2 py-2 px-4 w-5/6 ${colorStyle} border-2 rounded-full opacity-100`}>
 
         {/* message container */}
         <div className='flex flex-col sm:flex-row justify-center sm:justify-between items-center'>

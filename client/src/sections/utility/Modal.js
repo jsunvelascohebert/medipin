@@ -61,7 +61,7 @@ export default function Modal({ color, isOpen, setOpen, size, header, footer, ch
   return (
     <>{isModalOpen ? (
       // outer container
-      <div tabIndex={-1} aria-hidden="true" className={`fixed top-0 left-0 right-0 z-50 flex justify-center items-center w-full h-full overflow-x-hidden overflow-y-hidden bg-${color} bg-opacity-75 hover:cursor-pointer`} onClick={toggleModalState}>
+      <div tabIndex={-1} aria-hidden="true" className={`fixed top-0 left-0 right-0 z-10 flex justify-center items-center w-full h-full overflow-x-hidden overflow-y-hidden bg-${color} bg-opacity-75 hover:cursor-pointer`} onClick={toggleModalState}>
 
         {/* inner container */}
         <div className={`flex flex-col ${mobileSizeStyle} ${desktopSizeStyle} justify-start items-center bg-${color} border-2 border-${darkColor} shadow-md shadow-${darkColor} rounded-xl cursor-auto`} onClick={(event) => event.stopPropagation()}>

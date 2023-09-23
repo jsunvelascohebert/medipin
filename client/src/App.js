@@ -75,8 +75,7 @@ function App() {
   return (<>
     <AuthContext.Provider value={auth}>
       <Router>
-        <BannerProvider>    
-          <Banner />
+        <BannerProvider>
           <HeaderNav />
           <Routes>
             <Route path="/" element={<Home />} />
@@ -99,6 +98,7 @@ function App() {
               } />
           </Routes>
           <Footer />
+          <Banner />
         </BannerProvider>
       </Router>
     </AuthContext.Provider>
