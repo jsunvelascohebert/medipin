@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { RiUnpinLine } from 'react-icons/ri';
 import { useNavigate } from 'react-router-dom';
 
 export default function PinnedArticleCard({ topic, article }) {
 
   const navigate = useNavigate();
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (<>
     <div id={article.articleId} className="relative card bg-orange border-darkOrange shadow-darkOrange hover:shadow-darkOrange"

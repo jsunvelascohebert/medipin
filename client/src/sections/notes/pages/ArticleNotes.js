@@ -1,13 +1,12 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Link, Navigate, useNavigate, useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { FaArrowLeft } from 'react-icons/fa6';
 import { RiUnpinLine } from 'react-icons/ri';
 import { getArticleContentById } from '../../../fetches/ExternalAPI';
 import { parseRelated, parseRelatedAndSections, parseSection } from '../../utility/ArticleParser';
 import LoadingOverlay from '../../utility/LoadingOverlay';
 import NotesContainer from '../components/NotesContainer';
-import { deleteTopicArticle, deleteTopicArticleByTopicId } from '../../../fetches/internal/TopicArticleFetches';
-import { BannerContext } from '../../../contexts/BannerContext';
+import UnpinModal from '../components/UnpinModal';
 
 
 export default function () {
@@ -17,8 +16,7 @@ export default function () {
   const [articleContent, setArticleContent] = useState('');
   const [relatedArticles, setRelatedArticles] = useState('')
   const [hideNotes, setHideNotes] = useState(true);
-  const { showBanner } = useContext(BannerContext);
-  const navigate = useNavigate();
+  const [isUnpinModalOpen, setIsUnpinModalOpen] = useState(false);
 
   /* ***** ***** set up handlers ***** ***** */
 
@@ -38,22 +36,6 @@ export default function () {
         console.log(errs);
       })
   }, []);
-
-  /* ***** ***** handle unpin ***** ***** */
-
-  const handleUnpin = () => {
-    const topicArticle = { topicId: topicId, articleId: articleId };
-    deleteTopicArticle(topicArticle)
-      .then(() => {
-        navigate(`/topics/${topicId}/${topicName}`)
-        showBanner({
-          message: 'successfully unpinned article',
-          status: 'success'
-        });
-      }).catch(errs => {
-        console.log(errs);
-      })
-  }
   
   /* ***** ***** return ***** ***** */
 
@@ -77,7 +59,8 @@ export default function () {
             <div className='bg-purple px-3 py-1 text-darkPurple border-2 border-darkPurple rounded-full'>{topicName}</div>
 
             {/* unpin button */}
-            <button className='btn-purple p-3' onClick={handleUnpin}>
+            <button className='btn-purple p-3'
+              onClick={() => setIsUnpinModalOpen(true)}>
               <RiUnpinLine className='scale-150 font-extrabold text-darkPurple' />
             </button>
 
@@ -104,5 +87,14 @@ export default function () {
 
     {/* loading content */}
     {isLoading && <LoadingOverlay color='purple' />}
+
+    {/* unpin article modal */}
+    {isUnpinModalOpen && 
+      <UnpinModal isOpen={isUnpinModalOpen}
+      setOpen={(val) => setIsUnpinModalOpen(val)}
+      color='purple' topic={{ topicId: topicId, topicName: topicName }} article={{ articleId: articleId, articleName: articleName }}
+      />
+    }
+
   </>);
 }
