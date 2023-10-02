@@ -23,8 +23,8 @@ export default function UnpinModal({ isOpen, setOpen, color, topic, article }) {
     deleteTopicArticle(topicArticle)
       .then(() => {
         // open a modal
-
         navigate(`/topics/${topic.topicId}/${topic.topicName}`)
+        window.location.reload(false);
         showBanner({
           message: 'successfully unpinned article',
           status: 'success'

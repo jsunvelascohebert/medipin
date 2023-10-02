@@ -1,19 +1,25 @@
 import React, { useState } from 'react';
 import { RiUnpinLine } from 'react-icons/ri';
 import { useNavigate } from 'react-router-dom';
+import UnpinModal from '../../notes/components/UnpinModal';
 
 export default function PinnedArticleCard({ topic, article }) {
 
   const navigate = useNavigate();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const openModal = (e) => {
+    e.stopPropagation();
+    setIsModalOpen(true);
+  }
 
   return (<>
     <div id={article.articleId} className="relative card bg-orange border-darkOrange shadow-darkOrange hover:shadow-darkOrange"
       onClick={() =>
         navigate(`/notes/${topic.id}/${topic.name}/${article.articleId}/${article.title}`)}>
       {/* unpin button */}
-      <button className="absolute top-2 right-2 btn-orange p-3">
+      <button className="absolute top-2 right-2 btn-orange p-3"
+        onClick={openModal}>
         <RiUnpinLine className='scale-150 font-extrabold text-darkOrange'/>
       </button>
       {/* article content */}
@@ -22,5 +28,13 @@ export default function PinnedArticleCard({ topic, article }) {
         {article.title}
       </h3>
     </div>
+
+    {/* unpin article modal */}
+    {isModalOpen &&
+      <UnpinModal isOpen={isModalOpen}
+        setOpen={(val) => setIsModalOpen(val)}
+      color='orange' topic={{ topicId: topic.id, topicName: topic.name }} article={{ articleId: article.articleId, articleName: article.title }}
+      />
+    }
   </>);
 }

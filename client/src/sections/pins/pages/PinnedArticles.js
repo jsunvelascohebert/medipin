@@ -8,6 +8,7 @@ export default function PinnedArticles() {
 
   const [articles, setArticles] = useState([]);
   const { topicId, topicName } = useParams();
+  const [updated, setUpdated] = useState(false);
 
   /* ***** ***** pull articles from id ***** ***** */
 
@@ -26,7 +27,7 @@ export default function PinnedArticles() {
       }).catch(errs => {
         console.log(errs);
       })
-  }, []);
+  }, [updated]);
 
   /* **** ***** return ***** ***** */
 
@@ -67,7 +68,7 @@ export default function PinnedArticles() {
           {articles
             .sort((a, b) => a.title.localeCompare(b.title))
             .map(a => <PinnedArticleCard key={a.articleId}
-              topic={{ id: topicId, name: topicName }} article={a} />)}
+              topic={{ id: topicId, name: topicName }} article={a} updated={(val) => setUpdated(val)}/>)}
         </div>
       </div>
     </section>
