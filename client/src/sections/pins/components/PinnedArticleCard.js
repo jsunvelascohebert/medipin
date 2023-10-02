@@ -3,7 +3,7 @@ import { RiUnpinLine } from 'react-icons/ri';
 import { useNavigate } from 'react-router-dom';
 import UnpinModal from '../../notes/components/UnpinModal';
 
-export default function PinnedArticleCard({ topic, article }) {
+export default function PinnedArticleCard({ topic, article, updated }) {
 
   const navigate = useNavigate();
 
@@ -34,6 +34,7 @@ export default function PinnedArticleCard({ topic, article }) {
       <UnpinModal isOpen={isModalOpen}
         setOpen={(val) => setIsModalOpen(val)}
       color='orange' topic={{ topicId: topic.id, topicName: topic.name }} article={{ articleId: article.articleId, articleName: article.title }}
+      updated={() => updated()}
       />
     }
   </>);

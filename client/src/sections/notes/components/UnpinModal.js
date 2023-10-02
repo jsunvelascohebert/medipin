@@ -4,8 +4,9 @@ import { FaArrowLeft } from 'react-icons/fa6';
 import { deleteTopicArticle } from '../../../fetches/internal/TopicArticleFetches';
 import { BannerContext } from '../../../contexts/BannerContext';
 import { useNavigate } from 'react-router-dom';
+import { RxCross2 } from 'react-icons/rx';
 
-export default function UnpinModal({ isOpen, setOpen, color, topic, article }) {
+export default function UnpinModal({ isOpen, setOpen, color, topic, article, updated }) {
 
   const [isModalOpen, setIsModalOpen] = useState(isOpen);
   const { showBanner } = useContext(BannerContext);
@@ -24,11 +25,11 @@ export default function UnpinModal({ isOpen, setOpen, color, topic, article }) {
       .then(() => {
         // open a modal
         navigate(`/topics/${topic.topicId}/${topic.topicName}`)
-        window.location.reload(false);
         showBanner({
           message: 'successfully unpinned article',
           status: 'success'
         });
+        updated();
       }).catch(errs => {
         console.log(errs);
       })
@@ -44,7 +45,7 @@ export default function UnpinModal({ isOpen, setOpen, color, topic, article }) {
         cancel
       </a>
       {/* confirm button */}
-      <button className="btn-purple" onClick={handleUnpin}>
+      <button className={`btn-${color}`} onClick={handleUnpin}>
         unpin
       </button>
     </div>
@@ -54,18 +55,40 @@ export default function UnpinModal({ isOpen, setOpen, color, topic, article }) {
   return (<>
     <Modal color={color} isOpen={isModalOpen}
       setOpen={showModal}
-      size='sm' header='unpin particle' footer={footer}>
+      size='md' header='unpin particle' footer={footer}>
       
       {/* modal content container */}
       <div className='flex flex-col gap-2 p-2 justify-center items-center'>
-        <div className="flex flex-col">
+        {/* warning message */}
+        <div className="flex flex-col text-center gap-2">
           <p>unpinning an article will permanently remove the article from the topic as well as any notes affiliated with it</p>
-          <p>are you sure you want to unpin the following?</p>
+          <p className='font-extrabold'>are you sure you want to unpin the following?</p>
         </div>
-        {article.articleName} + {topic.topicName}
-      </div>
 
-      </Modal>
+        {/* divider */}
+        <div className="w-full border my-4"></div>
+
+        {/* article x topic info */}
+        <div className="flex flex-col md:flex-row justify-center items-center gap-2 md:gap-8 w-full">
+
+          {/* article info */}
+          <div className="flex flex-col justify-center items-center md:justify-end md:items-end gap-2 md:w-1/2 text-center md:text-right">
+            <h4>article</h4>
+            <p>{article.articleName}</p>
+          </div>
+
+          {/* x content */}
+          <RxCross2 className='h-full' />
+
+          {/* topic info */}
+          <div className="flex flex-col justify-center items-center md:justify-start md:items-start gap-2 md:w-1/2 text-center md:text-left">
+            <h4>topic</h4>
+            <p className={`px-2 rounded-full border-2 bg-${color} border-dark${color}`}>{topic.topicName}</p>
+          </div>
+          
+        </div>
+      </div>
+    </Modal>
   </>);
 
 }

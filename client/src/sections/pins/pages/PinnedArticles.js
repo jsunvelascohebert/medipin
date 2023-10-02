@@ -68,7 +68,7 @@ export default function PinnedArticles() {
           {articles
             .sort((a, b) => a.title.localeCompare(b.title))
             .map(a => <PinnedArticleCard key={a.articleId}
-              topic={{ id: topicId, name: topicName }} article={a} updated={(val) => setUpdated(val)}/>)}
+              topic={{ id: topicId, name: topicName }} article={a} updated={() => setUpdated(!updated)}/>)}
         </div>
       </div>
     </section>
