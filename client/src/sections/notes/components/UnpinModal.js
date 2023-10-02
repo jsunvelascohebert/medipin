@@ -70,24 +70,13 @@ export default function UnpinModal({ isOpen, setOpen, color, topic, article, upd
 
         {/* article x topic info */}
         <div className="flex flex-col md:flex-row justify-center items-center gap-2 md:gap-8 w-full">
-
-          <p className='text-center w-full md:w-1/2'>
-            {article.articleName}
-          </p>
-
           {/* article info */}
-          {/* <div className="flex flex-col justify-center items-center md:justify-end md:items-end gap-2 md:w-1/2 text-center md:text-right">
-            <p>{article.articleName}</p>
-          </div> */}
-
+          <p className='text-center w-full md:w-1/2'>
+            {article.articleName}</p>
           {/* x content */}
           <RxCross2 />
-
           {/* topic info */}
-          {/* <div className="flex flex-col justify-center items-center md:justify-start md:items-start gap-2 md:w-1/2 text-center md:text-left"> */}
-            <p className={`px-2 rounded-full border-2 bg-${color} border-dark${color}`}>{topic.topicName}</p>
-          {/* </div> */}
-          
+          <p className={`px-2 rounded-full border-2 bg-${color} border-dark${color}`}>{topic.topicName}</p>
         </div>
       </div>
     </Modal>

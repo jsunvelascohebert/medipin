@@ -1,22 +1,41 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { AiOutlineEdit, AiOutlineDelete } from 'react-icons/ai';
 import DeleteTopicModal from './DeleteTopicModal';
 import { useNavigate } from 'react-router-dom';
 import AddEditNoteCard from '../../notes/components/AddEditNoteCard';
 import { BsCheckLg } from 'react-icons/bs';
 import { IoClose } from 'react-icons/io5';
+import { updateTopic } from '../../../fetches/internal/TopicFetches';
+import { BannerContext } from '../../../contexts/BannerContext';
 
 export default function TopicCad({ topic, isUpdated }) {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [topicValue, setTopicValue] = useState(topic.name);
   const navigate = useNavigate();
+  const { showBanner } = useContext(BannerContext);
     
   /* ***** ***** update handlers ***** ***** */
 
   const [isEditOpen, setIsEditOpen] = useState(false);
 
-
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    topic.name = topicValue;
+    updateTopic(topic)
+      .then(() => {
+        setIsEditOpen(false);
+        showBanner({
+          message: `successfully updated topic to: ${topic.name}`,
+          status: 'success'
+        })
+      }).catch((errs) => {
+        showBanner({
+          message: errs[0],
+          status: 'error'
+        })
+      })
+  };
 
 
   /* ***** ***** return ***** ***** */
@@ -31,10 +50,7 @@ export default function TopicCad({ topic, isUpdated }) {
         ?
         <form id="edit-topic-input"
           className='flex flex-row gap-2 justify-center items-center h-full w-full'
-          onSubmit={(e) => {
-            e.preventDefault()
-            console.log(topicValue)
-          }}>
+          onSubmit={handleSubmit}>
           {/* input field */}
           <input type="text" name="topic-edit" id="topic-edit" className='text-input ring-orange' autoFocus
             onChange={(e) => setTopicValue(e.target.value)} value={topicValue} onClick={(e) => e.stopPropagation()} />

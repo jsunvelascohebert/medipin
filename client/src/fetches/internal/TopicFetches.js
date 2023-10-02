@@ -56,6 +56,24 @@ export async function addTopic(topic) {
   }
 }
 
+/* ***** update topic ***** */
+
+export async function updateTopic(topic) {
+  const init = {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+    },
+    body: JSON.stringify(topic)
+  }
+  const response = await fetch(`${URL}/${topic.topicId}`, init)
+  if (response.status !== 204) {
+    const errs = await response.json();
+    return Promise.reject(errs);
+  }
+}
+
 /* ***** delete topic ***** */
 
 export async function deleteTopic(topidId) {
