@@ -70,7 +70,8 @@ public class AuthController {
             System.out.println(ex);
         }
 
-        return new ResponseEntity<>(List.of("Bad Credentials"),
+        return new ResponseEntity<>(List.of("invalid username " +
+                "and password"),
                 HttpStatus.BAD_REQUEST);
     }
 
