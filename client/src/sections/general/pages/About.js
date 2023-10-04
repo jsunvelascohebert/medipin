@@ -6,12 +6,18 @@ export default function About() {
   const [isEmpathizeOpen, setIsEmpathizeOpen] = useState(true);
   const [isDefineOpen, setIsDefineOpen] = useState(false);
   const [isIdeateOpen, setIsIdeateOpen] = useState(false);
+  const [isPrototypeOpen, setIsPrototypeOpen] = useState(false);
+  const [isDevelopOpen, setIsDevelopOpen] = useState(false);
+  const [isDeployOpen, setIsDeployOpen] = useState(false);
 
   /* ***** ***** accordian handler ***** ***** */
   const openAccordian = (name) => {
     setIsEmpathizeOpen(false);
     setIsDefineOpen(false);
     setIsIdeateOpen(false);
+    setIsPrototypeOpen(false);
+    setIsDevelopOpen(false);
+    setIsDeployOpen(false);
     switch (name) {
       case 'empathize':
         setIsEmpathizeOpen(true);
@@ -21,6 +27,15 @@ export default function About() {
         break;
       case 'ideate':
         setIsIdeateOpen(true);
+        break;
+      case 'prototype':
+        setIsPrototypeOpen(true);
+        break;
+      case 'develop':
+        setIsDevelopOpen(true);
+        break;
+      case 'deploy':
+        setIsDeployOpen(true);
         break;
       default:
         break;
@@ -76,19 +91,22 @@ export default function About() {
           </div>
 
           {/* prototype icon */}
-          <div className="flex flex-col justify-center items-center gap-2 hover:cursor-pointer">
+          <div className={`flex flex-col justify-center items-center gap-2 hover:cursor-pointer ${isPrototypeOpen && 'border-2 border-darkRed rounded-lg p-2 bg-red'}`}
+          onClick={() => openAccordian('prototype')}>
             <PiHammerBold className='text-darkRed text-2xl' />
             <p className="font-bold text-darkRed">prototype</p>
           </div>
 
           {/* develop icon */}
-          <div className="flex flex-col justify-center items-center gap-2 hover:cursor-pointer">
+          <div className={`flex flex-col justify-center items-center gap-2 hover:cursor-pointer ${isDevelopOpen && 'border-2 border-darkRed rounded-lg p-2 bg-red'}`}
+            onClick={() => openAccordian('develop')}>
             <PiMonitorBold className='text-darkRed text-2xl' />
             <p className="font-bold text-darkRed">develop</p>
           </div>
 
           {/* deploy icon */}
-          <div className="flex flex-col justify-center items-center gap-2 hover:cursor-pointer">
+          <div className={`flex flex-col justify-center items-center gap-2 hover:cursor-pointer ${isDeployOpen && 'border-2 border-darkRed rounded-lg p-2 bg-red'}`}
+          onClick={() => openAccordian('deploy')}>
             <PiTelegramLogoBold className='text-darkRed text-2xl' />
             <p className="font-bold text-darkRed">deploy</p>
           </div>
@@ -181,8 +199,88 @@ export default function About() {
           </div>
         }
 
+        {/* prototype mobile accordian card */}
+        <div className="w-full flex md:hidden flex-row justify-between items-center border-b-2 border-darkRed pb-2 hover:cursor-pointer"
+          onClick={() => openAccordian('prototype')}>
+          {/* icon/name container */}
+          <div className="flex flex-row gap-2 justify-start items-center">
+            {/* icon */}
+            <PiHammerBold className='text-darkRed'/>
+            {/* name */}
+            <p className="font-bold text-darkRed">prototype</p>
+          </div>
+          {/* expand icon */}
+          {isPrototypeOpen
+            ? <PiArrowsInDuotone className='text-darkRed' />
+            : <PiArrowsOutDuotone className='text-darkRed' />
+          }
+        </div>
 
+        {/* prototype information */}
+        {isPrototypeOpen &&
+          <div className="flex flex-col md:flex-row justify-center items-center gap-4 md:gap-10">
+            {/* image */}
+            <img src={require('./assets/medipin-prototype.png')} alt="figma mockup board for the hi-fidelity prototype" className='rounded-lg border-2 border-darkRed shadow-md shadow-darkRed md:max-w-[40vw]'/>
+            {/* text content */}
+            <p>when prototyping, Figma was used to create both lo-fidelity and hi-fidelity mockups. with Figma, there was a focus on utilizing all of the available tools and features, including auto-layout, variants, and local variables. interactivity was an important element, so two interactive prototypes are made available for both the lo-fidelity and hi-fidelity mockups. lastly, responsive design was deeply considered, so both mobile and desktop versions were designed.</p>
+          </div>
+        }
+        
+        {/* develop mobile accordian card */}
+        <div className="w-full flex md:hidden flex-row justify-between items-center border-b-2 border-darkRed pb-2 hover:cursor-pointer"
+          onClick={() => openAccordian('develop')}>
+          {/* icon/name container */}
+          <div className="flex flex-row gap-2 justify-start items-center">
+            {/* icon */}
+            <PiMonitorBold className='text-darkRed'/>
+            {/* name */}
+            <p className="font-bold text-darkRed">develop</p>
+          </div>
+          {/* expand icon */}
+          {isDevelopOpen
+            ? <PiArrowsInDuotone className='text-darkRed' />
+            : <PiArrowsOutDuotone className='text-darkRed' />
+          }
+        </div>
 
+        {/* develop information */}
+        {isDevelopOpen &&
+          <div className="flex flex-col md:flex-row justify-center items-center gap-4 md:gap-10">
+            {/* image */}
+            <img src='https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80' alt="laptop screen with code editor opened" className='rounded-lg border-2 border-darkRed shadow-md shadow-darkRed md:max-w-[40vw]'/>
+            {/* text content */}
+            <p>development materialized into three main phases: the MySQL database, the Java backend, and the React front-end. as hinted at, MySQL and Docker were used for creating the database. the Java Backend prioritized SpringBoot and included test-driven development with JUnit tests. Lastly, the front-end uses both React and Tailwind CSS. all elements were created from scratch using the utility framework.</p>
+          </div>
+        }
+
+        {/* deploy mobile accordian card */}
+        <div className="w-full flex md:hidden flex-row justify-between items-center border-b-2 border-darkRed pb-2 hover:cursor-pointer"
+          onClick={() => openAccordian('deploy')}>
+          {/* icon/name container */}
+          <div className="flex flex-row gap-2 justify-start items-center">
+            {/* icon */}
+            <PiTelegramLogoBold className='text-darkRed'/>
+            {/* name */}
+            <p className="font-bold text-darkRed">deploy</p>
+          </div>
+          {/* expand icon */}
+          {isDeployOpen
+            ? <PiArrowsInDuotone className='text-darkRed' />
+            : <PiArrowsOutDuotone className='text-darkRed' />
+          }
+        </div>
+
+        {/* deploy information */}
+        {isDeployOpen &&
+          <div className="flex flex-col md:flex-row justify-center items-center gap-4 md:gap-10">
+            {/* image */}
+            <img src='https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2015&q=80' alt="laptop screen with data visualized" className='rounded-lg border-2 border-darkRed shadow-md shadow-darkRed md:max-w-[40vw]'/>
+            {/* text content */}
+            <p>for deploying medipin, multiple routes were considered including AWS and Heroku. Heroku was ultimately decided due to the simplicity in its services. all elements of the app are hosted on Heroku; including the backend, database, and front-end separately. in the future, AWS will be considered when resources, time, and energy are less sparse.</p>
+          </div>
+        }
+        
+        
 
 
       </div>
