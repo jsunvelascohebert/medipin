@@ -143,9 +143,9 @@ export default function About() {
 
         {/* empathize information */}
         {isEmpathizeOpen &&
-          <div className='flex flex-col md:flex-row justify-center items-center gap-4 md:gap-10'>
+          <div className='flex flex-col md:flex-row justify-center items-center gap-4 md:gap-10 md:max-w-[60vw]'>
             {/* image */}
-            <img src='https://images.unsplash.com/photo-1573497620053-ea5300f94f21?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80' alt='two people having a conversation' className='rounded-lg border-2 border-darkRed shadow-md shadow-darkRed md:max-w-[40vw]' />
+            <img src='https://images.unsplash.com/photo-1573497620053-ea5300f94f21?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80' alt='two people having a conversation' className='rounded-lg border-2 border-darkRed shadow-md shadow-darkRed md:max-w-[25vw]' />
             {/* text content */}
             <p>during the empathize phase, we spoke to current medical students starting with the question, “what are some issues in the medical field that you would want to see addressed?” the common pattern amongst their answers were centered on the discrepancy in health knowledge. upon further discussions with other involved parties, it was decided that an easily learnable app for bridging said gap would be central to the app’s development.</p>
           </div>
@@ -170,9 +170,9 @@ export default function About() {
 
         {/* define information */}
         {isDefineOpen &&
-          <div className="flex flex-col md:flex-row justify-center items-center gap-4 md:gap-10">
+          <div className="flex flex-col md:flex-row justify-center items-center gap-4 md:gap-10 md:max-w-[60vw]">
             {/* image */}
-            <img src='https://images.unsplash.com/photo-1598520106830-8c45c2035460?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2874&q=80' alt='person writing on whiteboard' className='rounded-lg border-2 border-darkRed shadow-md shadow-darkRed md:max-w-[40vw]' />
+            <img src='https://images.unsplash.com/photo-1598520106830-8c45c2035460?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2874&q=80' alt='person writing on whiteboard' className='rounded-lg border-2 border-darkRed shadow-md shadow-darkRed md:max-w-[25vw]' />
             {/* text content */}
             <p>during the define phase, work was done to articulate the problem statement and goal statements. Our hypothesis is that: <span className='font-bold'>If Zoe can easily access credible information on their partner’s condition, then they will be more educated and supportive of their partner’s needs and concerns</span>. Also, <span className=' underline'>We believe that an intuitive interface that makes medical information accessible for Zoe will ease their nerves concerning their knowledge of medical information with their limited background training.</span></p>
           </div>
@@ -197,9 +197,9 @@ export default function About() {
 
         {/* ideate information */}
         {isIdeateOpen &&
-          <div className="flex flex-col md:flex-row justify-center items-center gap-4 md:gap-10">
+          <div className="flex flex-col md:flex-row justify-center items-center gap-4 md:gap-10 md:max-w-[60vw]">
             {/* image */}
-            <img src={require('./assets/medipin-ideate.png')} alt="shared figjam board ideating medipin app" className='rounded-lg border-2 border-darkRed shadow-md shadow-darkRed md:max-w-[40vw]'/>
+            <img src={require('./assets/medipin-ideate.png')} alt="shared figjam board ideating medipin app" className='rounded-lg border-2 border-darkRed shadow-md shadow-darkRed md:max-w-[25vw]'/>
             {/* text content */}
             <p>for the ideate phase, we used a shared FigJam board to map out the remaining elements of our goal statement, hypothesis, personas, as well as the systemic structure of the app. For the second version, the planning began with the MySQL database tables, moved onto the backend structure, and ended with some interface prototypes. The structure was based primarily on a Three-Layer Architecture model: global level models, data layer repositories, domain level validation services, and a user interface level model/view/control structure.</p>
           </div>
@@ -224,9 +224,9 @@ export default function About() {
 
         {/* prototype information */}
         {isPrototypeOpen &&
-          <div className="flex flex-col md:flex-row justify-center items-center gap-4 md:gap-10">
+          <div className="flex flex-col md:flex-row justify-center items-center gap-4 md:gap-10 md:max-w-[60vw]">
             {/* image */}
-            <img src={require('./assets/medipin-prototype.png')} alt="figma mockup board for the hi-fidelity prototype" className='rounded-lg border-2 border-darkRed shadow-md shadow-darkRed md:max-w-[40vw]'/>
+            <img src={require('./assets/medipin-prototype.png')} alt="figma mockup board for the hi-fidelity prototype" className='rounded-lg border-2 border-darkRed shadow-md shadow-darkRed md:max-w-[25vw]'/>
             {/* text content */}
             <p>when prototyping, Figma was used to create both lo-fidelity and hi-fidelity mockups. with Figma, there was a focus on utilizing all of the available tools and features, including auto-layout, variants, and local variables. interactivity was an important element, so two interactive prototypes are made available for both the lo-fidelity and hi-fidelity mockups. lastly, responsive design was deeply considered, so both mobile and desktop versions were designed.</p>
           </div>
@@ -251,9 +251,9 @@ export default function About() {
 
         {/* develop information */}
         {isDevelopOpen &&
-          <div className="flex flex-col md:flex-row justify-center items-center gap-4 md:gap-10">
+          <div className="flex flex-col md:flex-row justify-center items-center gap-4 md:gap-10 md:max-w-[60vw]">
             {/* image */}
-            <img src='https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80' alt="laptop screen with code editor opened" className='rounded-lg border-2 border-darkRed shadow-md shadow-darkRed md:max-w-[40vw]'/>
+            <img src='https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80' alt="laptop screen with code editor opened" className='rounded-lg border-2 border-darkRed shadow-md shadow-darkRed md:max-w-[25vw]'/>
             {/* text content */}
             <p>development materialized into three main phases: the MySQL database, the Java backend, and the React front-end. as hinted at, MySQL and Docker were used for creating the database. the Java Backend prioritized SpringBoot and included test-driven development with JUnit tests. Lastly, the front-end uses both React and Tailwind CSS. all elements were created from scratch using the utility framework.</p>
           </div>
@@ -278,9 +278,9 @@ export default function About() {
 
         {/* deploy information */}
         {isDeployOpen &&
-          <div className="flex flex-col md:flex-row justify-center items-center gap-4 md:gap-10">
+          <div className="flex flex-col md:flex-row justify-center items-center gap-4 md:gap-10 md:max-w-[60vw]">
             {/* image */}
-            <img src='https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2015&q=80' alt="laptop screen with data visualized" className='rounded-lg border-2 border-darkRed shadow-md shadow-darkRed md:max-w-[40vw]'/>
+            <img src='https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2015&q=80' alt="laptop screen with data visualized" className='rounded-lg border-2 border-darkRed shadow-md shadow-darkRed md:max-w-[25vw]'/>
             {/* text content */}
             <p>for deploying medipin, multiple routes were considered including AWS and Heroku. Heroku was ultimately decided due to the simplicity in its services. all elements of the app are hosted on Heroku; including the backend, database, and front-end separately. in the future, AWS will be considered when resources, time, and energy are less sparse.</p>
           </div>
@@ -305,9 +305,9 @@ export default function About() {
 
         {/* iterate information */}
         {isIterateOpen &&
-          <div className="flex flex-col md:flex-row justify-center items-center gap-4 md:gap-10">
+          <div className="flex flex-col md:flex-row justify-center items-center gap-4 md:gap-10 md:max-w-[60vw]">
             {/* image */}
-            <img src='https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80' alt="person writing notes at a desk" className='rounded-lg border-2 border-darkRed shadow-md shadow-darkRed md:max-w-[40vw]'/>
+            <img src='https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80' alt="person writing notes at a desk" className='rounded-lg border-2 border-darkRed shadow-md shadow-darkRed md:max-w-[25vw]'/>
             {/* text content */}
             <p>iterating will be a continuous process and will result in updated versions with improvements. major areas to improve include new features such as sorting and filtering, better experience with specific elements, and updated backend/database services to meet the needs required. user testing will start with qualitative methods but attempts will be made to include quantitative elements (such as A/B testing and other digital metrics).</p>
           </div>
