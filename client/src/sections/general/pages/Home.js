@@ -39,31 +39,31 @@ export default function Home() {
             />
             {/* content */}
             <h4>search for information</h4>
-            <p>Pull interesting articles from the U.S. Department of Health and Human Service's external API.</p>
+            <p>pull interesting articles from the U.S. Department of Health and Human Service's external API.</p>
           </div>
 
           {/* pin card */}
           <div className="card items-start bg-blue">
             <img
-              src="https://images.unsplash.com/uploads/141103282695035fa1380/95cdfeef?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2860&q=80"
-              alt="person using keyboard"
+              src="https://plus.unsplash.com/premium_photo-1661963429761-5f27bcb6cdaa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2069&q=80"
+              alt="board with pinned sticky notes"
               className="rounded-xl border-2 border-darkBlue"
             />
             {/* content */}
-            <h4>search for information</h4>
-            <p>Pull interesting articles from the U.S. Department of Health and Human Service's external API.</p>
+            <h4>pin to custom topics</h4>
+            <p>using medipin's service, you can pin and organize any interesting articles to customized topics</p>
           </div>
 
           {/* notes card */}
           <div className="card items-start bg-blue">
             <img
-              src="https://images.unsplash.com/uploads/141103282695035fa1380/95cdfeef?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2860&q=80"
-              alt="person using keyboard"
+              src="https://images.unsplash.com/photo-1517842645767-c639042777db?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+              alt="notepad with some notes"
               className="rounded-xl border-2 border-darkBlue"
             />
             {/* content */}
-            <h4 className='text-left'>search for information</h4>
-            <p>Pull interesting articles from the U.S. Department of Health and Human Service's external API.</p>
+            <h4 className='text-left'>leave personalized notes</h4>
+            <p>for each article you pin, you can both read and leave notes, even editing and deleting them as you wish</p>
           </div>
         </div>
       </div>
