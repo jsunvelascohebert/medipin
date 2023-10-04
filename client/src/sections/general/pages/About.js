@@ -9,6 +9,7 @@ export default function About() {
   const [isPrototypeOpen, setIsPrototypeOpen] = useState(false);
   const [isDevelopOpen, setIsDevelopOpen] = useState(false);
   const [isDeployOpen, setIsDeployOpen] = useState(false);
+  const [isIterateOpen, setIsIterateOpen] = useState(false);
 
   /* ***** ***** accordian handler ***** ***** */
   const openAccordian = (name) => {
@@ -18,6 +19,7 @@ export default function About() {
     setIsPrototypeOpen(false);
     setIsDevelopOpen(false);
     setIsDeployOpen(false);
+    setIsIterateOpen(false);
     switch (name) {
       case 'empathize':
         setIsEmpathizeOpen(true);
@@ -36,6 +38,9 @@ export default function About() {
         break;
       case 'deploy':
         setIsDeployOpen(true);
+        break;
+      case 'iterate':
+        setIsIterateOpen(true);
         break;
       default:
         break;
@@ -112,7 +117,8 @@ export default function About() {
           </div>
 
           {/* iterate icon */}
-          <div className="flex flex-col justify-center items-center gap-2 hover:cursor-pointer">
+          <div className={`flex flex-col justify-center items-center gap-2 hover:cursor-pointer ${isIterateOpen && 'border-2 border-darkRed rounded-lg p-2 bg-red'}`}
+          onClick={() => openAccordian('iterate')}>
             <PiArrowsClockwiseBold className='text-darkRed text-2xl' />
             <p className="font-bold text-darkRed">iterate</p>
           </div>
@@ -279,10 +285,60 @@ export default function About() {
             <p>for deploying medipin, multiple routes were considered including AWS and Heroku. Heroku was ultimately decided due to the simplicity in its services. all elements of the app are hosted on Heroku; including the backend, database, and front-end separately. in the future, AWS will be considered when resources, time, and energy are less sparse.</p>
           </div>
         }
-        
-        
 
+        {/* iterate mobile accordian card */}
+        <div className="w-full flex md:hidden flex-row justify-between items-center border-b-2 border-darkRed pb-2 hover:cursor-pointer"
+          onClick={() => openAccordian('iterate')}>
+          {/* icon/name container */}
+          <div className="flex flex-row gap-2 justify-start items-center">
+            {/* icon */}
+            <PiArrowsClockwiseBold className='text-darkRed'/>
+            {/* name */}
+            <p className="font-bold text-darkRed">iterate</p>
+          </div>
+          {/* expand icon */}
+          {isIterateOpen
+            ? <PiArrowsInDuotone className='text-darkRed' />
+            : <PiArrowsOutDuotone className='text-darkRed' />
+          }
+        </div>
 
+        {/* iterate information */}
+        {isIterateOpen &&
+          <div className="flex flex-col md:flex-row justify-center items-center gap-4 md:gap-10">
+            {/* image */}
+            <img src='https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80' alt="person writing notes at a desk" className='rounded-lg border-2 border-darkRed shadow-md shadow-darkRed md:max-w-[40vw]'/>
+            {/* text content */}
+            <p>iterating will be a continuous process and will result in updated versions with improvements. major areas to improve include new features such as sorting and filtering, better experience with specific elements, and updated backend/database services to meet the needs required. user testing will start with qualitative methods but attempts will be made to include quantitative elements (such as A/B testing and other digital metrics).</p>
+          </div>
+        }
+      </div>
+
+      {/* designer & developer container */}
+      <div className="w-full flex flex-col justify-center items-center gap-10">
+        {/* section header */}
+        <h2 className='text-center text-darkRed'>designer & developer</h2>
+        <div className="w-full flex flex-col md:flex-row justify-center items-center gap-10 max-w-[75vw]">
+          {/* image */}
+          <img src={require('./assets/jvh_headshot.png')} alt='headshot of jsun velasco-hebert' className='rounded-full border-2 border-darkRed shadow-md shadow-darkRed max-w-[50vw] max-h-[35vh]' />
+          
+          <div className="flex flex-col justify-center md:justify-start items-center md:items-start gap-2">
+            {/* name */}
+            <p className='font-bold text-xl text-darkRed text-center md:text-left'>
+              jsun velasco-hebert
+            </p>
+            {/* pronouns */}
+            <p className='text-light italic text-sm text-center md:text-left'>they/he</p>
+            {/* text */}
+            <p className='text-center md:text-left'>Jsun is a designer-educator-developer with a diverse background in digital media, industrial design, participatory research, and community engagement. They have worked a plethora of positions including a diversity and equity liaison, a marketing and graphic designer for a sustainability office, and an educator in both higher education institutions and youth-oriented non-profits.</p>
+          </div>
+        </div>
+      </div>
+
+      {/* special thanks container */}
+      <div className="flex flex-col justify-center items-center gap-10">
+        <h2 className='text-center text-darkRed'>special thanks</h2>
+        <p className='text-center md:max-w-[30vw]'>as this project was made to improve on the capstone project completed during Jsun’s training at Dev10, special thanks are deserved to Ella Gaorian and Elizabeth Sweet, the other co-creators of the first version.</p>
       </div>
 
 
