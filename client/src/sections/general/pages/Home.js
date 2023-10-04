@@ -1,7 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
+import RegisterModal from '../components/RegisterModal';
 
 export default function Home() {
-  return (
+
+  const [isSignUpOpen, setIsSignUpOpen] = useState(false);
+
+  return (<>
     <section id="home" className='bg-gradient-to-b from-lightBlue to-white'>
       {/* banner */}
       <div id="banner" className="flex flex-col w-full mx-auto py-24 md:py-32 justify-center items-center gap-5">
@@ -31,9 +35,9 @@ export default function Home() {
         <div className="flex flex-col mx-auto gap-8 justify-center items-center md:flex-row p-8 sm:p-16">
 
           {/* search card */}
-          <div className="card items-start bg-blue">
+          <div className="card items-start bg-blue w-1/3">
             <img
-              src="https://images.unsplash.com/uploads/141103282695035fa1380/95cdfeef?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2860&q=80"
+              src="https://images.unsplash.com/photo-1501250987900-211872d97eaa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
               alt="person using keyboard"
               className="rounded-xl border-2 border-darkBlue"
             />
@@ -43,7 +47,7 @@ export default function Home() {
           </div>
 
           {/* pin card */}
-          <div className="card items-start bg-blue">
+          <div className="card items-start bg-blue w-1/3">
             <img
               src="https://plus.unsplash.com/premium_photo-1661963429761-5f27bcb6cdaa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2069&q=80"
               alt="board with pinned sticky notes"
@@ -55,7 +59,7 @@ export default function Home() {
           </div>
 
           {/* notes card */}
-          <div className="card items-start bg-blue">
+          <div className="card items-start bg-blue w-1/3">
             <img
               src="https://images.unsplash.com/photo-1517842645767-c639042777db?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
               alt="notepad with some notes"
@@ -74,7 +78,8 @@ export default function Home() {
         {/* content */}
         <p className="w-3/4 md:w-1/2 text-center text-xl">medipin is free to use but for the full experience, it is recommended you sign up for an account.</p>
         {/* button */}
-        <button className="btn-blue scale-150">
+        <button className="btn-blue scale-150"
+          onClick={() => setIsSignUpOpen(true)}>
           sign up
         </button>
       </div>
@@ -84,7 +89,13 @@ export default function Home() {
         <h2 className="text-darkBlue">disclaimer!</h2>
         <p className='text-center'>medipin is a personal project used for practicing full-stack development skills. important to note here is the level of security that may be provided due to limited knowledge on the backend. security features and user-specific features are included; however, it is highly advised to avoid inputting any sensitive information.</p>
       </div>
-
     </section>
-  );
+
+    {/* register modal */}
+    {isSignUpOpen &&
+      <RegisterModal isOpen={true} color='blue'
+        setOpen={(val) => setIsSignUpOpen(val)} />
+    }
+    
+    </>);
 }
