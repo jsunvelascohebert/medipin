@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react';
 import RegisterModal from '../components/RegisterModal';
+import AuthContext from '../../../contexts/AuthContext';
 
 export default function Home() {
 
