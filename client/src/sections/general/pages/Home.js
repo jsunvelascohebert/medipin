@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import RegisterModal from '../components/RegisterModal';
 
 export default function Home() {
 
   const [isSignUpOpen, setIsSignUpOpen] = useState(false);
+  const auth = useContext(AuthContext);
 
   return (<>
     <section id="home" className='bg-gradient-to-b from-lightBlue to-white'>
@@ -35,7 +36,7 @@ export default function Home() {
         <div className="flex flex-col mx-auto gap-8 justify-center items-center md:flex-row p-8 sm:p-16">
 
           {/* search card */}
-          <div className="card items-start bg-blue w-1/3">
+          <div className="card items-start bg-blue md:w-1/3">
             <img
               src="https://images.unsplash.com/photo-1501250987900-211872d97eaa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
               alt="person using keyboard"
@@ -47,7 +48,7 @@ export default function Home() {
           </div>
 
           {/* pin card */}
-          <div className="card items-start bg-blue w-1/3">
+          <div className="card items-start bg-blue md:w-1/3">
             <img
               src="https://plus.unsplash.com/premium_photo-1661963429761-5f27bcb6cdaa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2069&q=80"
               alt="board with pinned sticky notes"
@@ -59,7 +60,7 @@ export default function Home() {
           </div>
 
           {/* notes card */}
-          <div className="card items-start bg-blue w-1/3">
+          <div className="card items-start bg-blue md:w-1/3">
             <img
               src="https://images.unsplash.com/photo-1517842645767-c639042777db?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
               alt="notepad with some notes"
@@ -78,10 +79,13 @@ export default function Home() {
         {/* content */}
         <p className="w-3/4 md:w-1/2 text-center text-xl">medipin is free to use but for the full experience, it is recommended you sign up for an account.</p>
         {/* button */}
-        <button className="btn-blue scale-150"
+        {!auth.isLoggedIn() && 
+          <button className={`btn-blue scale-150`}
           onClick={() => setIsSignUpOpen(true)}>
-          sign up
-        </button>
+            sign up
+          </button>        
+        }
+
       </div>
 
       {/* disclaimer */}
